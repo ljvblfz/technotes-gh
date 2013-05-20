@@ -1,4 +1,7 @@
 *.swp
 *~
 *.swo
+*.pdf
+*.toc
+*.out
 

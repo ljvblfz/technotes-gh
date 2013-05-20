@@ -1,0 +1,25 @@
+\section{OCTEON模拟器环境下的GDB调试}
+需要两个终端。
+
+终端1:
+\begin{verbatim}
+oct-sim $(TARGET) -quiet -noperf -numcores=2 -uart1=2021 -debug
+\end{verbatim}
+
+
+终端2:
+\begin{verbatim}
+ mipsisa64-octeon-elf-gdb -x gdbfile_pc 
+\end{verbatim}
+上述gdbfile\_pc的内容为:
+
+\begin{verbatim}
+file pushtest
+set spawn-sim off
+target octeon tcp::2021
+b main
+set step-all on
+c
+\end{verbatim}
+
+然后就可以正常调试了。

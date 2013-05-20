@@ -1,0 +1,16 @@
+\section{格式调整技巧}
+\subsection{description换行}
+需要hfill命令，否则编译失败。
+\begin{verbatim}
+\begin{description}
+    \item[First] \hfill \\
+        The first item
+    \item[Second] \hfill \\
+        The second item
+    \item[Third] \hfill \\
+        The third etc \ldots
+\end{description}
+\end{verbatim}
+
+\subsection{下划线的处理}
+章节标题的下划线会出错，应该转义。url，字体名称中的下划线不会出错，即便vim给出警告也是如此。

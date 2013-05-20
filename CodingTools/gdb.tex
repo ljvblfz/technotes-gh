@@ -1,0 +1,143 @@
+\section{GDB调试器使用要略}
+
+
+如果想对elfname程序进行调试，则：
+\verb+gdb elfname+或\verb+gdb --args elfname arg1 arg2+\ldots
+也可以只输入gdb，在交互界面上设置：
+file elfname;
+set args argv1 argv2 \ldots 
+
+该程序在编译时需使用-g选项。
+
+基本的用法，可以在进入gdb后执行help。
+
+每次执行run，会从头开始运行程序。run简称r。
+
+\subsection{查看源码}
+list 显示当前位置10行代码。list简称l。
+
+list funcname：显示某函数附近的10行代码
+
+list lineno: 显示第lineno行及其上下文10行代码
+
+
+\subsection{断点}
+help b可以查看断电的用法。
+
+首先需要明确，如果在第18行设置断点，指的是在第18行执行之前中止，而非之后。
+
+设置断点:breakpoint命令，简称b，参数为[文件名：]行号或函数名，可以用list命令辅助b命令的参数选择。如无参数，为在当前行设置断点。
+
+此外，断点还可以enable, delete, disable。
+
+delete b会删除所有断点。简称del b或del或d。del 2会删除2号断点。
+
+info breakpoints，简称info b,显示当前断点。
+
+遇到断点时执行cont或c时程序继续执行直至结束或受阻。
+
+commands 断点号：
+用于修改断点行为。如 
+\begin{verbatim}
+commands 2
+>display
+>end
+\end{verbatim}
+程序在2号断点不中止，而是执行display;end用于退出对commands的定义。
+
+\subsection{步进}
+next命令简称n，用于执行下一条语句。执行完后显示的代码行为尚未执行的下一条语句。
+
+n 5可以前进5行。
+
+Return键用于重复执行上一条命令。
+
+step命令简称s，与next的区别是会进入函数体。
+
+\subsection{查看上下文信息}
+
+backtrace, 简称bt,查看堆栈层次信息。最内层的frame号为零；
+
+命令 frame frameno会跳到frameno指定的frame层次并打印相关信息。
+
+在函数堆栈中，info args为函数参数；在main函数中则为程序参数。
+
+info line 显示当前行号。
+
+info source 查看当前源文件信息。info sources查看所有源文件信息。
+
+info locals 局部变量信息查看。
+
+info variables 查看全局变量和静态变量。
+
+info registers，info frame顾名思义。
+
+info macro macroname和info macros查看宏定义。
+
+
+\subsection{查看指定变量}
+print varname 查看变量。print简称p。
+
+例如，对于char c[5] = {97,98,99,100,101}，
+执行print c[2]显示 99 'c'；print /x c[2]会显示为16进制0x63。
+print /x c[2]@3会显示c[2]开始的3个连续变量{0x63, 0x64, 0x65}。
+
+display varname 添加自动显示变量。
+display添加的变量会在每次程序中止时再次显示。
+
+\subsection{Patching:就地修补}
+set variable varname = varvalue命令用于就地修改变量的值。
+那么，下面的命令在断点处修改变量的值，下次run时生效。
+\begin{verbatim}
+commands 2
+>set variable n = n+1
+>cont
+>end
+\end{verbatim}
+
+
+\subsection{观察值}
+watch varname命令:当程序执行时发现varname被修改时就中止；
+rwatch varname:当varname被读时中止；而awatch是在varname被读或者写时都中止。
+
+注意watch只能观察当前堆栈frame的变量。所以一般要配合断点来使用。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

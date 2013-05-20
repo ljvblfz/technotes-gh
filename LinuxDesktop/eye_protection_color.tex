@@ -1,0 +1,43 @@
+\section{软件界面的绿豆沙色背景}
+关于绿豆沙色的定义网上找到了多种：
+1.RGB(204,232,207),RGB hex(CCE8CF)。
+
+2.RGB hex(CCE8CF)
+
+3.RGB(199,237,204),HSL(85,123,205)
+
+4.HSL(84,91,205)
+
+5.HSL(85,90,205),RGB(187,247,197)
+
+网上有人推荐第5种.
+
+能设置背景颜色的软件包括gnome-terminal, chromium浏览器，Adobe reader, okular等。
+
+
+Adobe：Edit->Preferences->Accessibility(这里一般译作"辅助功能")->Document Color Options
+
+okular:setting->configure okular->accessibility0->color mode
+
+evince不能设置任意背景色，只能反色为黑背景。其他Linux上的pdf阅读器，如xournal，永中pdf阅读器等，不能设置不背景色。wine过的cajviewer,foxit reader能够设置背景色。
+
+
+
+Chromium:
+修改配置文件：
+~/.config/chromium/Default/User StyleSheets/Custom.css
+添加：
+\begin{shellcmd}
+html, body {background-color: #CCE8CC!important;}
+\end{shellcmd}
+
+
+
+关于HSL，包括：
+H：Hue,色相，色调
+S：Sat，Saturation，饱和度
+L：Lum，Lightness,也有说Intensity，亮度
+
+也有HSB(HSV)色彩空间,
+V(Value)B(Brightness)译作明度
+Adobe的软件使用HSV而非HSL

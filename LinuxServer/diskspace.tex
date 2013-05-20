@@ -1,0 +1,26 @@
+\section{资源消耗查询}
+\begin{shellcmd}
+ df -h:磁盘分区使用率
+ du -h：文件夹大小
+ tree -h:文件夹和文件大小，树形打印
+ free -m：内存使用率
+ vmstat -s M：虚拟内存占用情况
+\end{shellcmd}
+上述free命令中，m选项设置单位为MB。因为buffer和cache是否算作已用空间有争议，故分两种算法列出。
+ 上述vmstat命令，M表示单位为MB，如果是m，则为1000*1000B
+
+如果只想查看当前目录下所有子目录的大小，有
+\begin{shellcmd}
+du -s
+\end{shellcmd}
+或者
+\begin{shellcmd}
+du -h --max-depth=1
+\end{shellcmd}
+
+对于top命令，最重要的两个交互快捷键是h和q，分别打印帮助信息和退出top。利用好h命令就能够进行各种复杂操作。例如，F可以选择一个field列，以其为标准进行行排序，如n表示MEM。可以查出Ubuntu占用内存最剧烈的是chromium-browser等浏览器。
+ 
+
+
+
+

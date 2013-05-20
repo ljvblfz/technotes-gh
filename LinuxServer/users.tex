@@ -1,0 +1,60 @@
+\section{用户与组}
+
+\subsection{用户增加与删除}
+useradd, adduser, userdel, deluser, usermod, delgroup
+
+使用ueradd时，如果后面不添加任何参数选项，例如:\verb+#sudo useradd test+创建出来的用户将是默认“三无”用户:一无Home Directory，二无密码，三无系统Shell。
+使用adduser时，创建用户的过程更像是一种人机对话，系统会提示你输入各种信息，然后会根据这些信息帮你创建新用户。
+\begin{verbatim}
+useradd -m -s /bin/bash user 
+-m表示创建家目录，默认不创建。
+注意-p选项以密文方式设置密码，似乎没什么用。
+userdel -r user
+删除用户及其家目录
+\end{verbatim}
+
+\subsection{设置用户为sudoer}
+执行visudo命令，在打开的文件中添加一行
+\begin{verbatim}
+userA ALL=(ALL)  ALL
+userB ALL=(ALL)  NOPASSWD: ALL
+\end{verbatim}
+visudo相当于修改/etc/sudoers文件。userB执行sudo的时候不需要输入密码。
+
+可以在bashrc或profile中添加如下内容，修改PATH
+\begin{verbatim}
+PATH=/usr/sbin:/usr/local/sbin:/sbin:$PATH
+export PATH
+\end{verbatim}
+
+\subsection{查看用户所在组}
+方法一:id命令
+方法二:/etc/group,格式:
+\begin{verbatim}
+group_name:password('x'):GID:user_list(separated by commas)
+\end{verbatim}
+
+/etc/passwd包含了家目录，shell等用户信息
+
+\subsection{用户的shell}
+查看系统安装的shell
+\begin{verbatim}
+cat /etc/shells
+\end{verbatim}
+
+查看当前shell
+\begin{verbatim}
+echo $SHELL
+\end{verbatim}
+
+更改某用户的shell
+\begin{verbatim}
+usermod -s /bin/zsh someuser
+\end{verbatim}
+
+
+\subsection{修改用户名和主机名}
+用户名在/etc/shadow中修改，主机名需要在/etc目录下hostname和hosts两个文件下修改
+
+\subsection{用户密码}
+只能使用passwd命令。在创建用户后创建密码。

@@ -1,0 +1,30 @@
+\section{Doxygen文档生成工具}
+\begin{verbatim}
+http://www.stack.nl/~dimitri/doxygen/index.html
+
+http://sourceforge.net/projects/doxygen/
+\end{verbatim}
+
+\begin{shellcmd}
+doxygen -g
+doxygen Doxyfile
+\end{shellcmd}
+
+要点：
+\begin{enumerate}
+	\item 修改Doxyfile，可以指定项目名称，概要，语言(Chinese)等。Doxyfile中比较重要的字段还包括
+	\begin{enumerate}
+		\item OUTPUT\_LANGUAGE
+		\item OPTIMIZE\_OUTPUT\_FOR\_C
+		\item EXTRACT\_ALL, EXTRACT\_STATIC
+	\end{enumerate}
+	\item \verb+ \mainpage \author +等命令比较常用
+	\item 无需学习过多内容
+\end{enumerate}
+
+在vim中安装doxygen-toolkit插件，常用命令包括
+\begin{verbatim}
+:Dox
+生成函数注释
+\end{verbatim}
+

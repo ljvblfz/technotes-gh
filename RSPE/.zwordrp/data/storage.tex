@@ -1,0 +1,52 @@
+\section{IPSAN连接}
+加载iscsi相关模块：
+\begin{verbatim}
+modprobe crc32c;
+insmod iomtr_kstat.ko;
+insmod scsi_transport_iscsi_dxf.ko;
+insmod libiscsi_dxf.ko;
+insmod iscsi_tcp_dxf.ko;
+echo "127.0.0.1       localhost.localdomain   localhost" > /etc/host;
+mkdir /var/lock/;
+\end{verbatim}
+
+配置initiator端id，即IQN。主机的IQN必须经过磁盘阵列客户端的“定义”。
+\begin{verbatim}
+mkdir /etc/iscsi;
+echo "InitiatorName=iqn.2002-10.com.infortrend:raid.sn7905538.309" > /etc/iscsi/initiatorname.iscsi;
+\end{verbatim}
+
+启动iscsi守护进程
+\begin{verbatim}
+./iscsid_dxf;
+\end{verbatim}
+
+寻找远程磁盘。在解压出的iscsi目录下，执行
+\begin{verbatim}
+./iscsiadm_dxf -m discovery -t sendtargets -p 192.168.0.17;
+\end{verbatim}
+
+该IP下的磁盘记录信息会被获取到本地。如果需要（如磁盘连接异常需重新连接），可用以下命令清空记录：
+\begin{verbatim}
+./iscsiadm_dxf -m node -o delete
+\end{verbatim}
+
+获取盘阵信息后，进行iscsi登录，连接磁盘：
+\begin{verbatim}
+./iscsiadm\_dxf -m node  -p 192.168.0.17 -l;
+\end{verbatim}
+
+查看磁盘挂载情况：
+\begin{verbatim}
+fdisk -l;
+\end{verbatim}
+
+获取iscsi会话信息
+\begin{verbatim}
+./iscsiadm_dxf -m session -P3
+\end{verbatim}
+
+
+
+
+

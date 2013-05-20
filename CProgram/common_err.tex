@@ -1,0 +1,17 @@
+\section{常见错误}
+
+条件表达式容易发生如下错误，如:
+\begin{verbatim}
+    n_cdn_cache_buf = avRate / BASE_MBPS + (avRate % BASE_MBPS)?(1):(0);
+\end{verbatim}
+注意加法优先级大于？优先级，程序员的本意可能想表达:
+\begin{verbatim}
+    n_cdn_cache_buf = avRate / BASE_MBPS + ((avRate % BASE_MBPS)?(1):(0));
+\end{verbatim}
+但实际表达效果为:
+
+\begin{verbatim}
+    n_cdn_cache_buf = (avRate / BASE_MBPS + avRate % BASE_MBPS)?(1):(0);
+\end{verbatim}
+
+

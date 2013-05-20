@@ -1,0 +1,38 @@
+
+\section{Latex中文环境安装}
+\label{sec:LatexInstall}.
+\subsection{基于CJK宏包的方法}
+Debian下相关软件包：
+texlive texlive-latex-extra latex-cjk-chinese
+参\ref{sec:zhCJK}。
+CJK 作为一个 LaTeX2e 宏包，其对字体的定义遵照 NFSS（新字体选择框架）。Dpkg环境只提供了gbsn,gkai两种简体中文字体。可以使用一些网上流传的工具(如gbkfonts)将ttl字体转换为CJK宏包需要的PK字体，很繁琐，勿尝试。
+
+\subsection{基于xeCJK宏包的方法}
+Debian下相关软件包：
+texlive texlive-latex-extra texlive-xetex
+
+xeCJK的好处就是能够直接使用系统安装的字体。
+
+\subsection{CTEX}
+Ubuntu原生软件包系统不提供对CTEX的安装，只能到网上下载相关文件，复制到目录\verb+/usr/share/texmf-texlive/tex/latex/ctex/fontset+下，然后执行sudo texhash命令。
+
+字体配置路径可能是
+\begin{verbatim}
+/usr/local/texlive/tex/latex/ctex/fontset/
+\end{verbatim}
+相关文件包括: ctex-xecjk-winfonts.def
+
+\subsection{从CTAN安装texlive}
+\url{http://oss.ustc.edu.cn/CTAN/systems/texlive}
+
+\url{http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive}
+
+\subsection{背景知识}
+texhash又叫mktexlsr，用于刷新ls-R文件名数据库。
+
+CTAN全称是Comprehensive Tex Archive Network.The TeX Archive Network is a set of fully-mirrored ftp sites providing the most complete, up-to-date TeX-related software possible.
+
+
+
+
+

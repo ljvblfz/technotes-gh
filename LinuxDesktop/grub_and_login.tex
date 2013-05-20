@@ -1,0 +1,41 @@
+\section{Grub与系统登录}
+\subsection{修改Grub配置}
+配置/etc/default/grub文件，然后运行update-grub，会自动生成/boot/grub/grub.cfg文件
+\subsection{安装Grub}
+如果安装了多个Linux系统，最后一个安装的系统的GRUB会覆盖之前安装的GRUB。如果这不是所希望的，可以进入心目中的默认系统重新安装GRUB。如果最后安装的是Windows，
+则GRUB会被破坏，不会在开机时显示GRUB界面，也需要设法进入Linux后重新安装GRUB。
+进入所希望的Linux系统后，执行grub-install. grub-install copies GRUB images into /boot/grub, and uses grub-setup to install grub into the boot sector.
+\begin{verbatim}
+sudo grub-install /dev/sda
+\end{verbatim}
+可以添加选项，\verb+boot-directory=DIR+
+install GRUB images under the directory DIR/grub instead of the /boot/grub directory。
+如果是从LiveCD进入的系统，执行grub-install前先chroot。
+如果没有LiveCD，在进入系统前停留在了如下界面上：
+\begin{verbatim}
+GRUB loading
+error:unknow filesystem
+grub rescue>
+\end{verbatim}
+可以执行ls命令，找到Linux被安装在了哪个分区。如果确定了分区，比如，(hd0,5),则执行\verb+ls (hd0, 5)+时会看到许多mod文件。
+安装normal.mod:
+\begin{verbatim}
+grub rescue>set root=(hd0,5)
+grub rescue>set prefix=(hd0,5)/boot/grub
+grub rescue>insmod /boot/grub/normal.mod
+\end{verbatim}
+执行normal命令，可以恢复Grub界面。进入Linux后重新安装GRUB即可。
+
+
+\subsection{登陆密码恢复}
+方法如下：
+
+1、重新启动，按ESC键进入Boot Menu，选择recovery mode（一般是第二个选项）。
+
+2、在\#号提示符下用cat /etc/shadow，看看用户名。
+
+3、输入passwd "用户名"（引号要有的哦）。
+
+4、输入新的密码.
+
+5、重新启动，用新密码登录。 

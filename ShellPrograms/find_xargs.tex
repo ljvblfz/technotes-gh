@@ -1,0 +1,49 @@
+\section{find和xargs}
+
+\subsection{xargs命令}
+执行一条命令，其参数从标准输入获取。
+
+其用途之一是用于将参数分成多行输入，类似于行末添加了反斜杠。例如输入xargs file，分多行输入file命令的参数，用CtrlD终止输入。
+
+用途之二是构造管道，第一个命令的输入并不连接到第二个命令的输入，而是其命令行参数。如
+
+\begin{verbatim}
+ls | xargs file
+find /tmp -name core -type f -print0 | xargs -0 /bin/rm -f
+\end{verbatim}
+
+\subsection{find命令}
+\begin{verbatim}
+find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression]
+\end{verbatim}
+H,L,P选项控制是否进入符号链接。D,O选项也不太常用。
+expression包含选项、测试、行动三部分,因此find命令的使用方式通常为如下形式：
+
+\verb+find 起始目录 寻找条件 操作+
+
+寻找条件可以用and,or,not连接起来，分别写作:
+
+\verb+ -a -o 和 !+
+
+如
+
+\verb+ find ! -name 'tmp'+
+
+\verb+-prune选项相当与-maxdetph 0+,表示只对path参数包含的路径进行操作，不进行递归。
+
+需要说明的是：当使用很多的逻辑选项时，可以用括号把这些选项括起来。为了避免Shell本身对括号引起误解，在话号前需要加转义字符来去除括号的意义。例：
+
+\verb+find \(–name ’tmp’ -a type c -user ’inin’ \)+
+
+
+\subsection{只显示文件夹}
+只显示当前目录下的文件夹：
+
+\verb+ls -l | grep ^d+
+\verb+find * -type d -prune+
+\verb+find . -maxdepth 1 -mindepth 1 -type d+
+
+只显示当前目录下的非文件夹：
+
+\verb+ls -l | grep -v ^d+
+

@@ -1,0 +1,24 @@
+
+\section{Ubuntu系统服务}
+
+Ubuntu使用service命令来临时启动和停止服务。service是一个脚本，调用start,stop等可执行文件。
+
+Ubuntu上可以使用工具update-rc.d或sysv-rc-conf来管理服务，但经尝试似乎效果不理想。
+
+
+\section{RHEL系统服务}
+service命令运行\verb+/etc/init.d+目录下的System V脚本或\verb+/etc/init+目录下的upstart jobs。这些脚本应至少支持start, stop参数，有些支持status, restart参数。
+
+service runs a System V init script or upstart job in as predictable environment as possible, removing most environment variables and with current working directory set to \verb+/+.  
+
+重启网络：
+\begin{verbatim}
+service network restart
+\end{verbatim}
+
+查看所有服务的状态
+\begin{verbatim}
+service --status-all
+将所有支持status命令的服务运行一遍
+\end{verbatim}
+

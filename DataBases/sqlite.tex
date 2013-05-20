@@ -1,0 +1,37 @@
+\section{sqlite3用法}
+用法：
+\begin{verbatim}
+sqlite3 [options] [databasefile] [SQL]
+\end{verbatim}
+
+举例：
+\begin{verbatim}
+sqlite3 -line mydata.db 'select * from memos where priority > 20;'
+sqlite3 bankinfo.db 'select * from BAcounts'
+\end{verbatim}
+
+\subsection{backup和restore}
+\begin{verbatim}
+.backup ?DB? FILE
+.restore ?DB? FILE 
+\end{verbatim}
+DB默认为main。
+
+\subsection{SQL脚本}
+执行SQL脚本
+\begin{verbatim}
+.read filename
+\end{verbatim}
+
+输出SQL脚本
+\begin{verbatim}
+.output filename 
+.dump
+\end{verbatim}
+
+\subsection{时间与日期}
+
+\begin{verbatim}
+select date('now')
+\end{verbatim}
+

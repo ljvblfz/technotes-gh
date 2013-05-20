@@ -1,0 +1,31 @@
+\section{Windows系统下添加字体}
+将需要的TTF文件放到操作系统所在的windows目录下的FONTS目录里面就可以了。如：复制到\verb+C:\windows\font 或 C:\winnt\font+目录下.，或者在开始菜单> 控制面板> 字体。
+\section{Windows XP的安装配置}
+
+\subsection{安装版XP}
+使用安装版CD安装Windows XP，大致需要四五十分钟。其中，二十分钟后会提示输入地域、账户、序列号等信息。余下不需要刻意关注。
+
+在实验室电脑安装KVM版虚拟XP时，没有额外安装任何驱动程序。显示外观在全屏时比较模糊。设置以1280*800分辨率使得全屏时恰好覆盖整个屏幕。
+
+如果是在PC上安装真实XP，第一件是安装网卡驱动和其他驱动,推荐使用自带网卡驱动的驱动精灵。此外，我至少需安装的软件包括360浏览器和安全卫士，输入法, Chrome浏览器。然后运行激活工具。
+
+\subsection{克隆版XP}
+要点有二:MBR和设置活动分区。
+
+克隆版在复制C盘数据的过程中不更新MBR。因此，对于MBR不需要改动的情形，克隆版可以顺利安装。否则，就需要改动MBR。可以使用WinPE安装XP，PE下带有分区管理工具，在分区后可以先设置C盘为活动分区。然后使用本工具或另一款分区修复工具，更新MBR。
+
+\subsection{VirtualBox安装XP虚拟机}
+使用虚拟机安装克隆版XP经常发生蓝屏错误，提示processor.sys出现了问题。可以通过PE系统修改\verb+C:/windows/system32/drivers/processor.sys+的名称，使系统找不到这个文件。
+
+对于某些机构IP和MAC绑定上网的情形，VirtualBox联网方式设置成NAT方式。在虚拟机里无需更改MAC地址，只需要设置正确的DNS服务器地址就好。
+
+\subsection{IP与MAC地址查看}
+在命令提示符下输入
+\begin{verbatim}
+ipconfig /all
+\end{verbatim}
+
+\subsection{MAC地址设置}
+如果需要更改MAC地址，而且不借助于第三方工具，方法如下:
+通过设备管理器找到相关的网卡，从``属性''对话框‘Network Adress’标签找到一个叫’值‘的编辑框，在此处设置MAC地址。
+

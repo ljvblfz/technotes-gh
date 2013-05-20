@@ -1,0 +1,22 @@
+\section{Python IDE选用}
+
+\subsection{Vim搭建Python IDE}
+Vim插件pythonComplete可用于Python代码自动补全。对于VIM 7.3以上版本，这个插件是自带的。需要在.vimrc上添加如下配置:
+\begin{verbatim}
+filetype plugin on  
+autocmd FileType python set omnifunc=pythoncomplete#Complete  
+\end{verbatim}
+
+\subsection{ctags配置}
+ctags也支持Python语言:
+\begin{verbatim}
+ctags -R
+ctags -R --language-force=Python --Python-kinds=cfmvi --extra=+q
+\end{verbatim}
+
+\subsection{Eric}
+Eric是基于Qt的IDE，依赖于包python-qscintilla2。
+
+\subsection{IDLE}
+IDLE常常是python安装是自带的开发工具。
+

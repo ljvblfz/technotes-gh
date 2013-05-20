@@ -1,0 +1,198 @@
+\section{awk语言}
+Awk是功能完整的文本处理语言, 使用类似于C的语法. 它具有一整套操作符和能力集, 我们只在这里讲解一小部分 - 也就是在shell脚本中最有用的部分.
+
+Awk将传递进来的每行输入都分割成域. 默认情况下, 一个域指的就是使用空白分隔的一个连续字符串, 不过我们可以修改属性来改变分隔符. Awk将会分析并操作每个分割域. 因为这种特性, 所以awk非常善于处理结构化的文本文件 -- 尤其是表 -- 将数据组织成统一的块, 比如说分成行和列.
+
+强引用(单引号)和大括号用来包含shell脚本中的awk代码段.
+
+\begin{verbatim}
+echo one two | awk '{print $1}'
+# one
+
+echo one two | awk '{print $2}'
+# two
+
+awk '{print $3}' $filename
+# 打印文件$filename的域#3, 到stdout. 
+ 
+awk '{print $1 $5 $6}' $filename
+# 打印文件$filename的域#1, #5, 和#6. 
+\end{verbatim}
+
+
+\section{cut命令用法笔记}
+
+cut是一个选取命令，就是将一段数据经过分析，取出我们想要的。一般来说，选取信息通常是针对“行”来进行分析的，并不是整篇信息分析的。
+
+其语法格式为：
+\begin{verbatim}
+cut  [-bn] [file] 
+cut [-c] [file]  
+cut [-df] [file]
+\end{verbatim}
+
+使用说明
+cut 命令从文件的每一行剪切字节、字符和字段并将这些字节、字符和字段写至标准输出。
+如果不指定 File 参数，cut 命令将读取标准输入。必须指定 -b、-c 或 -f 标志之一。
+主要参数
+
+\begin{itemize}
+    \item -b ：以字节为单位进行分割。这些字节位置将忽略多字节字符边界，除非也指定了 -n 标志。
+    \item -c ：以字符为单位进行分割。
+    \item -d ：自定义分隔符，默认为制表符tab。
+    \item -f  ：与-d一起使用，指定显示哪个区域。
+\end{itemize}
+
+举例:
+\begin{verbatim}
+提取who命令输出每一行的第3个字节
+who | cut -b 3
+
+提取who命令输出每一行的第3,4,5,8字节
+who|cut -b 3-5,8
+
+paswd文件的内容是由冒号分割的域，可以用cut提取某些域。下面的命令提取前5行的某些域。
+cat /etc/passwd|head -n 5|cut -d : -f 1,3-5,7
+
+获取当前年份
+date | cut -d ' ' -f 1
+
+\end{verbatim}
+\section{find和xargs}
+
+\subsection{xargs命令}
+执行一条命令，其参数从标准输入获取。
+
+其用途之一是用于将参数分成多行输入，类似于行末添加了反斜杠。例如输入xargs file，分多行输入file命令的参数，用CtrlD终止输入。
+
+用途之二是构造管道，第一个命令的输入并不连接到第二个命令的输入，而是其命令行参数。如
+
+\begin{verbatim}
+ls | xargs file
+find /tmp -name core -type f -print0 | xargs -0 /bin/rm -f
+\end{verbatim}
+
+\subsection{find命令}
+\begin{verbatim}
+find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression]
+\end{verbatim}
+H,L,P选项控制是否进入符号链接。D,O选项也不太常用。
+expression包含选项、测试、行动三部分,因此find命令的使用方式通常为如下形式：
+
+\verb+find 起始目录 寻找条件 操作+
+
+寻找条件可以用and,or,not连接起来，分别写作:
+
+\verb+ -a -o 和 !+
+
+如
+
+\verb+ find ! -name 'tmp'+
+
+\verb+-prune选项相当与-maxdetph 0+,表示只对path参数包含的路径进行操作，不进行递归。
+
+需要说明的是：当使用很多的逻辑选项时，可以用括号把这些选项括起来。为了避免Shell本身对括号引起误解，在话号前需要加转义字符来去除括号的意义。例：
+
+\verb+find \(–name ’tmp’ -a type c -user ’inin’ \)+
+
+
+\subsection{只显示文件夹}
+只显示当前目录下的文件夹：
+
+\verb+ls -l | grep ^d+
+\verb+find * -type d -prune+
+\verb+find . -maxdepth 1 -mindepth 1 -type d+
+
+只显示当前目录下的非文件夹：
+
+\verb+ls -l | grep -v ^d+
+
+\section{sed的使用}
+
+用法: sed [选项]\ldots {脚本(如果没有其他脚本)} [输入文件]\ldots
+
+\begin{verbatim}
+-n, --quiet, --silent
+    取消自动打印模式空间
+-e 脚本, --expression=脚本
+    添加“脚本”到程序的运行列表
+-f 脚本文件, --file=脚本文件
+    添加“脚本文件”到程序的运行列表
+-i[扩展名], --in-place[=扩展名]
+   直接修改文件(如果指定扩展名就备份文件)
+\end{verbatim}
+
+下面主要谈论sed脚本语言。
+
+
+sed命令主要有：
+\begin{description}
+    \item[s/match/replace]替换
+    \item[i\textbackslash\ TEXT]前插(insert)文本
+    \item[a\textbackslash\ TEXT]后插(append)文本
+    \item[r filename]后插文件
+    \item[d]删除行
+    \item[p]打印行
+\end{description}
+
+sed命令之前需要有0～2个量，被称作''地址''。addr1,addr2形式为地址范围，闭区间。addr1,addr2!后面的叹号表示取反。addr1,+N形式为addr及其后N行。addr1~N为自addr1起以N为步长的所有行。由 /regexp/表示regexp匹配到的行。
+
+替换命令 举例：
+\begin{verbatim}
+echo 123456|sed -e s/123/wolf/g > haha4
+more haha3|sed -e s/123/wolf/g > haha4
+sed -e 's/<[^>]*>//g' haha.xml     (删除haha.xml中所有的xml标记)
+\end{verbatim}
+
+删除行命令举例:
+\begin{verbatim}
+sed -e /^$/d haha >> haha2  //删除文件haha中的空行
+sed -e /33/d haha > haha2  //删除haha中包含33的行
+sed -e 2d haha > haha2  //删除第2行
+sed -e 2,4d haha > haha2  //删除第2~4行
+\end{verbatim}
+
+提取行命令:
+\begin{verbatim}
+sed -n '3,10p' myfile > newfile //提取从第3行到第10行
+\end{verbatim}
+
+提取不定行：
+\begin{verbatim}
+i=2
+sed -n ${i}p myfile
+\end{verbatim}
+
+
+\section{sort用法笔记}
+比较重要的选项包括:
+
+\begin{itemize}
+    \item o 指定输出文件
+    \item r 逆序
+    \item k=pos 指定关键词在第几列，默认为第一列
+    \item n 按照数值大小排序；默认为按字典序
+    \item u 删除重复行
+    \item t 指定field分隔符；默认为空格
+    \item f 忽略大小写 
+\end{itemize}
+
+
+举例：
+\begin{verbatim}
+sort -n -t ‘ ‘ -k 3r -k 2 facebook.txt
+sort -t ‘ ‘ -k 1 facebook.txt
+\end{verbatim}
+
+sort命令选项众多，十分强大，但我此时意识到不常用的命令和选项对我来说是毫无意义的。
+\section{uniq命令用法笔记}
+
+uniq命令用来检查或忽略文件中重复的行。重要选项有：
+
+\begin{itemize}
+    \item -u 只显示不重复的行
+    \item -d 只显示重复的行
+    \item -c 显示重复次数
+\end{itemize}
+
+

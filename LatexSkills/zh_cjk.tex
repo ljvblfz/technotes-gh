@@ -1,0 +1,32 @@
+\section{中文处理的CJK方法}
+\label{sec:zhCJK}
+
+\begin{verbatim}
+\documentclass{article}
+\usepackage{CJKutf8}
+\begin{document}
+\begin{CJK}{UTF8}{gkai}
+这是一个楷体中文测试，处理简体字。
+\end{CJK}
+\begin{CJK}{UTF8}{gbsn}
+这是一个宋体中文测试，处理简体字。
+\end{CJK}
+\end{document}
+\end{verbatim}
+
+另一个例子：
+\begin{verbatim}
+\documentclass{article}
+\usepackage{CJK}
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+\CJKfamily{gbsn}
+{\Huge          万岁}
+{\footnotesize  万岁}
+{\scriptsize    万岁}
+{\tiny          万岁}
+\end{CJK}
+\end{document}
+\end{verbatim}
+
+

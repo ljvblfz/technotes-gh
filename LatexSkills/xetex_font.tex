@@ -1,0 +1,55 @@
+\section{xelatex下的字体调节}
+
+\subsection{字形调节}
+一般有：
+\begin{verbatim}
+\textrm{...} \textbf{...}
+\textsf{...} \textit{...} 
+\texttt{...} \textsl{...}
+\emph{...} \underline{...}
+\textsc{...} 
+\end{verbatim}
+或者\verb+\itshape \sffamily+等。
+
+
+\subsection{全局字体设置}
+示例:
+\begin{verbatim}
+\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
+\setCJKmainfont[ItalicFont={KaiTi_GB2312}]{SimSun}
+\setCJKsansfont{SimHei}
+\end{verbatim}
+注意，\verb+KaiTi_GB2312+中的下划线不需要转义。需要事先查看系统已经安装了的字体：
+\begin{verbatim}
+fc-list :lang=zh
+\end{verbatim}
+以下模板从网上抄得：
+\begin{verbatim}
+\usepackage{xeCJK}
+\CJKlanguage{zh-cn}
+\setmainfont{DejaVu Sans}
+\setCJKmainfont{AR PL UMing CN}
+\setCJKsansfont[BoldFont=AR PL New Kai]{AR PL New Kai}
+\setCJKmonofont{DejaVu Sans Mono}
+\setCJKfamilyfont{song}{AR PL New Sung}
+\setCJKfamilyfont{kai}{AR PL New Kai}
+\setCJKfamilyfont{hei}{文泉驿正黑}
+\end{verbatim}
+
+\subsection{xeCJK字体调用}
+在导言中设置hei字体为系统黑体：
+\begin{verbatim}
+\setCJKfamilyfont{hei}{SimHei}
+\end{verbatim}
+在正文中使用字体调用：
+\begin{verbatim}
+{\CJKfamily{hei}
+这里对CDN有个要求，就是对同一个媒体资源子文件，相应的transferID必须保持一致
+}
+\end{verbatim}
+
+
+
+
+
+

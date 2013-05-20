@@ -1,0 +1,11 @@
+\section{lightdm登录配置}
+配置文件在\verb+/etc/lightdm/+目录下，修改lightdm.conf文件
+\begin{verbatim}
+[SeatDefaults]
+greeter-session=unity-greeter
+user-session=ubuntu
+greeter-show-manual-login=true #手工输入登陆系统的用户名和密码
+allow-guest=false   #不允许guest登录
+\end{verbatim}
+
+

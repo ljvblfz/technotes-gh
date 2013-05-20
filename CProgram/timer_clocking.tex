@@ -1,0 +1,3 @@
+\section{程序计时}
+在Linux上使用gettimeofday函数获取timeval结构体，内含微秒级字段。clock函数也提供了一种定时机制，但定时单元取决于系统。我遇到的都是1微秒。
+在OCTEON上有cvmx\_get\_cycle函数获取时钟周期数，处以主频可以精确计时。

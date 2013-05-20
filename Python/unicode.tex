@@ -1,0 +1,32 @@
+
+\section{Python字符编码问题}
+\subsection{Python中文字符输出}
+\begin{verbatim}
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+u"中文￥ chinese"
+\end{verbatim}
+
+\subsection{Python Unicode序列与字符串}
+unicode(str,encoding)函数将字符串str转换为unicode序列。
+
+str.encode(encoding)将某种编码的字符串转为另一种编码的字符串。如：
+\begin{verbatim}
+str = u'你'
+str2 = str.encode('gbk')
+str3 = str.encode('utf8')#此处也作'utf-8'
+\end{verbatim}
+
+
+一个unicode数值可表示为字符串\verb|u'%c'%i|.中文“你”的unicode序列为0x4f60,unicode字符串为\verb|u'\u4f60'|。假设unicode数字序列用链表uarray表示，则其转换为unicode编码的字符串的过程为:
+\begin{verbatim}
+str = ''
+for ucode in uarray: str += '%c'%ucode
+\end{verbatim}
+
+\label{subsec:PythonUnicode}
+
+
+
+

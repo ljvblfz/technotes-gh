@@ -1,0 +1,20 @@
+\section{编程语言基础知识}
+
+Programming language generations
+ 1GL为机器语言，2GL为汇编，3GL包括C, C++, C\#, Java, BASIC and Pascal。（4GL），基本上是传统软件工程界为了“范式开发” (prototyping) 而设计出来的语言，同时具有程序性与非程序性（就是宣告性）的特性，用来快速开发连接数据库的编程语言。如今天的 PowerBuilder 、 SQLWindows 等等。A fifth-generation programming language (abbreviated 5GL) is a programming language based on solving problems using constraints given to the program, rather than using an algorithm written by a programmer. "Generational" classification of high level languages (3rd generation and later) was never fully precise and was later perhaps abandoned, with more precise classifications gaining common usage, such as object-oriented, declarative and functional.
+
+A domain-specific language (DSL) is a type of programming language or specification language in software development and domain engineering dedicated to a particular problem domain, a particular problem representation technique, and/or a particular solution technique.The opposite is:a general-purpose programming language, such as C, Java or Python,or a general-purpose modeling language such as the Unified Modeling Language (UML).
+
+
+Query languages are computer languages used to make queries into databases and information systems.Broadly, query languages can be classified according to whether they are database query languages or information retrieval query languages. The difference is that a database query language attempts to give factual answers to factual questions, while an information retrieval query language attempts to find documents containing information that is relevant to an area of inquiry.
+
+In computer programming, create, read, update and delete (CRUD) are the four basic functions of persistent storage.
+
+A data manipulation language (DML) is a family of syntax elements similar to a computer programming language used for inserting, deleting and updating data in a database. Performing read-only queries of data is sometimes also considered a component of DML.Data manipulation languages are divided into two types, procedural programming and declarative programming.Procedural programming can sometimes be used as a synonym for imperative programming (命令式，specifying the steps the program must take to reach the desired state).Procedural programming languages include C, C++, Fortran, Pascal, and BASIC.
+
+
+Each SQL DML statement is a declarative command. The individual SQL statements are declarative, as opposed to imperative, in that they describe the program's purpose, rather than describing the procedure for accomplishing it.
+
+参数化查询（Parameterized Query 或 Parameterized Statement）是指在设计与数据库链接并访问数据时，在需要填入数值或数据的地方，使用参数 (Parameter) 来给值，这个方法目前已被视为最有效可预防SQL注入攻击 (SQL Injection) 的攻击手法的防御方式。
+有部份的开发人员可能会认为使用参数化查询，会让程序更不好维护，或者在实现部份功能上会非常不便[来源请求]，然而，使用参数化查询造成的额外开发成本，通常都远低于因为SQL注入攻击漏洞被发现而遭受攻击，所造成的重大损失。
+除了安全因素，相比起拼接字符串的 SQL 语句，参数化的查询往往有性能优势。因为参数化的查询能让不同的数据通过参数到达数据库，从而公用同一条 SQL 语句。大多数数据库会缓存解释 SQL 语句产生的字节码而省下重复解析的开销。如果采取拼接字符串的 SQL 语句，则会由于操作数据是 SQL 语句的一部分而非参数的一部分，而反复大量解释 SQL 语句产生不必要的开销。

@@ -1,0 +1,23 @@
+
+\subsection{Latex转rtf格式}
+\begin{verbatim}
+latex2rtf -C utf8 filename
+\end{verbatim}
+其中，filename不包含tex后缀。
+
+公式错乱的话，可以用-M4选项将单行公式变成图片，或-M12将单行和文内公式全部变bitmap图片.转换成bitmap的过程非常耗时。
+
+\subsection{Latex转html}
+\begin{verbatim}
+latex2html -html_version 4.0,latin1,unicode -split +0 haha
+\end{verbatim}
+其中，3.0以上的版本才能正确转换utf8编码的中文，split +0表示生成一个单一的html文件，否则会生成一堆文件。
+
+\subsection{Latex公式转LibreOffice公式}
+LibreOffice可安装Texmaths插件，即可以Latex的方式输入公式。
+
+
+\subsection{LibreOffice转Latex}
+安装Debian包libreoffice-writer2后，latexLibreOffice自动获得writer2latex扩展。可以以tex格式导出文件。但LibreOffice中的中文不能正确处理，会以[16进制数字串?]的方式写入tex文件。可以用perl或python等将这种串转为utf8编码，参\ref{subsec:PythonUnicode}。
+
+

@@ -1,0 +1,9 @@
+\section{访问铁道部网站}
+网购火车票的网址是http://www.12306.cn.sixxs.org/mormhweb/kyfw/，这个是http的普通网页，里面有个iframe，也就是嵌套了另一个网页，地址是https://dynamic.12306.cn/otsweb/，这里就是https的了。因为dynamic.12306.cn使用的是SRCA颁发的证书，这个证书在我们的计算机中是默认不被信任的，也就是不安全的。
+
+
+火狐下解决办法：
+\begin{verbatim}
+1.在authorities导入铁道部根证书,编辑->首选项->高级->加密->查看证书->导入
+2.打开https://dynamic.12306.cn/otsweb/，然后有提示将该网站添加例外即可
+\end{verbatim}

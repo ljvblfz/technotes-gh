@@ -1,0 +1,36 @@
+\section{进程查看与控制}
+
+按照NOHUP方式执行进程:
+\begin{verbatim}
+nohup ./cdn > /dev/null 2>&1 &
+\end{verbatim}
+noup:run a command immune to hangups, with output to a non-tty
+
+\subsection{进程查找}
+\begin{verbatim}
+pgrep [-u user] pattern
+如 pgrep -u root evince
+pstree -p
+-p选项会打印出PID的值，否则只打印名字
+ps -ef
+\end{verbatim}
+
+\subsection{单一进程查看}
+ps, top
+\begin{verbatim}
+ps pid
+top [-p pid]
+\end{verbatim}
+
+
+\subsection{信号发送}
+\begin{verbatim}
+kill [信号] pid
+pkill [信号] pattern
+\end{verbatim}
+
+\subsection{X下杀死进程}
+xkill杀死单一窗口
+如需重启，可按住Alt SysRq,再依次按REISUB
+
+

@@ -1,0 +1,61 @@
+\section{printf的覆盖定义}
+
+用自定义的myprintf定义库函数printf.
+
+先定义myprintf:
+\begin{verbatim}
+
+#include <stdio.h>
+#include <stdarg.h>
+
+int myprintf (const char *format, ...)
+{
+  va_list arg;
+  int done;
+        
+  va_start (arg, format);
+
+  char* fmt = (char *)malloc(strlen(format) + 32);
+  strcpy(fmt, "myprt begin:\n");
+  strcat(fmt, format);
+  done = vfprintf(stdout, fmt, arg);
+  va_end (arg);
+  free(fmt);
+  return done;
+}
+
+\end{verbatim}
+
+有多方法实现替换。
+\subsection{宏替换法}
+\begin{verbatim}
+int myprintf (const char *format, ...);
+
+#define printf(a, b...) myprintf(a, ##b)
+   ...........
+    printf(``hello world\n'');
+   ...........
+#undef printf
+
+   ...........
+    printf(``hello world\n'');
+   ...........
+\end{verbatim}
+
+\subsection{函数指针法}
+\begin{verbatim}
+int myprintf (const char *format, ...);
+
+{
+    int (* printf) (const char *format, ...) = myprintf;
+    printf(``hello world\n'');
+}
+
+printf(``hello world\n'');
+\end{verbatim}
+
+
+\subsection{interposition}
+直接将上文myprintf的名字改为printf即可.
+
+

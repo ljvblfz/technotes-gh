@@ -1,0 +1,327 @@
+\section{SQL}
+
+SQL is a set-based, declarative query language, not an imperative language like C or BASIC. However, there are extensions to Standard SQL which add procedural programming language functionality, such as control-of-flow constructs. SQL/PSM (SQL/Persistent Stored Modules) is an ISO standard mainly defining an extension of SQL with a procedural language for use in stored procedures. However, the major SQL vendors have historically included their own proprietary procedural extensions. 
+
+\subsection{语法分析}
+\begin{itemize}
+    \item 
+“数据定义语言”（DDL : Data Definition Language）是SQL语言集中，负责数据结构定义与数据库对象定义的语言，由CREATE、ALTER与DROP三个语法所组成，最早是由 Codasyl (Conference on Data Systems Languages) 数据模型开始，现在被纳入 SQL 指令中作为其中一个子集。
+    \item 
+“数据操纵语言”（DML : Data Manipulation Language）负责对数据库对象运行数据访问工作的指令集，以INSERT、UPDATE、DELETE三种指令为核心，分别代表插入、更新与删除。Performing read-only queries of data is sometimes also considered a component of DML.有很多开发人员都把加上SQL的SELECT语句的四大指令以“CRUD”来称呼。SELECT \ldots INTO是非标准的持久化操作。
+    \item 
+“数据控制语言”（DCL : Data Control Language）是一种可对数据访问权进行控制的指令，它可以控制特定用户帐户对数据表、查看表、预存程序、用户自定义函数等数据库对象的控制权。由 GRANT 和 REVOKE 两个指令组成。
+\end{itemize}
+
+\begin{figure}[htpb]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=0.5\paperwidth]{Pictures/SQL_ANATOMY_wiki.svg.png}
+    \end{center}
+    \caption{SQL language elements}
+    \label{fig:SQL lan elem}
+\end{figure}
+
+某些数据库强制要求语句后有分号。
+
+\subsection{真值逻辑}
+
+空值(关键字NULL),关系数据库中对数据属性未知或缺失的一种标识。数据库表主键的取值不能为空值。在SQL的Where条件式去判断字段是否为Null时，where id = null 是无法正确执行的，必须写成 where id is null。
+
+三值逻辑:true, false, unknown。false AND unknown为false，true OR unknown为true。与null比较运算的结果是unknown.
+
+SQL provides two Null-specific comparison predicates: IS NULL and IS NOT NULL test whether data is or is not Null.There is also the "<row value expression> IS DISTINCT FROM <row value expression>" infixed comparison operator which returns TRUE unless both operands are equal or both are NULL. Likewise, IS NOT DISTINCT FROM is defined as "NOT (<row value expression> IS DISTINCT FROM <row value expression>)".
+
+
+\subsection{ANSI SQL数据类型}
+\begin{itemize}
+   \item 
+ CHARACTER(n) or CHAR(n): fixed-width n-character string, padded with spaces as needed
+   \item 
+CHARACTER VARYING(n) or VARCHAR(n): variable-width string with a maximum size of n characters
+   \item 
+NATIONAL CHARACTER(n) or NCHAR(n): fixed width string supporting an international character set
+   \item 
+NATIONAL CHARACTER VARYING(n) or NVARCHAR(n): variable-width NCHAR string
+   \item 
+BIT(n): an array of n bits
+   \item 
+BIT VARYING(n): an array of up to n bits
+   \item 
+INTEGER and SMALLINT
+   \item 
+FLOAT, REAL and DOUBLE PRECISION
+   \item 
+NUMERIC(precision, scale) or DECIMAL(precision, scale)，precision为有效数字位数，scale为小数位数
+   \item 
+DATE: for date values (e.g. 2011-05-03)
+   \item 
+TIME: for time values (e.g. 15:51:36). The granularity of the time value is usually a tick (100 nanoseconds).
+   \item 
+TIME WITH TIME ZONE or TIMETZ: the same as TIME, but including details about the time zone in question.
+   \item 
+TIMESTAMP: This is a DATE and a TIME put together in one variable (e.g. 2011-05-03 15:51:36).
+   \item 
+TIMESTAMP WITH TIME ZONE or TIMESTAMPTZ: the same as TIMESTAMP, but including details about the time zone in question.
+\end{itemize}
+
+
+
+
+
+\subsection{关键词}
+关键词 DISTINCT 用于返回唯一不同的值。
+\begin{verbatim}
+SELECT DISTINCT 列名称 FROM 表名称
+\end{verbatim}
+
+
+IN 操作符允许我们在 WHERE 子句中规定多个值。
+
+\begin{verbatim}
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1,value2,...)
+\end{verbatim}
+
+操作符 BETWEEN ... AND 会选取介于两个值之间的数据范围。这些值可以是数值、文本或者日期。然而区间的开闭性因厂商而异。
+
+\begin{verbatim}
+SELECT column_name(s)
+FROM table_name
+WHERE column_name
+BETWEEN value1 AND value2
+\end{verbatim}
+
+通过使用AS，可以为列名称和表名称指定别名（Alias）。
+
+\begin{verbatim}
+SELECT column_name(s)
+FROM table_name
+AS alias_name
+\end{verbatim}
+
+TOP 子句用于规定要返回的记录的数目。并非所有的数据库系统都支持 TOP 子句。
+SQL Server 的语法： 
+\begin{verbatim}
+SELECT TOP number|percent column_name(s)
+FROM table_name
+\end{verbatim}
+
+MySQL 语法：
+\begin{verbatim}
+SELECT column_name(s)
+FROM table_name
+LIMIT number
+\end{verbatim}
+
+Oracle 语法：
+\begin{verbatim}
+SELECT column_name(s)
+FROM table_name
+WHERE ROWNUM <= number
+\end{verbatim}
+
+合计函数 (比如 SUM) 常常需要添加 GROUP BY 语句.
+\begin{verbatim}
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+\end{verbatim}
+
+在 SQL 中增加 HAVING 子句原因是，WHERE 关键字无法与合计函数一起使用。
+
+我们希望查找订单总金额少于 2000 的客户。
+我们使用如下 SQL 语句：
+\begin{verbatim}
+SELECT Customer,SUM(OrderPrice) FROM Orders
+GROUP BY Customer
+HAVING SUM(OrderPrice)<2000
+\end{verbatim}
+
+
+\subsection{连接join}
+
+内连接包含分: 相等连接，自然连接，和交叉连接.
+
+\begin{verbatim}
+SELECT *
+FROM   employee 
+INNER JOIN department 
+ON employee.DepartmentID = department.DepartmentID
+\end{verbatim}
+
+\begin{verbatim}
+SELECT *  
+FROM   employee，department 
+WHERE  employee.DepartmentID = department.DepartmentID
+\end{verbatim}
+
+相等连接 (equi-join，或 equijoin)，是比较连接(θ连接)的一种特例，它的连接谓词只用了相等比较。使用其他比较操作符(如 <)的不是相等连接。
+
+自然连接比相等连接的进一步特例化。两表做自然连接时，两表中的所有名称相同的列都将被比较，这是隐式的。自然连接得到的结果表中，两表中名称相同的列只出现一次.
+
+\begin{verbatim}
+SELECT *
+FROM   employee NATURAL JOIN department
+\end{verbatim}
+
+
+交叉连接(cross join)，又称笛卡尔连接(cartesian join)或叉乘(Product)，它是所有类型的内连接的基础。把表视为行记录的集合，交叉连接即返回这两个集合的笛卡尔积。这其实等价于内连接的链接条件为"永真"，或连接条件不存在.如果 A 和 B 是两个集合，它们的交叉连接就记为: A × B.用于交叉连接的 SQL 代码在 FROM 列出表名，但并不包含任何过滤的连接谓词.
+显式的交叉连接实例:
+
+\begin{verbatim}
+SELECT *
+FROM   employee CROSS JOIN department
+\end{verbatim}
+
+隐式的交叉连接实例:
+
+\begin{verbatim}
+SELECT *
+FROM   employee，department;
+\end{verbatim}
+
+外连接并不要求连接的两表的每一条记录在对方表中都一条匹配的记录. 连接表保留所有记录 -- 甚至这条记录没有匹配的记录也要保留. 外连接可依据连接表保留左表, 右表或全部表的行而进一步分为左外连接, 右外连接和全连接.在标准的 SQL 语言中, 外连接没有隐式的连接符号.
+
+左外连接(left outer join), 亦简称为左连接(left join), 若 A 和 B 两表进行左外连接, 那么结果表中将包含"左表"(即表 A)的所有记录, 即使那些记录在"右表" B 没有符合连接条件的匹配. 这意味着即使 ON 语句在 B 中的匹配项是0条, 连接操作还是会返回一条记录, 只不过这条记录的中来自于 B 的每一列的值都为 NULL. 这意味着左外连接会返回左表的所有记录和右表中匹配记录的组合(如果右表中无匹配记录, 来自于右表的所有列的值设为 NULL). 如果左表的一行在右表中存在多个匹配行, 那么左表的行会复制和右表匹配行一样的数量, 并进行组合生成连接结果.
+
+全连接是左右外连接的并集. 连接表包含被连接的表的所有记录, 如果缺少匹配的记录, 即以 NULL 填充.一些数据库系统(如 MySQL)并不直接支持全连接, 但它们可以通过左右外连接的并集(union)来模拟实现.
+
+自连接就是和自身连接.
+
+\begin{verbatim}
+SELECT F.EmployeeID, F.LastName, S.EmployeeID, S.LastName, F.Country
+FROM Employee F, Employee S
+WHERE F.Country = S.Country
+AND F.EmployeeID < S.EmployeeID
+ORDER BY F.EmployeeID, S.EmployeeID
+-- 雇员表 Employee
+\end{verbatim}
+
+\subsection{举例}
+
+\begin{lstlisting}[language=SQL]
+SELECT *
+ FROM Book
+ WHERE price > 100.00
+ ORDER BY title;
+\end{verbatim}
+
+
+ SELECT * FROM Persons
+WHERE City LIKE 'N%'
+--从"Persons" 表中选取居住在以 "N" 开始的城市里的人
+--提示："%" 可用于定义通配符（模式中缺少的字母）。
+
+
+SELECT Book.title AS Title,
+ COUNT(*) AS Authors
+ FROM Book JOIN Book_author
+ ON Book.isbn = Book_author.isbn
+ GROUP BY Book.title;
+
+SELECT * FROM Persons
+WHERE LastName IN ('Adams','Carter')
+
+SELECT * FROM Persons
+WHERE LastName
+BETWEEN 'Adams' AND 'Carter'
+
+SELECT title,
+ COUNT(*) AS Authors
+ FROM Book NATURAL JOIN Book_author
+ GROUP BY title;
+
+SELECT isbn,
+ title,
+ price,
+ price * 0.06 AS sales_tax
+ FROM Book
+ WHERE price > 100.00
+ ORDER BY title;
+
+SELECT isbn, title, price
+ FROM Book
+ WHERE price < (SELECT AVG(price) FROM Book)
+ ORDER BY title;
+
+INSERT INTO My_table
+ (field1, field2, field3)
+ VALUES
+ ('test', 'N', NULL);
+
+UPDATE My_table
+ SET field1 = 'updated value'
+ WHERE field2 = 'N';
+
+DELETE FROM My_table
+ WHERE field2 = 'N';
+
+START TRANSACTION;
+ UPDATE Account SET amount=amount-200 WHERE account_number=1234;
+ UPDATE Account SET amount=amount+200 WHERE account_number=2345;
+ 
+IF ERRORS=0 COMMIT;
+IF ERRORS<>0 ROLLBACK;
+
+CREATE TABLE tbl_1(id INT);
+ INSERT INTO tbl_1(id) VALUES(1);
+ INSERT INTO tbl_1(id) VALUES(2);
+COMMIT;
+ UPDATE tbl_1 SET id=200 WHERE id=1;
+SAVEPOINT id_1upd;
+ UPDATE tbl_1 SET id=1000 WHERE id=2;
+ROLLBACK TO id_1upd;
+ SELECT id FROM tbl_1;
+
+CREATE TABLE My_table(
+ my_field1 INT,
+ my_field2 VARCHAR(50),
+ my_field3 DATE NOT NULL,
+ PRIMARY KEY (my_field1, my_field2)
+);
+
+
+ALTER TABLE My_table ADD my_field4 NUMBER(3) NOT NULL;
+
+TRUNCATE TABLE My_table;--清零
+
+DROP TABLE My_table;--删除
+
+GRANT SELECT, UPDATE
+ ON My_table
+ TO some_user, another_user;
+ 
+REVOKE SELECT, UPDATE
+ ON My_table
+ FROM some_user, another_user;
+
+
+
+SELECT CASE WHEN i IS NULL THEN 'Null Result'  
+-- This will be returned when i is NULL
+            WHEN     i = 0 THEN 'Zero'         
+-- This will be returned when i = 0
+            WHEN     i = 1 THEN 'One'          
+-- This will be returned when i = 1
+            END
+FROM t;
+
+
+GRANT SELECT, UPDATE
+ ON My_table
+  TO some_user, another_user;
+   
+  REVOKE SELECT, UPDATE
+   ON My_table
+    FROM some_user, another_user;
+
+
+    CREATE TABLE employees (
+    id            INTEGER      PRIMARY KEY,
+    first_name    VARCHAR(50)  NULL,
+    last_name     VARCHAR(75)  NOT NULL,
+    dateofbirth   DATE         NULL
+    );   
+\end{lstlisting}
+

@@ -1,0 +1,39 @@
+
+\section{cut命令用法笔记}
+
+cut是一个选取命令，就是将一段数据经过分析，取出我们想要的。一般来说，选取信息通常是针对“行”来进行分析的，并不是整篇信息分析的。
+
+其语法格式为：
+\begin{verbatim}
+cut  [-bn] [file] 
+cut [-c] [file]  
+cut [-df] [file]
+\end{verbatim}
+
+使用说明
+cut 命令从文件的每一行剪切字节、字符和字段并将这些字节、字符和字段写至标准输出。
+如果不指定 File 参数，cut 命令将读取标准输入。必须指定 -b、-c 或 -f 标志之一。
+主要参数
+
+\begin{itemize}
+    \item -b ：以字节为单位进行分割。这些字节位置将忽略多字节字符边界，除非也指定了 -n 标志。
+    \item -c ：以字符为单位进行分割。
+    \item -d ：自定义分隔符，默认为制表符tab。
+    \item -f  ：与-d一起使用，指定显示哪个区域。
+\end{itemize}
+
+举例:
+\begin{verbatim}
+提取who命令输出每一行的第3个字节
+who | cut -b 3
+
+提取who命令输出每一行的第3,4,5,8字节
+who|cut -b 3-5,8
+
+paswd文件的内容是由冒号分割的域，可以用cut提取某些域。下面的命令提取前5行的某些域。
+cat /etc/passwd|head -n 5|cut -d : -f 1,3-5,7
+
+获取当前年份
+date | cut -d ' ' -f 1
+
+\end{verbatim}

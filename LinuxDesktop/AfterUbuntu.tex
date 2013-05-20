@@ -1,0 +1,129 @@
+\section{Ubuntu/Deepin安装后的配置}
+
+\subsection{配置网络和locale}
+直接使用图形工具network-manager-gnome即可。
+
+\subsection{硬盘设置}
+设置/etc/fstab,使得一些硬盘分区开机自动挂载。
+\begin{shellcmd}
+UUID=4C0E	/media/D \	
+ntfs-3g	defaults,nosuid,nodev,locale=zh_CN.UTF-8	0	0
+UUID=077  /media/E12	ext4	defaults	0	0
+\end{shellcmd}
+有个图形工具叫做pysdm；另外对于ntfs分区，可以使用ntfs-config工具。
+配置完/etc/fstab后，使用mount -a命令执行该文件。
+
+\subsection{软件安装}
+设置软件更新源，更新系统，并安装软件。对于deepin官方源，直接支持IPV6。对于USTC等其他源，可能需要将地址中的mirror改为mirror6。另外如果sources.list.d目录下有无法访问的地址，需要将其删除，可以将该目录重命名。
+
+PPA清单：
+\begin{verbatim}
+UbuntuTweak
+ppa:tualatrix/ppa
+pidgin的WebQQ插件
+ppa:lainme/lwqq
+\end{verbatim}
+
+包清单:
+vim, vim-gnome, vim-scripts, vim-doc, vim-latexsuite,ntfs-config,pysdm,ubuntu-tweak(ppa:tualatrix/ppa)，gnome-tweak-tool,nautilus-open-terminal,gdebi,Pidgin，chromium-browser, aMSN, sshpass, lcrt, texlive, texlive-xetex
+
+需要手动下载的商用软件：
+永中Office,Adobe Reader, Nutstore, Mendeley, Chrome
+
+\subsubsection{系统工具}
+Gnome桌面:gnome-shell和经典桌面gnome-panel。gnome-shell可以安装panel-dock插件。通过PPA可以安装cinnamon桌面，是LinuxMint开发的Gnome2风格的桌面。
+
+Deb包管理器gdebi。
+
+系统设置工具：ubuntu-tweak(ppa:tualatrix/ppa)，gnome-tweak-tool。
+
+nautilus辅助:nautilus-open-terminal
+
+深度软件中心:deepin-softwarecenter(ppa:noobslab/deepin-sc)。
+
+Adobe Air:官网下载安装即可。在Ubuntu12.04上安装会出错，可以执行:
+\begin{verbatim}
+sudo ln -s /usr/lib/i386-linux-gnu/\
+libgnome-keyring.so.0.2.0 \
+/usr/lib/libgnome-keyring.so.0
+\end{verbatim}
+
+\subsubsection{网络通信}
+Pidgin，chromium-browser, aMSN, sshpass, lcrt, 网盘等。
+
+\subsubsection{音视频播放}
+视频播放器:Gnome-Mplayer和VLC。
+
+视频网站客户端:ppstream。
+
+音乐播放器:可选择banshee，audacious，rhythmbox。
+
+歌词搜索程序:osdlyrics(ppa:osd-lyrics/ppa)为独立程序。执行osdlyrics命令，以将其打开。Ctrl+Shift+L快捷键使其解除锁定。
+
+\subsubsection{办公软件}
+
+VIM：vim-scripts，vim-latexsuite和vim-doc包含了Vim的一些有用插件。vim-addon-manager为Vim插件管理程序，安装该工具之后可以用vim-addons命令激活各种插件。
+
+Latex：在texlive和texlive-xetex, texlive-latex-extra。
+
+办公套件:永中2012青春版。
+
+PDF文件阅读与编辑:acrobat, xournal, pdfmod。 
+
+文献管理：mendeleydesktop。
+
+制图工具:QtiPlot(仿制Origin), dia(模仿Visio)。论文制图也可使用办公套件中的电子表格程序，或GNUplot。 
+
+词典: Goldendict
+
+编程相关: ctags, cscope, doxygen, manpages-dev(Ubuntu可能已经预装), qtcreator, python-qt4, python-qt4-doc
+
+\subsubsection{虚拟机}
+KVM虚拟系统:qemu-kvm libvirt-bin virt-manager bridge-utils。
+KVM制作的虚拟机保存路径一般是/var/lib/libvirt/images。
+打开virt-manager可能需要root权限。
+
+
+\subsection{系统设置工具一览}
+
+系统设置:gnome-control-center
+
+高级设置:gnome-tweak-tool
+
+系统配置机制:gnome3用Gsettings机制取代了gconf机制。用gsettings取代了gconftool-2工具。dconf-editor是gsettings的众多后端工具之一。
+
+\subsection{设置unity白名单}
+如果是Unity桌面，设置unity白名单:
+\begin{shellcmd}
+gsettings set com.canonical.Unity.Panel systray-whitelist "['all']"
+\end{shellcmd}
+
+\subsection{字体配置}
+文泉驿可能被默认安装了。安装少量Windows字体即可。如simsun,simfang,simhei,simkai
+使用\verb+fc-list :lang=zh-cn+查看当前系统字体。
+
+\subsection{主菜单配置}
+使用alacarte创建的应用程序的快捷入口，创建在~/.local/share/applications目录下，并默认以 alacarte-made[-X].desktop 的格式命名，其中X是数字，用户可以随后重命名这个文件，菜单上显示的内容不会改变。而在alacarte工具中删除的快捷入口，也不会真的删除对应的 desktop 文件，而只是将对应文件中的Hide字段的值改为true。
+以root权限安装的程序，其快捷入口大多创建在/usr/share/applications目录下，而以用户权限安装的程序，则只能将快捷入口创建在~/.local/share/applications目录下。
+
+\subsection{默认程序配置}
+有几个文件用于存储指定类型文件的关联程序，分别是 /etc/gnome/defaults.list, /usr/share/applications/defaults.list, /usr/share/applications/mimeinfo.cache, ~/.local/share/applications/mimeapps.list, ~/.local/share/applications/mimeinfo.cache。前面三个文件保存全局设置，后面两个保存用户设置。如果要修改某个类型文件的关联程序，可以通过直接修改这几个文件的方式实现。
+
+\subsection{开机自启动程序}
+gnome-session-properties工具，可以在主菜单->启动应用程序中找到。
+
+\subsection{桌面启动器配置}
+gnome-desktop-item-edit，可以创建或编辑.desktop类型的文件。创建名为my.desktop的启动器，执行:
+\begin{verbatim}
+gnome-desktop-item-edit --create-new my.desktop
+\end{verbatim}
+
+
+
+
+
+
+
+
+
+

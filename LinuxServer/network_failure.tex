@@ -1,0 +1,23 @@
+
+\section{网络连接故障原因}
+\begin{itemize}
+    \item 物理上是否连通
+        \begin{itemize}
+            \item 网线、电口模块是否受损
+            \item 如果多条网线直连，是否两个端一一对应
+            \item 如果走交换机，交换机是否正常
+            \item 有时Hili某些网口不通，reset之后也不行。需要断电才可以。
+
+        \end{itemize}
+    \item 配置是否正确
+        \begin{itemize}
+            \item 是否属于同一子网
+            \item IP是否冲突
+            \item (Hili)MAC地址是否冲突
+        \end{itemize}
+    \item 软件是否正常
+        曾遇到Dell服务器不能ping通时，将该网口用ifconfig重启后即可用。
+        
+\end{itemize}
+
+另外，不能确定某服务器是否正常时，将两台相同的服务器连接到同一个交换机内，配置为同一个子网。Hili只能ping通其中一台，说明另一台有问题。

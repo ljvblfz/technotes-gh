@@ -1,0 +1,21 @@
+
+\section{OCTEON服务器登录}
+
+\subsection{ACTA-7200登录}
+使用telnet登陆7220后执行oct-serial 2命令登陆CPU-B。Ctrl+A+C退出CPU-B。dpbreset 2重启CPU-B。
+
+运行文件服务器上的hello程序：
+\begin{shellcmd}
+tftpboot 0 hello
+bootoct 0 coremask=*** stack=*** heap=***
+\end{shellcmd}
+
+\subsection{Hili登录}
+DRM组目前有两台Hili，分别登录194和130服务器，在root权限下使用minicom登录。
+
+\begin{verbatim}
+minicom configuration A
+minicom configuration B
+\end{verbatim}
+
+上述命令分别登录CPA-A和CPU-B

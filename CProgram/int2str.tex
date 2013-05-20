@@ -1,0 +1,25 @@
+\section{int转为字符串类型的几种方法}
+\begin{verbatim}
+1.itoa(), itoa是广泛应用的非标准C语言扩展函数, 不能在所有的编译器中使用。某些的编译器（如Windows上的）通常在<stdlib.h>头文件中包含这个函数。
+
+2.sprintf(), 格式化输出函数，但是还是要事先定义一个大小固定的字符数组作为目的字符串
+
+3.CString str； str.Format(``%d'',int);
+
+4. 使用stringstream类
+
+#include <iostream> 
+#include <sstream>   
+using namespace std;
+
+int main() 
+{ 
+	int i = 10;   
+	stringstream   strstr;   
+	strstr << i;   
+	string str(strstr.str());   
+	cout << "str = " << str << std::endl;   
+}
+
+\end{verbatim}
+

@@ -1,0 +1,480 @@
+
+
+\section{比特率单位规范}
+
+在电信和计算领域，\textbf{比特率}（Bit rate）是单位时间内传输送或处理的比特的数量，变量名记作R\cite{wikipedia}或$R_{bit}$\cite{weijipedia}。比特率经常在电信领域用作连接速度、传输速度、信道容量、最大吞吐量和数字带宽容量的同义词。
+。
+比特率规定使用“比特每秒”（bit/s）为单位，经常和国际单位制词头关联在一起，如“千”(kbit/s)，“兆”(Mbit/s)，“吉”(Gbit/s) 和“太”(Tbit/s)。在一些非正式文章，经常使用“b/s”或“bps”缩写，此时容易跟Bytes per second混淆。注意kilo的简写为小写k，而mega的简写为大写M。
+
+根据国际单位制(SI, international systems of unit), kilo简写为小写k，表示1000。IEC60027引入了Kibi，Mibi，Gibi，分别简写作Ki,Mi,Gi, 首字母大写，以2的幂为权值。同时规定SI前缀(k,m,g)只使用十进制作权值，不使用二进制。Ki即kilobinary，表示1024。二进制更多得应用于单位字节/秒（byte/s），而不是电信相关的典型用法。大写K经常表示1024，尤其是KB(kilobytes)。有时在一些特殊的上下文中有必要查找单位的定义。文件大小通常用字节数(bytes, kilobytes, megabytes, gigabytes)衡量。现代教科书中1 kilobytes为1000字节。然而，Windows系统下1 kilobytes按照旧式计算机科学定义为1024字节。按照IEC术语，1024字节应称作1 kibibytes。
+
+\begin{center}
+1 kbps = 1 kbit/s = 1000 bit/s
+1 kB/s = 8000 bit/s
+1 Kibit/s = 1024 bit/s
+1 MB/s = 8000000 bit/s
+1 KiB/s = 1024 bytes/s
+\end{center}
+
+
+\textbf{毛比特率}或粗比特率(physical layer gross bitrate,raw bitrate,data signaling rate, or uncoded transmission rate)是每秒物理传送的总数量，包括了有效的数据和物理层协议头。变量名有时记作$R_b$或$f_b$。有$R_b = \frac{1}{T_b},T_b$是bit传输时间。\textbf{符号率}或调制波特率(symbol rate, modulation rate in baud, symbols/s or pulses/s)与毛比特率相关。当每个符号只有两种取值(level)时，每个符号对应一个bit，则毛比特率和符号率在数值上相等。而现代调制系统往往不符合这一条件，符号率不等于毛比特率。
+
+而\textbf{净比特率}或有效比特率(physical layer net bitrate,information rate,useful bit rate,payload rate,net data transfer rate,coded transmission rate,effective data rate or wire speed (informal language))衡量数字通信通道(channel)的容量(capacity)，不包括物理层协议开销(如时分复用帧比特，冗余的信道编码（前向错误纠正）)，但包括链路层开销。连接速度(connection speed，不正式)指净比特率的当前值，而峰值比特率(peak bitrate)是指在最快速、最不健壮的模式下的净比特率，比如通线双方距离很近。线速率(line rate)在有些教科书上指毛比特率，而在其他教科书上指净比特率。
+
+\textbf{吞吐量}(throughput), 或数字带宽消耗(digital bandwidth consumption)指计算机网络中流过一条逻辑通信链路或物理通信链路或通过一个网络结点的有用比特能达到的平均速率，不包括链路层开销。吞吐量不仅取决于我们所关心的数据源的流量负载，也受到共享相同网络资源的其他数据源的影响。
+
+\textbf{Goodput}，或者数据传输速率(data transfer rate)指提交给应用层的有用比特能达到的平均速率，不包括任何通信协议开销和重传开销。导致Goodput低于毛比特率的因素还包括传输层的拥塞避免和流量控制。
+
+在数字多媒体领域，比特率指单位回放(playback)时间内表述音视频连续媒体的经过压缩后的bit数。\textbf{编码比特率}(encoding bitrate)为多媒体文件的长度字节数与回放时间的比值，再乘以8。对于实时流媒体而言，编码比特率是为防止断流而所需的Goodput。对于VBR编码方案，峰值比特率为的压缩数据在任意时刻的最大比特率。对于无损数据压缩，编码比特率存在理论下限，称做源信息速率，或熵速率。
+
+
+
+
+
+
+\section{网络连接查询netstat}
+
+\label{nettool:netstat}
+
+\begin{verbatim}
+netstat [类型] [选项]
+\end{verbatim}
+默认类型为打印所有Open socket信息，类型-r表示路由表信息，-i表示网络接口信息，-g表示多播组信息，-s表示各协议统计信息。
+
+对于Open socket信息，重要选项为：
+\begin{itemize}
+    \item 
+a 显示所有的socket，而不仅仅是监听套接字(默认为l)
+    \item 
+t TCP only
+    \item 
+u UDP only
+    \item 
+n 不将数字解析成名字，使用该选项能加速程序输出
+    \item 
+p 显示相关进程的PID和名字
+\end{itemize}
+
+
+\section{Tcpdump用法举例}
+
+\begin{verbatim}
+tcpdump -i eth0 host 192.168.130.10 'tcp' -w file.pcap
+tcpdump -r file.pcap >> file.txt
+\end{verbatim}
+注意，待写入的文件必须以pcap为后缀，否则tcpdump不能运行，报权限错误。pcap文件也可以用wireshark打开。
+
+一些常用选项为：
+\begin{itemize}
+    \item 
+        c选项指定抓包数量
+    \item 
+        s选项指定抓包长度(从二层开始)
+\end{itemize}
+
+注意如果s选项指定的长度超过帧长，则只抓帧长。所谓帧长，如果是在Linux下运行pcap程序，是不包括L2 FCS的（以太网尾部CRC），这和Smartbit等测试仪表不一样。sar也将FCS加入到计数器中，虽然Linux下的pcap抓不到FCS。
+
+
+
+ To print the start and end packets (the SYN and FIN packets) of each TCP conversation that involves a non-local host.
+\begin{verbatim}
+tcpdump 'tcp[tcpflags] & (tcp-syn|tcp-fin) != 0 and not src and dst net localnet'
+\end{verbatim}
+
+
+
+\section{Ping高级用法}
+Unix上ping工具的常用选项：
+\begin{itemize}
+    \item 
+        -c 控制发送的包数
+    \item 
+        -i 控制发包间隔，单位为秒，非root用户最少可设0.2秒
+    \item 
+        -s 控制包长
+    \item 
+        -t 控制ttl
+\end{itemize}
+
+
+\section{Wireshark用法举例}
+Wireshark会判断操作系统是否能抓到FCS，但声称判断未必准确，可以手工告诉Wireshark一定有FCS。
+有个很实用的功能是对一个包右键选择follow tcp connection，能够筛选出该包所属连接的所有包。
+
+
+\section{网络流量测量}
+vnstat, sar, slurm, ifstat, system-monitor等工具可查看网卡总流量。iptraf，iftop可查看连接的流量。
+
+\subsection{简单测量}
+最原始的办法,是连续两次使用date;ifconfig命令,计算一定时间间隔内的数据量。
+也可以通过查看/proc/net/dev获取数据量。
+在Gnome3下,可以使用一个叫做netspeed的gnome shell插件。
+
+\subsection{vnstat工具}
+\begin{shellcmd}
+#-ru 0 使其以byte为单位,1使其以bit为单位.
+vnstat -l -ru 0 #持续采样 
+vnstat -tr #统计网速，5秒内的采样平均计算所得。
+\end{shellcmd}
+
+\subsection{iftop工具}
+显示带宽使用情况。3列显示，分别表示过去2s，10s，40s内的统计带宽。
+\begin{verbatim}
+iftop -h | [-nNpbBP] [-i interface] [-f filter code] [-F net/mask]
+\end{verbatim}
+例如：
+\begin{shellcmd}
+#-B表示以byte而非bit为单位,-P显示端口号
+sudo iftop -B -P 
+\end{shellcmd}
+工具默认自动将IP地址转换为主机名，会产生一定的DNS流量，扰乱测试。为讲其关闭，可使用-n命令。
+
+\subsection{sar工具}
+也可以使用sar工具.在Fedora下,sar工具位于sysstat软件包中.
+\begin{shellcmd}
+#最后的数字表示刷新时间间隔,单位为秒
+sar -n DEV 3 
+\end{shellcmd}
+
+经我验证，sar统计的字节数为以太网层，包括其头部和尾部(虽然Linux抓不到帧尾的FCS)，不包括前导码和帧间隔。
+
+\subsection{ifstat工具}
+\begin{shellcmd}
+ifstat -a
+\end{shellcmd}
+
+\subsection{ntop工具}
+Ntop是一种监控网络流量工具，用ntop显示网络的使用情况比其他一些网络管理软件更加直观、详细。Ntop甚至可以列出每个节点计算机的网络带宽利用率。它是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具；尤其当ntop与nprobe配合使用，其功能更加显著。它同时提供命令行输入和web页面，可应用于嵌入式web服务。跟 top 监视系统活动状况相似，ntop 是一个用来实时监视网络使用情况的工具。由于 ntop 具有 Web 界面模式，因此无论是配置还是使用都很容易在短时间之内快速上手。
+
+\subsection{iptraf工具}
+Interactive Colorful IP LAN Monitor。可查看每条连接的信息。
+\begin{verbatim}
+iptraf -i eth0
+\end{verbatim}
+
+
+\subsection{slurm工具}
+ Simple Linux Utility for Resource Management，查看网络流量的一个工具。
+ \begin{verbatim}
+ slurm -i eth0
+ \end{verbatim}
+
+彩色curse节目，有部分文字是白色，在浅色背景下看不清楚。
+
+
+
+
+\subsection{SmartBits仪表使用}
+其测试客户端称为SmartWindow, 只能安装在Windows XP系统下，驱动程序选择7.x版本。需要输入序列号。
+
+打开SmartWindow后，选择connection set up,设置连接地址，即仪表的IP地址。其默认IP地址为192.168.1.121。然后执行连接操作，可以看到仪表正面面板图。在面板图上选择连线了的子板，执行reserve操作，相当于选中。然后可以右键进行各种测试了。
+
+发送数据时，需要确保对方的IP，MAC，PORT等设置正确。
+
+统计速率，可用的子工具有smart counter，或右键某module选择display counter。统计的字节数为L2层，包括以太网头和尾（FCS），不包括帧前导和帧间隔，确定。
+
+抓包:SmartWindow界面，右击某module模块选择capture。
+
+每次更改设置时，smartbit可能会停止发包。可以查看光电转换模块的指示等判断smartbits是否仍然在发包。如果没有，需要重启smartbits。
+
+用完后，smartbit和光电转换模块都需关闭电源，以防损害设备。
+
+Smartbit统计速率时，帧长包括L2的FCS的（以太网尾部CRC）。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{TCP/IP报文长度}
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+协议 & 头部字节 & 备注 \\
+\hline
+UDP & 8 &   定长 \\
+\hline
+TCP & 20 & 包含选项字段 \\
+\hline
+ICMP & 8 & 定长 \\
+\hline
+IPv4 & 20 & 包含选项字段,包头范围20-60 \\
+\hline
+IPv6 & 40 & 固定头部40字节，扩展头部每个至少8字节 \\
+\hline
+Ethernet & 14 & 源目的地址各6字节，类型2字节\\
+\hline
+\end{tabular}
+\caption{TCP/IP包头长度}
+\end{center}
+
+
+\end{table}
+
+MTU(最大传输单元)为网络链路属性，其值为链路层载荷长度，不包含链路层首部(\cite{tcpipill}2.8)。如果IP包长超过MTU则要分片。以太网MTU一般为1500, IEEE802.3网络的MTU为1492, Point-to-point网络的MTU为296。X.25网络的MTU为576。RFC791规定支持IPv4的网络，其MTU至少为68。支持IPv6的网络MTU至少为1280。
+
+由于以太网MTU一般为1500, 意味着以太网帧最大为1514字节，而IP载荷为1480字节。对于以太网上经过分片的UDP(或ICMP)报文，第一片IP会包含UDP(或ICMP)头，意味着应用层载荷最大为1472字节，而其他片的应用层载荷同样是1480字节。
+
+RFC2460规定MTU必须至少为1280。如果不能将1280长的包一次性传递，则在链路层分片。总之不能要求网络层分片。路由器不得对IPv6包分片，主机可以对包分片，以适应链路上最短的MTU。如果遇到了超过自己MTU的IPv6包，会将其丢弃，并向源主机发送ICMPv6 Type2消息：Packet too big。主机被“强烈建议”实现路径MTU发现功能，以发现可以将包长设置为超过1280字节的机会。IPv6的最小实现可以不支持路径MTU发现，但必须限制自己发包长度不超过1280。
+
+
+\verb+netstat -i+命令能够打印出主机网络接口信息，包括MTU(\cite{tcpipill}3.9)，参\ref{nettool:netstat}。
+
+MTU不同于系统必须支持IP包长最小值。RFC791规定IPv4主机必须至少支持576字节的IPv4包。对于576字节的包，IP包头长度至多60字节，可以留出512字节给上层协议。RFC2460规定结点必须接受(重组后)长度可达1500字节的IPv6包。
+
+MSS为TCP层参数，表示TCP报文端最大载荷，不包含TCP协议头部。SYN报文段中有MSS选项，向对方宣告自己希望接收的MSS值。如果某方没有收到MSS通告，则假定对方MSS为536，因为对方必须至少支持576字节的IPv4包。如果连接的两端都在同一个以太网内，为自己选择MSS时常选择1460,使得IP包长恰好为以太网MTU1500。如果是802.3网络，则选择1452。有些BSD协议栈要求MSS为512的倍数，因此主机可能会选择1024。如果连接时目标IP不在本地局域网内，则常选择536。
+
+TCP报文通过路径MTU检查和设置MSS可以避免分片。
+
+Exploit的英文本意为“利用”。在计算机安全术语中，这个词通常表示利用程序中的某些漏洞，来得到计算机的控制权（使自己编写的代码越过具有漏洞的程序的限制，从而获得运行权限）。这个词同时也表示为了利用这个漏洞而编写的攻击程序(即Exploit程序)。经常还可以看到名为ExploitMe的程序。这样的程序是故意编写的具有安全漏洞的程序，通常是为了练习写Exploit程序。
+
+IP分片攻击(exploit)可能有以下形式\cite{wikipedia}:
+\begin{itemize}
+    \item 分片重叠。IP包分片出现重叠或包含，有些系统可能不能很好地应对。是Teardrop DOS attacks的基础。
+    \item 包长上溢。重组后的包超过了所声称的长度，或超过了IP包最大长度65535。
+    \item 报文不完整。缺失数据导致无法重组。
+    \item 分片过小。某些分片不是最后一个分片，仍然小于400字节。
+    \item 包数过多。
+    \item 缓冲区满。大量的IPv4包缺少分片，或IPv4包分片过量，或两者兼有。通常用来试图绕过IDS。例如Rose攻击。
+\end{itemize}
+
+Rose攻击：不断发送如下包，每包分成两片，长度都很短, 第一片offset值为0，第二片offset值接近IP包长上限，如64800。目标主机可能会分配完整的内存等待其他分片到来，以致出现CPU、内存等资源的大量消耗，合法包被丢弃。此包无法通过IP层，故TCP端口等信息不会被检查。有些系统设置分片超时定时器，对于长期未完成分片重组的包会丢弃，从而应对这种攻击。
+
+
+
+
+
+
+\section{以太网包头格式}
+以太网各帧之间有12字节帧间间隔(IPG,interpacket gap)，帧前面还有8字节前导码(Preamble)，也称为7字节前导码(0xAA)和1字节帧前界定符(Start Frame Delimiter，值为0xAB), 进而是14字节帧头，46-1500字节载荷，最后是4字节CRC。以太网帧长范围在64-1518字节之间。
+
+以太网这个术语一般是指数字设备公司(Digital Equipment Corp)、英特尔公司和Xerox公司在1982年联合公布的一个标准。它是当今TCP/IP采用的主要的局域网技术。它采用一种称作CSMA/CD的媒体接入方法,其意思是带冲突检测的载波侦听多路接入(Carrier Sense, Multiple Access with Collision Detection)。它的速率为10Mb/s,地址为48 bit。
+
+几年后, IEEE(电子电气工程师协会)802委员会公布了一个稍有不同的标准集,其中802.3针对整个CSMA/CD网络,80 .4针对令牌总线网络, 802.5针对令牌环网络。这三者的共同特性由 802.2标准来定义,那就是802网络共有的逻辑链路控制(LLC)。不幸的是, 802.2和802.3定义了一个与以太网不同的帧格式(\cite{tcpipill}2.2)。
+
+在TCP/IP世界中,以太网IP数据报的封装是在RFC894中定义的, IEEE802网络的IP数据报封装是在RFC1042中定义的。
+
+\section{IPv4包头格式}
+RFC791规定的IPv4包头格式：
+\begin{center}
+\begin{lstlisting}
+
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version|  IHL  |Type of Service|          Total Length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Identification        |Flags|      Fragment Offset    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Time to Live |    Protocol   |         Header Checksum       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                       Source Address                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Destination Address                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                    Options                    |    Padding    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+\end{lstlisting}
+\end{center}
+
+第一行Version值为4,IHL(Internet Hearder length)表示头部所包含的32bit字的数目。8bit的Type of Service后来被分为6bit DSCP(RFC2474)和2bit ECN字段。Differentiated Services Code Point (DSCP)由RFC2474定义，新的需要实时数据流的技术会应用这个字段。ECN(Explicit Congestion Notification)在RFC 3168中定义，允许在不丢弃报文的同时通知对方网络拥塞的发生。ECN是一种可选的功能，仅当两端都支持并希望使用，且底层网络支持时才被使用。Total Length为IP头部和IP载荷长度的总和，同MTU所表示的范围是一致的。Total Length字段占用两个字节，意味着IP包最长65535。
+
+第二行与分片相关，同一个包的所有分片Identification相同。Fragment Offset表示本分片在原包中的位置，单位为8字节。Flags包括3bit，第1个bit必须是0；第2个为DF，表示不分片。第3个为MF，表示后面还有更多的分片。
+
+第三行Protocal字段表示上层协议的名称(同IPv6的Next Header字段)，其值起初由RFC 790规定，后由IANA维护，如0x6表示TCP，0x11表示UDP，0x29表示IPv6(6in4)。
+
+\section{IPv6包头格式}
+RFC2460规定的IPv6的包格式包括：
+
+\begin{center}
+    \begin{lstlisting}
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version| Traffic Class |           Flow Label                  |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Payload Length        |  Next Header  |   Hop Limit   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                         Source Address                        +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                      Destination Address                      +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+\end{lstlisting}
+\end{center}
+
+第一行Version为6。Traffic Class同IPv4的Type of Service一样，被改称DiffServ，分为6it长的DSCP和2bit长的ECN。20bit的flowlabel与流媒体有关。第二行Payload Length包括扩展头部和上层载荷长度，这点与IPv4的Total Length字段不同。IPv6固定头部的长度为40字节，不需指明。而IPv4则有IHL字段。
+如果没有扩展头部，Next Header表示IPv6的上层协议，包括TCP，UDP，ICMPv6,OSPF等，与IPv4的Protocal字段共用相同的取值。如果有扩展头部，则Next Header表示第一个扩展头部的类型，其值与上层协议的值一起由IANA维护。第一个扩展头部的Next Header表示第二个扩展头部的类型(如果有第二个扩展头部)。最后一个扩展头部的Next Header字段表示上层协议的类型。扩展头部至少8字节，且按照8字节对齐，不足则填充。总之，顾名思义，Next Header表示当前头部之后的头部的类型。Hop Limit即TTL。
+
+
+\begin{center}
+    \begin{lstlisting}
+
++---------------+------------------------
+   |  IPv6 header  | TCP header + data
+   |               |
+   | Next Header = |
+   |      TCP      |
+   +---------------+------------------------
+
+
+   +---------------+----------------+------------------------
+   |  IPv6 header  | Routing header | TCP header + data
+   |               |                |
+   | Next Header = |  Next Header = |
+   |    Routing    |      TCP       |
+   +---------------+----------------+------------------------
+
+
+   +---------------+----------------+-----------------+-----------------
+   |  IPv6 header  | Routing header | Fragment header | fragment of TCP
+   |               |                |                 |  header + data
+   | Next Header = |  Next Header = |  Next Header =  |
+   |    Routing    |    Fragment    |       TCP       |
+   +---------------+----------------+-----------------+-----------------
+
+    \end{lstlisting}
+\end{center}
+
+
+\section{TCP包头格式}
+RFC793规定的TCP报文格式:
+\begin{lstlisting}
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |          Source Port          |       Destination Port        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                        Sequence Number                        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                    Acknowledgment Number                      |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |  Data |           |U|A|P|R|S|F|                               |
+    | Offset| Reserved  |R|C|S|S|Y|I|            Window             |
+    |       |           |G|K|H|T|N|N|                               |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |           Checksum            |         Urgent Pointer        |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                    Options                    |    Padding    |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |                             data                              |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+\end{lstlisting}
+
+Data Offset，有些文献叫Header length，表示TCP包头长度，单位为32bit字。RFC793定义了5个控制bit，后来又新增3个控制bit，Reserved相应减少了3bit。
+\begin{lstlisting}
+    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+    +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+    |               |           | N | C | E | U | A | P | R | S | F |
+    | Header Length | Reserved  | S | W | C | R | C | S | S | Y | I |
+    |               |           |   | R | E | G | K | H | T | N | N |
+    +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+\end{lstlisting}
+
+CWR和ECE参\ref{rfc3168}。RFC3540又增加了NS(ECN-nonce concealment protection)字段，防止恶意攻击。
+    
+
+ECE(ECN-Echo indicates)
+
+\section{UDP包头格式}
+RFC768规定的UDP包头:
+\begin{center}
+    \begin{lstlisting}
+0      7 8     15 16    23 24    31
++--------+--------+--------+--------+
+|     Source      |   Destination   |
+|      Port       |      Port       |
++--------+--------+--------+--------+
+|                 |                 |
+|     Length      |    Checksum     |
++--------+--------+--------+--------+
+|
+|          data octets ...
++---------------- ...
+
+    \end{lstlisting}
+\end{center}
+
+
+\section{显式拥塞通告}
+ECN(Explicit Congestion Notification)是IP和TCP协议的扩展，使得通信双方可以不通过丢包就能相互通告网络拥塞。只用于TCP连接双方和中间路由结点都支持该扩展的情形，某些老式或异常的中间某路由器会将设置了ECN的包丢弃。ECN于2001年定义于RFC3168。
+TCP协议报文增加ECE(ECN-Echo)和CWR(Congestion Window Reduced)字段。连接建立阶段，SYN和SYN-ACK报文段的ECE字段分别置位，表示该通信方支持ECN。
+IP协议DiffServ字段的最低两位称ECN字段。ECN为0表示Non-ECN。ECN设置为1或2表示ECN使能(ECT,ECN-Capable Transport)。ECN设置为3表示经历了拥塞(Congestion Experienced,CE)。如果TCP通信双方经协商都开启ECN时，IP包ECN字段设置为ECT。如果中间路由器发现了拥塞，且IP包设置为ECT，同时路由器也支持ECN，则路由器将IP的ECN字段设置为CE。
+
+通信方A发送的报文到达B时，如果B发现ECN字段被置CE，则以后B对A发送报文时ECE字段均置位，直至A发来的报文CWR置位。A发现B发来的报文ECE置位后，应主动减小发送窗口，并对CWR置位。
+\label{rfc3168}
+
+
+
+
+\section{ICMP包头格式}
+FC792定义的ICMP包头格式包括:
+\begin{verbatim}
+
+Echo or Echo Reply Message
+
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Type      |     Code      |          Checksum             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Identifier          |        Sequence Number        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Data ...
++-+-+-+-+-
+
+Timestamp or Timestamp Reply Message
+
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Type      |      Code     |          Checksum             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Identifier          |        Sequence Number        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Originate Timestamp                                       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     RECEive Timestamp                                         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Transmit Timestamp                                        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+\end{verbatim}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

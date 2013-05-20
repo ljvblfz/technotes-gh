@@ -1,0 +1,55 @@
+\section{SSH免密登录}
+默认情况下ssh命令的每次执行都需要输入密码以进行验证。scp命令基于ssh，也需要密码。有两种方法能够避免在使用ssh和scp时输入密码。
+
+\subsection{sshpass}
+sshpass工具可用于保存ssh密码。在ssh和scp命令前添加\verb+sshpass -p <password>+即可。
+
+\subsection{服务器端保存客户机公钥}
+首先，客户端需要生成自身的公钥和私钥，使用ssh-keygen命令,公私钥文件在生成后保存到客户机~/.ssh目录下。
+\begin{verbatim}
+ssh-keygen -t rsa
+\end{verbatim}
+
+其次，将公钥文件追加到服务器主机\verb+~/.ssh/authorized_keys+文件结尾。该文件模式需为600，.ssh目录需为700。
+\begin{verbatim}
+client> scp <pubkey_file> root@server_host:~
+server> cat <pubkey_file> >> /root/.ssh/authorized_keys
+server> chmod 700 /root
+server> chmod 700 /root/.ssh
+server> chmod 600 /root/.ssh/authorized_keys
+\end{verbatim}
+经实验，root家目录访问权限也可以为750, .ssh权限也可以为755, authorized\_keys权限也可为644。
+Ubuntu上传客户端公钥的方法也可以是：
+\begin{verbatim}
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@serverhost
+\end{verbatim}
+
+
+然后，按正常方式进行ssh登录。此时输入密码。以后则无需输入密码了。
+
+\section{sshd服务启动}
+在Ubuntu上，临时启动、停止和查看一个服务可以执行：
+\begin{verbatim}
+service ssh start/stop/status
+/etc/init.d/ssh start/stop/status
+\end{verbatim}
+
+如果希望开机时不自动启动sshd，只有需要用时才开启sshd，目前找到的办法是:破坏\verb+/etc/init/ssh.conf+文件，如将其重命名，或将exec语言破坏。
+这样，sshd将脱离service命令的管理。需要临时开启时，执行
+\begin{verbatim}
+/usr/sbin/sshd 或者
+/usr/sbin/sshd -D
+\end{verbatim}
+
+如果遇到一个错误:
+\begin{verbatim}
+Missing privilege separation directory: /var/run/sshd
+\end{verbatim}
+
+只需执行：
+\begin{verbatim}
+mkdir -p /var/run/sshd
+\end{verbatim}
+
+
+

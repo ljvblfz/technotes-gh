@@ -1,0 +1,24 @@
+
+\section{RHEL配置yum}
+
+\begin{enumerate}
+    \item 如果没有安装yum，先安装yum
+    \item /etc/yum.repos.d目录下，删除原有的repo文件，替换为Centos的源文件
+    \item /etc/yum.conf文件，添加一行\verb+timeout=120+，未验证必要性
+    \item 使用rpm命令import选项导入密钥文件
+    \item 运行yum update命令
+\end{enumerate}
+
+关于密钥文件，目前不是很懂其原理。网上提到的有：
+\begin{verbatim}
+http://ftp.sjtu.edu.cn/centos/5/os/i386/RPM-GPG-KEY-CentOS-5
+http://centos.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-5
+\end{verbatim}
+如果不导入密钥，那么安装可能不能成功。yum有nogpgcheck选项，以及配置文件也有相关选项，可能会强制安装软件。未测试。
+
+安装软件包时需要知道这个包在yum系统中的名字。使用yum search命令。例如，需要安装git时，键入
+\begin{verbatim}
+yum search git
+\end{verbatim}
+易知git在yum系统中可能叫做git.i386.
+

@@ -1,0 +1,38 @@
+\section{网络通信工具}
+
+\subsection{邮件提醒}
+
+\begin{description}
+    \item[Pidgin插件]安装pidgin-guifications插件,并设置Pidgin接收MSN邮件。
+    \item[checkgmail]checkgmail可以检查Gmail邮箱。将所关注的邮箱设置成自动转发到gmail，设置gmail的动作为打开邮件客户端如evolution。
+    \item[其他方案]mail-notification；gnubiff。
+\end{description}
+
+\subsection{即时通信}
+
+常见的聊天工具如QQ，MSN和飞信都有网页版，可以用浏览器制作Web App。除此之外，还有一些第三方客户端。
+
+飞信: Web飞信，3G飞信，openfetion，cliofetion，pidgin-openfetion。
+
+QQ：Web Q+, libqq-pidgin(ppa:lainme/libqq，基于QQ国际版，已经失效)，Wine-qq。基于Web QQ协议，分别有人使用Python，GTK，Qt，Java、Pidgin开发了QQ客户端，包括：python-webqq(ppa:linux-deepin-team/linux-deepin), gtkqq(ppa:bill-zt/gtkqq),QtQQ, iQQ，pidgin-lwqq(ppa:lainme/pidgin-lwqq)。
+
+MSN：Web Windows Live，pidgin，aMSN，kmess, kopete, emesene，empathy等。
+
+\subsection{聊天消息提醒}
+Web Q+：桌面通知功能，可以实现跨工作区提醒，直接显示聊天内容于桌面。标题栏提醒功能，不能跨工作区提醒，不暴露消息内容。消息走马灯功能，尚不知如何使用。
+
+Pidgin:libnotify插件，会弹出消息，不够隐私;guification(软件包pidgin-guifications)插件，和notify(中文：消息提示)插件，可以做到跨工作区提醒，不直接显示消息。后来发现notify插件没什么作用(Linux Deepin 12.06)。好友千里眼，添加对单独好友的新消息监视，一次性使用，也可以勾选“重复”，每条消息都会提示一次。最好的办法是右键面板图标，勾选“有新消息时闪烁”。
+
+其他聊天工具具体情况有待补充。
+
+\subsection{Chromium浏览器}
+软件包叫做chromium-browser，默认不自带flash插件。需要安装flashplugin-installer。然后执行:
+\begin{shellcmd}
+    sudo cp /usr/lib/flashplugin-installer/\
+    libflashplayer.so \ 
+    /usr/lib/chromium-browser/
+\end{shellcmd}
+
+\subsection{远程登录}
+ssh远程登录：sshpass,lcrt。lcrt是为数不多的能保存密码的ssh登录工具。
+

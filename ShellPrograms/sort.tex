@@ -1,0 +1,21 @@
+\section{sort用法笔记}
+比较重要的选项包括:
+
+\begin{itemize}
+    \item o 指定输出文件
+    \item r 逆序
+    \item k=pos 指定关键词在第几列，默认为第一列
+    \item n 按照数值大小排序；默认为按字典序
+    \item u 删除重复行
+    \item t 指定field分隔符；默认为空格
+    \item f 忽略大小写 
+\end{itemize}
+
+
+举例：
+\begin{verbatim}
+sort -n -t ‘ ‘ -k 3r -k 2 facebook.txt
+sort -t ‘ ‘ -k 1 facebook.txt
+\end{verbatim}
+
+sort命令选项众多，十分强大，但我此时意识到不常用的命令和选项对我来说是毫无意义的。

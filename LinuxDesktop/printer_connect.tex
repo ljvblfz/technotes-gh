@@ -1,0 +1,19 @@
+
+
+\section{工作打印机配置}
+首先确保能够连接打印机所在网络：192.168.192.0/24
+
+\subsection{Windows XP下连接打印机}
+
+“通过驱动连接打印机”的方式，打印机IP为：192.168.192.1。我不太明白这句话的意思。通过SMB方式连接打印机，在XP系统开始菜单，选择“添加打印机”，地址为：
+\begin{verbatim}
+//192.168.192.235/3nmedia_tzb_printer
+\end{verbatim}
+
+\subsection{Gnome桌面连接打印机}
+网上的帖子大多是通过系统设置->打印机方式获得添加打印机的界面，但Linux Deepin 12.06下该界面无法解锁。使用另一套工具：system-config-printer-gnome软件包，该软件包包含了system-config-printer.py程序，执行它，就得到了一个添加打印机的界面。该程序由/usr/bin/system-config-printer调用。
+
+执行system-config-printer命令后，选择以SMB方式添加打印机，等待程序搜索SMB网络，可以找到上述打印机。需要安装驱动程序，可以在给出的列表中选择Laser 1015驱动。
+
+
+

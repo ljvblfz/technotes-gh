@@ -1,0 +1,57 @@
+\section{sed的使用}
+
+用法: sed [选项]\ldots {脚本(如果没有其他脚本)} [输入文件]\ldots
+
+\begin{verbatim}
+-n, --quiet, --silent
+    取消自动打印模式空间
+-e 脚本, --expression=脚本
+    添加“脚本”到程序的运行列表
+-f 脚本文件, --file=脚本文件
+    添加“脚本文件”到程序的运行列表
+-i[扩展名], --in-place[=扩展名]
+   直接修改文件(如果指定扩展名就备份文件)
+\end{verbatim}
+
+下面主要谈论sed脚本语言。
+
+
+sed命令主要有：
+\begin{description}
+    \item[s/match/replace]替换
+    \item[i\textbackslash\ TEXT]前插(insert)文本
+    \item[a\textbackslash\ TEXT]后插(append)文本
+    \item[r filename]后插文件
+    \item[d]删除行
+    \item[p]打印行
+\end{description}
+
+sed命令之前需要有0～2个量，被称作''地址''。addr1,addr2形式为地址范围，闭区间。addr1,addr2!后面的叹号表示取反。addr1,+N形式为addr及其后N行。addr1~N为自addr1起以N为步长的所有行。由 /regexp/表示regexp匹配到的行。
+
+替换命令 举例：
+\begin{verbatim}
+echo 123456|sed -e s/123/wolf/g > haha4
+more haha3|sed -e s/123/wolf/g > haha4
+sed -e 's/<[^>]*>//g' haha.xml     (删除haha.xml中所有的xml标记)
+\end{verbatim}
+
+删除行命令举例:
+\begin{verbatim}
+sed -e /^$/d haha >> haha2  //删除文件haha中的空行
+sed -e /33/d haha > haha2  //删除haha中包含33的行
+sed -e 2d haha > haha2  //删除第2行
+sed -e 2,4d haha > haha2  //删除第2~4行
+\end{verbatim}
+
+提取行命令:
+\begin{verbatim}
+sed -n '3,10p' myfile > newfile //提取从第3行到第10行
+\end{verbatim}
+
+提取不定行：
+\begin{verbatim}
+i=2
+sed -n ${i}p myfile
+\end{verbatim}
+
+

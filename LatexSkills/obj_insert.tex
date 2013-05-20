@@ -1,0 +1,44 @@
+
+\section{插入内容}
+
+\subsection{插入图片}
+graphicx宏包:
+\begin{verbatim}
+\begin{figure}[htpb]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=0.8\paperwidth]{Pictures/SQL_ANATOMY_wiki.svg.png}
+    \end{center}
+    \caption{SQL language elements}
+    \label{fig:SQL lan elem}
+\end{figure}
+\end{verbatim}
+
+
+\subsection{插入特殊字符}
+反斜杠 \verb+\textbackslash+
+
+\subsection{URL}
+示例:
+\begin{verbatim}
+\url{https://launchpad.net/ubuntu/+ppas}
+\end{verbatim}
+章节标题的下划线会出错，应该转义。url，字体名称中的下划线不会出错，即便vim给出警告也是如此
+
+\subsection{插入交叉引用}
+引用图片编号，使用ref而不是cite
+
+\subsection{插入程序代码}
+可以使用宏包listings。
+示例:
+\begin{verbatim}
+\usepackage{listings} 
+
+\begin{lstlisting}[language=C]
+int rank()
+{ 
+    return 0;
+}
+\end{lstlisting}
+\end{verbatim}
+
+

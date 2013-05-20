@@ -1,0 +1,88 @@
+\section{主机硬件与OS信息查询}
+\subsection*{查询主机名称}
+hostname命令可以查询主机名称。但是很多主机的名称都取作localhost
+\subsection*{Linux内核版本}
+\begin{shellcmd}
+cat /proc/version:查询内核信息
+uname -r：查询Linux内核版本号
+uname -a：查询内核信息
+\end{shellcmd}
+注意不要用file命令通过查看可执行文件的信息来判断当前主机的内核版本号，二者关系复杂
+\subsection*{Linux发行版信息}
+\begin{shellcmd}
+lsb_release -a 
+cat /etc/issue
+cat /etc/redhat-release
+rpm -q redhat-release：查看Redhat release号
+\end{shellcmd}
+Redhat release号和实际的版本之间存在一定的对应关系：
+\begin{verbatim}
+   redhat-release-3AS-1 -> Redhat Enterprise Linux AS 3
+   redhat-release-3AS-7.4 -> Redhat Enterprise Linux AS 3 Update 4
+   redhat-release-4AS-2 -> Redhat Enterprise Linux AS 4
+   redhat-release-4AS-2.4 -> Redhat Enterprise Linux AS 4 Update 1
+   redhat-release-4AS-3 -> Redhat Enterprise Linux AS 4 Update 2
+   redhat-release-4AS-4.1 -> Redhat Enterprise Linux AS 4 Update 3
+   redhat-release-4AS-5.5 -> Redhat Enterprise Linux AS 4 Update 4 
+\end{verbatim} 
+
+\subsection*{查看字长:32/64位}
+\begin{shellcmd}
+getconf LONG_BIT
+getconf WORD_BIT
+file /bin/ls
+lsb_release -a
+\end{shellcmd}
+\subsection*{CPU信息}
+\subsubsection*{CPU架构}
+arch命令或uname -m：结果如"i386", "i486","i586", "alpha", "sparc", "arm", "m68k", 
+"mips", "ppc","ia64","x86\_64"等；ia64和x86\_64就说明这台机器是64位的
+\subsubsection*{CPU详细信息}
+\begin{shellcmd}
+cat /proc/cpuinfo
+\end{shellcmd}
+\subsubsection*{CPU数与核数}
+Linux下可以在/proc/cpuinfo中看到每个cpu的详细信息。但是对于双核的cpu，在cpuinfo中会看到两个cpu。常常会让人误以为是两个单核的cpu。
+其实应该通过Physical Processor ID来区分单核和双核。而Physical Processor ID可以从cpuinfo或者dmesg中找到.
+flags如果有ht说明支持超线程技术。判断物理CPU的个数可以查看physical id 的值，相同则为同一个物理CPU。
+\begin{shellcmd}
+ cat /proc/cpuinfo |grep "model name" && cat /proc/cpuinfo |grep "physical id"
+\end{shellcmd}
+\subsubsection*{CPU型号}
+\begin{shellcmd}
+cat /proc/cpuinfo |grep "model name"
+\end{shellcmd}
+
+\subsection*{内存信息}
+\begin{shellcmd}
+cat /proc/meminfo |grep MemTotal
+sudo dmidecode |grep -A16 "Memory Device$"
+\end{shellcmd}
+
+\subsection*{硬盘大小}
+\begin{shellcmd}
+fdisk -l |grep Disk
+\end{shellcmd}
+df命令主要用来查询文件系统信息，可以用来查看硬盘以挂载的分区的大小
+\begin{shellcmd}
+df -h
+\end{shellcmd}
+
+\subsection*{主板型号}
+\begin{shellcmd}
+sudo dmidecode |grep -A16 "System Information$"
+cat /proc/pci
+\end{shellcmd}
+
+
+
+
+
+
+
+
+
+
+
+
+

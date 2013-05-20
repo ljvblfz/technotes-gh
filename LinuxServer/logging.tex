@@ -1,0 +1,94 @@
+\section{日志信息}
+
+
+\subsection{查看用户连接信息}
+连接时间日志一般由/var/log/wtmp和/var/run/utmp这两个文件记录，不过这两个文件都无法使用tail或cat命令直接查看。该文件由系统自动更新。Linux提供了如 w, who, finger, id, last, lastlog,ac等命令读取这部分的信息。
+\begin{description}
+    \item[finger]user information lookup program.用户详细信息，甚至包括电话号码。 
+    \item[w]Show who is logged on and what they are doing.
+    \item[last]show listing of last logged in users.\verb+last|grep reboot+记录了开机时间。 
+    \item[lastlog] reports the most recent login of all users or of a given user
+    \item[users]print the user names of users currently logged in to the current host. 其实就是第一列。
+    \item[ac]ac应是accounting的缩写。打印用户连接时间的总和，指多个pty
+    \item[id]当前用户的id和组id
+    \item[uptime]查看开机时间，其实就是w输出的第一行
+\end{description}
+
+The utmp file allows one to discover information about who is currently using the system. 
+
+The  wtmp  file records all logins and logouts.
+
+\subsection{命令历史记录}
+
+
+.bash\_history 记录了Bash命令历史,但不包含最近执行的命令。
+
+/var/log/apt/目录下的文件记录了apt相关的命令执行历史。
+
+\subsection{进程清算(accounting)}
+
+acct是一个系统调用：
+
+\begin{verbatim}
+ #include <unistd.h>
+ int acct(const char *filename);
+\end{verbatim}
+
+The  acct()  system  call  enables  or  disables process accounting.  If called with the name of an existing file as its argument,
+accounting is turned on, and records for each terminating process are appended to filename as it terminates.  An argument of  NULL
+causes accounting to be turned off.
+
+例如：
+\verb+ acct("/var/log/pacct");+
+
+accton为系统命令，清算一段时间内终结的进程, 记录于清算文件中, 默认为/var/log/account/pacct。lastcomm用来读取清算文件。
+\verb+ accton [OPTION] on|off|filename+
+
+例如：
+\begin{verbatim}
+sudo accton somefile
+sudo accton off
+lastcomm -f somefile
+\end{verbatim}
+
+默认的pacct清算似乎早已默认开启，使得\verb+sudo accton on+命令显得多余。
+
+
+\subsection{内核日志}
+dmesg: 显示内核信息
+
+\subsection{系统与服务日志}
+由syslog的服务管理，比如下面的日志文件都是由syslog日志服务驱动的：      
+/var/log/lastlog ：记录最后一次用户成功登陆的时间、登陆IP等信息 
+
+/var/log/messages ：记录Linux操作系统常见的系统和服务错误信息 
+
+/var/log/secure ：Linux系统安全日志，记录用户和工作组变坏情况、用户登陆认证情况 
+
+/var/log/btmp ：记录Linux登陆失败的用户、时间以及远程IP地址 
+
+/var/log/cron ：记录crond计划任务服务执行情况
+
+syslog服务由配置文件/etc/syslog.conf或/etc/rsyslog.conf.
+
+/etc/syslog.conf的内容格式为：
+\verb+消息类型.错误级别    动作域+
+
+\subsection{日志转储}
+Linux中使用logrotate命令进行日志转储。可以配合cron计划任务轻松实现日志文件的定时转储, /etc/logrotate.conf提供了日志转储的相关配置.
+包括发送电子邮件。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

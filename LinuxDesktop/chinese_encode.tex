@@ -1,0 +1,117 @@
+\section{中文输入与显示问题}
+
+\subsection{修改locale为GB18030}
+
+\begin{verbatim}
+
+/usr/share/i18n目录下为系统已经下载的字符集和locale定义文件。
+
+在 /var/lib/locales/supported.d/local 添加两行:
+zh_CN.GBK GBK和zh_CN.GB18030 GB18030 
+
+执行sudo locale-gen 生成相应locale
+在/etc/default/locale文件配置LANG，LC_*, LC_ALL等参数。其优先级递增。
+也有说修改/etc/environment。但修改的结果都是只改变了root用户的locale。
+
+普通用户的locale可以通过export LANG修改环境变量的方法进行修改。
+但将locale编码改为GB码后会出现各种乱码，网上建议还是保留为UTF-8。
+
+\end{verbatim}
+
+
+
+
+\subsection{Evolution客户端没有附件}
+Evolution发的邮件附件Foxmail不认,在 Evolution 的 [编辑] -> [首选项] -> [编写器首选项] 中
+将“使用 Outlook / Gmail 的方式编码文件名” 前的复选框打上勾就可以了
+
+\subsection{查看文件编码}
+\begin{shellcmd}
+file *
+enca *
+本地化编码 enconv *
+\end{shellcmd}
+
+\subsection{转换文件名由GBK为UTF8}
+\begin{shellcmd}
+convmv -r -f cp936 -t utf8 --notest --nosmart *
+\end{shellcmd}
+
+批量转换src目录下的所有文件内容由GBK到UTF8
+\begin{shellcmd}
+find src -type d -exec mkdir -p utf8/{} \;
+find src -type f -exec iconv -f GBK -t UTF-8 {} -o utf8/{} \;
+mv utf8/* src
+rm -fr utf8
+\end{shellcmd}
+
+\subsection{文字大小不一致}
+\begin{shellcmd}
+sudo apt-get remove ttf-kochi-gothic ttf-kochi-mincho ttf-unfonts ttf-unfonts-core
+\end{shellcmd}
+
+\subsection{gedit中文乱码}
+
+ 命令行指定编码，例如gedit --encoding=gbk 霜冷长河.txt 。也可以配置Gsettings参数，如：
+   
+   \begin{shellcmd}
+    gsettings set org.gnome.gedit.preferences.encodings auto-detected 
+	"['UTF-8','GB18030','GB2312','GBK','BIG5','CURRENT','UTF-16']"
+    gsettings set org.gnome.gedit.preferences.encodings shown-in-menu 
+	"['GB18030','UTF-8','GB2312','GBK','BIG5','CURRENT','UTF-16']"
+   \end{shellcmd}  
+
+	相关图形工具叫做dconf-editor,在dconf-tools包中
+
+  
+  
+
+
+\subsection{vim字符编码}
+涉及3个参数:enc,fenc,fencs.
+fenc为当前文件的属性，可以对当前文件set fenc，在保存，从而设置文件的编码方式。在vimrc中设置fenc，就是设置以后写入的所有文件的编码方式。
+fencs为读入文件时的编码猜测列表。enc为vim工作时的编码方式，但最终写入文件时采取的编码仍取决于fenc。
+ set fencs=utf-8,gbk
+ set fenc=gb18030
+
+\subsection{PDF 文件乱码}
+PDF中文乱码有两种
+1.汉字显示为方块：如各种从中国知网下载的论文。网上的方法多针对此种乱码
+
+2.汉字显示为各种欧洲字母：如我电脑中的"西游记.pdf", 基于popplar的阅读器都不能搞定，foxit4linux和Adobe Reader也都失败。永中office的pdf阅读器可以搞定。foxit for linux在2009年烂尾，目前仍为1.1版。
+\begin{shellcmd}
+sudo apt-get install xpdf-chinese-simplified xpdf-chinese-traditional poppler-data
+\end{shellcmd}
+
+\begin{shellcmd}
+sudo gedit /etc/fonts/conf.d/49-sansserif.conf 
+将倒数第四行 <string>sans-serif</string>
+改为 <string>sans</string>
+保存即可，重启firefox
+\end{shellcmd}
+
+\subsection{unzip中文文件名乱码}
+\begin{shellcmd}
+sudo apt-get install p7zip-full
+export LANG=zh_CN.GBK  #临时在控制台修改环境为zh_CN.GBK，然后解压缩即可
+7za e docs.zip
+\end{shellcmd}
+
+\subsection{输入法问题}
+ibus跟随
+\begin{shellcmd}
+安装ibus-gtk即可,最好另外安装：ibus-qt4
+\end{shellcmd}
+输入法切换
+\begin{shellcmd}
+im-switch -c
+\end{shellcmd}
+
+
+
+
+
+
+
+
+

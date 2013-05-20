@@ -1,0 +1,34 @@
+
+
+\section{比特率单位规范}
+
+在电信和计算领域，\textbf{比特率}（Bit rate）是单位时间内传输送或处理的比特的数量，变量名记作R\cite{wikipedia}或$R_{bit}$\cite{weijipedia}。比特率经常在电信领域用作连接速度、传输速度、信道容量、最大吞吐量和数字带宽容量的同义词。
+。
+比特率规定使用“比特每秒”（bit/s）为单位，经常和国际单位制词头关联在一起，如“千”(kbit/s)，“兆”(Mbit/s)，“吉”(Gbit/s) 和“太”(Tbit/s)。在一些非正式文章，经常使用“b/s”或“bps”缩写，此时容易跟Bytes per second混淆。注意kilo的简写为小写k，而mega的简写为大写M。
+
+根据国际单位制(SI, international systems of unit), kilo简写为小写k，表示1000。IEC60027引入了Kibi，Mibi，Gibi，分别简写作Ki,Mi,Gi, 首字母大写，以2的幂为权值。同时规定SI前缀(k,m,g)只使用十进制作权值，不使用二进制。Ki即kilobinary，表示1024。二进制更多得应用于单位字节/秒（byte/s），而不是电信相关的典型用法。大写K经常表示1024，尤其是KB(kilobytes)。有时在一些特殊的上下文中有必要查找单位的定义。文件大小通常用字节数(bytes, kilobytes, megabytes, gigabytes)衡量。现代教科书中1 kilobytes为1000字节。然而，Windows系统下1 kilobytes按照旧式计算机科学定义为1024字节。按照IEC术语，1024字节应称作1 kibibytes。
+
+\begin{center}
+1 kbps = 1 kbit/s = 1000 bit/s
+1 kB/s = 8000 bit/s
+1 Kibit/s = 1024 bit/s
+1 MB/s = 8000000 bit/s
+1 KiB/s = 1024 bytes/s
+\end{center}
+
+
+\textbf{毛比特率}或粗比特率(physical layer gross bitrate,raw bitrate,data signaling rate, or uncoded transmission rate)是每秒物理传送的总数量，包括了有效的数据和物理层协议头。变量名有时记作$R_b$或$f_b$。有$R_b = \frac{1}{T_b},T_b$是bit传输时间。\textbf{符号率}或调制波特率(symbol rate, modulation rate in baud, symbols/s or pulses/s)与毛比特率相关。当每个符号只有两种取值(level)时，每个符号对应一个bit，则毛比特率和符号率在数值上相等。而现代调制系统往往不符合这一条件，符号率不等于毛比特率。
+
+而\textbf{净比特率}或有效比特率(physical layer net bitrate,information rate,useful bit rate,payload rate,net data transfer rate,coded transmission rate,effective data rate or wire speed (informal language))衡量数字通信通道(channel)的容量(capacity)，不包括物理层协议开销(如时分复用帧比特，冗余的信道编码（前向错误纠正）)，但包括链路层开销。连接速度(connection speed，不正式)指净比特率的当前值，而峰值比特率(peak bitrate)是指在最快速、最不健壮的模式下的净比特率，比如通线双方距离很近。线速率(line rate)在有些教科书上指毛比特率，而在其他教科书上指净比特率。
+
+\textbf{吞吐量}(throughput), 或数字带宽消耗(digital bandwidth consumption)指计算机网络中流过一条逻辑通信链路或物理通信链路或通过一个网络结点的有用比特能达到的平均速率，不包括链路层开销。吞吐量不仅取决于我们所关心的数据源的流量负载，也受到共享相同网络资源的其他数据源的影响。
+
+\textbf{Goodput}，或者数据传输速率(data transfer rate)指提交给应用层的有用比特能达到的平均速率，不包括任何通信协议开销和重传开销。导致Goodput低于毛比特率的因素还包括传输层的拥塞避免和流量控制。
+
+在数字多媒体领域，比特率指单位回放(playback)时间内表述音视频连续媒体的经过压缩后的bit数。\textbf{编码比特率}(encoding bitrate)为多媒体文件的长度字节数与回放时间的比值，再乘以8。对于实时流媒体而言，编码比特率是为防止断流而所需的Goodput。对于VBR编码方案，峰值比特率为的压缩数据在任意时刻的最大比特率。对于无损数据压缩，编码比特率存在理论下限，称做源信息速率，或熵速率。
+
+
+
+
+
+

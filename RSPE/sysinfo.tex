@@ -1,0 +1,18 @@
+\section{运行时系统信息识别}
+
+\subsection{processor\_id}
+cvmx.h中定义了\verb+cvmx_get_proc_id+函数。所谓processor\_id，应该是用于标示处理器的型号。例如有cvmx.h中有如下代码：
+\begin{verbatim}
+ return (cvmx_get_proc_id() == OCTEON_CN38XX_PASS1);
+\end{verbatim}
+
+
+\subsection{OCTEON MODEL识别}
+使用\verb|OCTEON_IS_MODEL(x)|宏可判断是否为模型x。该宏和x可取的值定义在executive/octeon\_model.h中。
+
+\subsection{是否为模拟器}
+\begin{verbatim}
+cvmx_sysinfo_get() 返回值的board_type字段代表“板子”类型，其取值由enum cvmx_board_types_enum定义。对于模拟器，取CVMX_BOARD_TYPE_SIM。
+\end{verbatim}
+
+

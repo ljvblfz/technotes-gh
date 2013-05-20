@@ -1,0 +1,81 @@
+\section{中文字体的安装使用}
+\subsection{查看已安装的中文字体}
+\begin{shellcmd}
+fc-list :lang=zh|sort
+\end{shellcmd}
+
+\subsection{安装文泉驿字体}
+在Ubuntu软件仓库中，文泉驿点阵宋体和矢量正黑体分别包含于xfonts-wqy,ttf-wqy-zenhei软件包，不过很可能已经预装。
+在Fedora中，点阵宋体和矢量正黑体分别位于wqy-bitmap-fonts，wqy-zenhei-fonts
+
+\subsection{安装文鼎字体}
+在Ubuntu软件仓库中，we文鼎楷体和明体分别位于ttf-arphic-ukai，ttf-arphic-uming软件包，不过很可能已经预装。
+新发布的有文鼎PL报宋二GBK
+
+\subsection{安装Windows字体}
+
+将simsun等字体复制到目录/usr/share/fonts/TTF
+
+在字体所在目录执行命令：
+\begin{shellcmd}
+mkfontdir  生成font.dir
+ttmkfdir   为ttc字体生成font.dir
+mkfontscale 为simsun.ttc生成font.scale
+\end{shellcmd}
+生成encoding文件：
+\begin{shellcmd}
+sudo cp /usr/share/fonts/encodings/encodings.dir ./
+\end{shellcmd}
+以上命令为X.org 字体系统服务。以下命令为xft字体系统服务：
+\begin{shellcmd}
+sudo fc-cache -fv   刷新xft字体库
+\end{shellcmd}
+重启X即可。
+
+\subsection{字体大小}
+1em=16px
+
+\subsection{字体与文件名对照}
+\begin{verbatim}
+方正舒体              FZSTK.TTF
+
+方正姚体              FZYTK.TTF
+
+微软雅黑              MSYH.TTF
+
+微软雅黑 Bold         MSYHBD.TTF
+
+仿宋体               simfang.ttf
+
+黑体                 simhei.ttf
+
+楷体                 simkai.ttf
+
+隶书                 SIMLI.TTF
+
+宋体 & 新宋体        simsun.ttc
+
+幼园                 SIMYOU.TTF
+
+华文彩云            STCAIYUN.TTF
+
+华文仿宋            STFANGSO.TTF
+
+华文琥珀            STHUPO.TTF
+
+华文楷体            STKAITI.TTF
+
+华文隶书            STLITI.TTF
+
+华文宋体            STSONG.TTF
+
+华文细黑            STXIHEI.TTF
+
+华文行楷            STXINGKA.TTF
+
+华文新魏            STXINWEI.TTF
+
+华文中宋            STZHONGS.TTF
+
+宋体-方正超大字符集 SURSONG.TTF
+\end{verbatim}

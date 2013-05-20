@@ -1,0 +1,11 @@
+\section{SE程序设计与编译}
+\subsection{资源配置}
+Static configuration of the hardware resources are controlled by the include file "cvmx-config.h". This file is generated from the executive-config.h file and other files in the config directory of the application. 
+Example: creating an application that uses simple executive
+\begin{shellcmd}
+% mkdir application
+% cd application
+% mkdir config
+% cp $OCTEON_ROOT/executive/executive-config.h.template config/executive-config.h
+\end{shellcmd}
+(then edit config/executive-config.h to tune the flags/settings as appropriate for the application)

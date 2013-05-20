@@ -1,0 +1,26 @@
+\section{ISO镜像与光盘}
+在Ubuntu下将文件夹做成iso镜像的工具叫做genisoimage(原名mkisofs)。可引导光盘加载后对相应文件夹使用genisoimage工具，会失去引导性。如欲保留引导性，可以使用dd工具对裸设备进行操作。如:
+
+\verb+dd if=/dev/sr0 of=deepin.iso+
+
+如需将iso烧录入光盘，可以使用Brasero工具。这很可能是Ubuntu系统自带的。
+
+\section{制作USB启动盘}
+可以使用dd命令或使用一些图形工具。在维基百科上有一个制作LiveUSB的软件列表。包括：
+\begin{itemize}
+  \item Fedora Liveusb-creator,在Windows或Linux下制作Fedora的LiveUSB
+  \item Ubuntu Liveusb Creator(在命令为usb-creator-gtk或usb-creator-kde)
+  \item LinuxLive USB Creator,在Windows上制作Linux LiveUSB
+  \item Unetbootin，在Windows或Linux下制作UNIX LiveUSB，Ubuntu软件仓库有提供
+\end{itemize}
+我自己用优盘实际创建启动盘，在Ubuntu下使用Ubuntu Liveusb Creator制作失败了。用dd和Unetbootin制作成功。
+
+如果使用dd命令，先umount这个USB设备，其名称可能是sdb1。但dd命令要作用与sdb而不是sdb1上。
+\begin{verbatim}
+dd if=linux_image.iso of=/dev/sdb
+\end{verbatim}
+尝试使用dd命令将Windows安装镜像做成启动盘，未能成功，U盘在启动时未能引导，依然由硬盘进行了引导。
+
+制作完成后，需要更改BIOS设置，让USB-HDD(或其他USB设备类型)的设备启动优先级高于HDD。优盘可能被当作硬盘处理，如果是这种优盘，开机时需要在BIOS设置中更改的不是设备启动顺序，而是HDD启动优先级。在实验室电脑上DEL键进入BIOS设置。
+
+

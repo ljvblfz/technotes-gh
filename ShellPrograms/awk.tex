@@ -1,0 +1,21 @@
+\section{awk语言}
+Awk是功能完整的文本处理语言, 使用类似于C的语法. 它具有一整套操作符和能力集, 我们只在这里讲解一小部分 - 也就是在shell脚本中最有用的部分.
+
+Awk将传递进来的每行输入都分割成域. 默认情况下, 一个域指的就是使用空白分隔的一个连续字符串, 不过我们可以修改属性来改变分隔符. Awk将会分析并操作每个分割域. 因为这种特性, 所以awk非常善于处理结构化的文本文件 -- 尤其是表 -- 将数据组织成统一的块, 比如说分成行和列.
+
+强引用(单引号)和大括号用来包含shell脚本中的awk代码段.
+
+\begin{verbatim}
+echo one two | awk '{print $1}'
+# one
+
+echo one two | awk '{print $2}'
+# two
+
+awk '{print $3}' $filename
+# 打印文件$filename的域#3, 到stdout. 
+ 
+awk '{print $1 $5 $6}' $filename
+# 打印文件$filename的域#1, #5, 和#6. 
+\end{verbatim}
+

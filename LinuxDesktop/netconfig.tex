@@ -1,0 +1,49 @@
+\section{主机网络配置}
+\subsection{配置IP地址和DNS}
+可以使用图形工具network-manager-gnome.重启网络：系统设置-网络-关闭
+\begin{shellcmd}
+sudo vi /etc/network/interfaces 
+\end{shellcmd}
+\begin{verbatim}
+auto lo
+iface lo inet loopback
+auto eth0 eth0:1
+iface eth0 inet static
+address 210.75.225.165
+netmask 255.255.255.0
+gateway 210.75.225.254
+dns-nameservers 159.226.59.158 159.226.8.6
+iface eth0:1 inet static
+address 192.168.1.224
+netmask 255.255.255.0
+gateway 192.168.1.1
+\end{verbatim}
+
+新系统版本不希望手动更改/etc/resolv.conf文件，重启后会重置。修改/etc/resolvconf/tail文件，然后执行/etc/init.d/resolveconf restart，会自动生成/etc/resolve.conf文件。或者在上述/etc/network/interfaces添加dns-nameservers配置。
+
+对于旧版系统，编辑/etc/resolv.conf文件，加入2行： 
+\begin{verbatim}
+nameserver 159.226.59.158
+nameserver 159.226.8.6
+\end{verbatim}
+其他的DNS服务器包括：
+谷歌：8.8.8.8
+中国科大：202.38.64.1。
+
+
+重启网络
+\begin{shellcmd}
+sudo /etc/init.d/networking restart
+或者 sudo ifdown -a;sudo ifup -a;
+\end{shellcmd}
+如果配置了interfaces文件，那么network-manager-gnome无用，可以卸载
+
+\subsection{代理设置}
+使用tsocks这个软件。配置文件在/etc/tsocks.conf,修改local使其包含202.38.95.110。
+其他工具还包括proxychains
+
+\subsection{备注}
+2012年5月9日我调动工位，网址由192.168.10.224改为同MAC绑定的210.75.225.165，结果网络不通。后来放弃network-manager-gnome工具，改用/etc/network/interface来配置，方可正常使用网络。原因不明。
+
+
+

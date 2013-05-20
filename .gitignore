@@ -4,4 +4,7 @@
 *.pdf
 *.toc
 *.out
+*.aux
+*.log
 
+Chap*.tex

@@ -125,4 +125,21 @@ git pull
 git push
 \end{verbatim}
 
+\subsection{Google Hosting操作}
+在网页端建立项目，本地端在~/.netrc文件中添加用户名和密码配置:
+\begin{verbatim}
+machine code.google.com login lmz0610@gmail.com password [generated googlecode.com password] 
+\end{verbatim}
+clone项目时不要带用户名和密码。Google Codes目前只支持HTTPS方式使用git。
+\begin{verbatim}
+git clone https://code.google.com/p/technotes-gh/
+\end{verbatim}
+首次提交时，如果服务器端为空，还没有master分支，则push时应指定分支和remote名
+\begin{verbatim}
+git push origin master 
+\end{verbatim}
+此后push操作只需要
+\begin{verbatim}
+git push
+\end{verbatim}
 

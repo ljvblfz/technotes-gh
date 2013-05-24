@@ -28,10 +28,14 @@ SOURCE_FILE = technotes.tex
 .PHONY: display 
 
 
-all: $(TARGET) backup display
+all: $(TARGET) display
+
+doublemake: $(SOURCE_FILE) $(CHAP_FILES) makefile
+	xelatex $<
+	xelatex $<
+	cp $@ ~
 
 %.pdf: $(SOURCE_FILE) $(CHAP_FILES) makefile
-	xelatex $<
 	xelatex $<
 	#latex2rtf -C utf8 technotes
 	cp $@ ~

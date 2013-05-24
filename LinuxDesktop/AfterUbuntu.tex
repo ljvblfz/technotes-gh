@@ -16,19 +16,42 @@ UUID=077  /media/E12	ext4	defaults	0	0
 \subsection{软件安装}
 设置软件更新源，更新系统，并安装软件。对于deepin官方源，直接支持IPV6。对于USTC等其他源，可能需要将地址中的mirror改为mirror6。另外如果sources.list.d目录下有无法访问的地址，需要将其删除，可以将该目录重命名。
 
-PPA清单：
-\begin{verbatim}
-UbuntuTweak
-ppa:tualatrix/ppa
-pidgin的WebQQ插件
-ppa:lainme/lwqq
-\end{verbatim}
+软件源编辑器：software-properties-gtk
 
 包清单:
-vim, vim-gnome, vim-scripts, vim-doc, vim-latexsuite,ntfs-config,pysdm,ubuntu-tweak(ppa:tualatrix/ppa)，gnome-tweak-tool,nautilus-open-terminal,gdebi,Pidgin，chromium-browser, aMSN, sshpass, lcrt, texlive, texlive-xetex
+vim, vim-gnome, vim-scripts, vim-doc, vim-latexsuite,ntfs-config, pysdm，gnome-tweak-tool,nautilus-open-terminal,gdebi,Pidgin，chromium-browser, aMSN, sshpass, lcrt, texlive, texlive-xetex, texlive-latex-extra。
 
-需要手动下载的商用软件：
-永中Office,Adobe Reader, Nutstore, Mendeley, Chrome
+Ubuntu源中未收录的软件：
+yozooffice, wpsoffice, acroread, yunio, nautilus-nutstore, mendeleydesktop, google-chrome, ubuntu-tweak, pidgin-lwqq。
+
+永中office，WPS和yunio可能被深度源收录，在LinuxDeepin下直接搜索安装即可。
+
+pidgin的WebQQ插件，和UbuntuTweak可通过PPA安装:
+\begin{lstlisting}
+ppa:lainme/lwqq
+ppa:tualatrix/ppa
+\end{lstlisting}
+
+Adobe Reader被Canonical源收录，名称为acroread:
+\begin{lstlisting}
+sudo add-apt-repository ``deb http://archive.canonical.com/ precise partner''
+sudo apt-get update
+sudo apt-get install acroread
+\end{lstlisting}
+
+其他软件也类似：
+\begin{lstlisting}
+Mendeley
+deb http://download.mendeley.com/apt/ stable main 
+Chrome
+deb http://dl.google.com/linux/chrome/deb/ stable main
+pidgin-lwqq:
+deb http://ppa.launchpad.net/lainme/pidgin-lwqq/ubuntu precise main
+deb-src http://ppa.launchpad.net/lainme/pidgin-lwqq/ubuntu precise main
+UbuntuTweak:
+deb http://ppa.launchpad.net/tualatrix/ppa/ubuntu precise main
+deb-src http://ppa.launchpad.net/tualatrix/ppa/ubuntu precise main
+\end{lstlisting}
 
 \subsubsection{系统工具}
 Gnome桌面:gnome-shell和经典桌面gnome-panel。gnome-shell可以安装panel-dock插件。通过PPA可以安装cinnamon桌面，是LinuxMint开发的Gnome2风格的桌面。
@@ -68,7 +91,7 @@ Latex：在texlive和texlive-xetex, texlive-latex-extra。
 
 办公套件:永中2012青春版。
 
-PDF文件阅读与编辑:acrobat, xournal, pdfmod。 
+PDF文件阅读与编辑:okular, xournal, pdfmod。 
 
 文献管理：mendeleydesktop。
 

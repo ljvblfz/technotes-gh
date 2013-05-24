@@ -1,0 +1,11 @@
+#Name:RPMforge RPM Repository for Red Hat Enterprise 5 - dag
+#URL:http://rpmforge.net/
+[dag]
+name=CentOS-$releasever - Dag
+mirrorlist=http://apt.sw.be/redhat/el5/en/mirrors-rpmforge
+#mirrorlist=file:///etc/yum.repos.d/CentOS-Dag-Mirrors
+#baseurl=http://apt.sw.be/redhat/el5/en/$basearch/dag
+enabled=1
+protect=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY.Dag.txt
+gpgcheck=1

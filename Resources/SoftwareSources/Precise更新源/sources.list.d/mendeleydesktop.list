@@ -1,0 +1,9 @@
+# This file lists the repositories for Mendeley Desktop.
+#
+# These repositories should work with most recent Debian/Ubuntu-based Linux
+# distributions.
+#
+# If you have any problems with Mendeley's Debian/Ubuntu repositories,
+# you can let us know at http://feedback.mendeley.com
+
+deb http://download.mendeley.com/apt/ stable main

@@ -1,0 +1,47 @@
+
+
+deb http://mirror.bjtu.edu.cn/ubuntu/ precise main multiverse restricted universe 
+deb http://mirror.bjtu.edu.cn/ubuntu/ precise-backports main multiverse restricted universe 
+deb http://mirror.bjtu.edu.cn/ubuntu/ precise-proposed main multiverse restricted universe 
+deb http://mirror.bjtu.edu.cn/ubuntu/ precise-security main multiverse restricted universe 
+deb http://mirror.bjtu.edu.cn/ubuntu/ precise-updates main multiverse restricted universe 
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ precise main multiverse restricted universe
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ precise-backports main multiverse restricted universe 
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ precise-proposed main multiverse restricted universe 
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ precise-security main multiverse restricted universe 
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ precise-updates main multiverse restricted universe
+
+deb http://debian.ustc.edu.cn/ubuntu/ precise main restricted universe multiverse 
+deb http://debian.ustc.edu.cn/ubuntu/ precise-backports restricted universe multiverse 
+deb http://debian.ustc.edu.cn/ubuntu/ precise-proposed main restricted universe multiverse 
+deb http://debian.ustc.edu.cn/ubuntu/ precise-security main restricted universe multiverse 
+deb http://debian.ustc.edu.cn/ubuntu/ precise-updates main restricted universe multiverse 
+deb-src http://debian.ustc.edu.cn/ubuntu/ precise main restricted universe multiverse 
+deb-src http://debian.ustc.edu.cn/ubuntu/ precise-backports main restricted universe multiverse 
+deb-src http://debian.ustc.edu.cn/ubuntu/ precise-proposed main restricted universe multiverse 
+deb-src http://debian.ustc.edu.cn/ubuntu/ precise-security main restricted universe multiverse 
+deb-src http://debian.ustc.edu.cn/ubuntu/ precise-updates main restricted universe multiverse
+
+
+deb http://packages.linuxdeepin.com/ubuntu precise main restricted universe multiverse
+deb http://packages.linuxdeepin.com/ubuntu precise-security main restricted universe multiverse
+deb http://packages.linuxdeepin.com/ubuntu precise-updates main restricted universe multiverse
+deb http://packages.linuxdeepin.com/ubuntu precise-proposed main restricted universe multiverse
+deb http://packages.linuxdeepin.com/ubuntu precise-backports main restricted universe multiverse
+deb-src http://packages.linuxdeepin.com/ubuntu precise main restricted universe multiverse
+deb-src http://packages.linuxdeepin.com/ubuntu precise-security main restricted universe multiverse
+deb-src http://packages.linuxdeepin.com/ubuntu precise-updates main restricted universe multiverse
+deb-src http://packages.linuxdeepin.com/ubuntu precise-proposed main restricted universe multiverse
+deb-src http://packages.linuxdeepin.com/ubuntu precise-backports main restricted universe multiverse
+
+deb http://packages.linuxdeepin.com/deepin precise main non-free
+deb-src http://packages.linuxdeepin.com/deepin precise main non-free
+
+deb http://packages.linuxdeepin.com/deepin precise-updates main non-free
+deb-src http://packages.linuxdeepin.com/deepin precise-updates main non-free
+
+deb http://archive.canonical.com/ precise partner
+deb-src http://archive.canonical.com/ precise partner
+
+
+

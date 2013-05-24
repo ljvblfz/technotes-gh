@@ -1,0 +1,67 @@
+
+"for latex-suite
+filetype plugin on
+
+set shellslash
+
+set grepprg=grep\ -nH\ $*
+
+filetype indent on
+
+let g:tex_flavor='latex'
+
+
+"for coding
+set nu
+set softtabstop=4
+set shiftwidth=4
+
+"for reading Windows created files
+set fencs=utf-8,gb18030
+set fenc=gb18030
+
+"for sdcv
+nmap <C-k> : !sdcv <C-R>=expand("<cword>")<CR><CR>
+
+
+"for cscope
+if has("cscope")
+	set csprg=/usr/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+		" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+		cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+
+nmap <F2>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <F2>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <F2>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+nmap <F3>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <F3>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <F3>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+
+"for ctags
+set tags=tags;
+set autochdir
+

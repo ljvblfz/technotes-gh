@@ -1,0 +1,26 @@
+# /etc/fstab: static file system information.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+
+proc                                    /proc                    proc     nodev,noexec,nosuid                       0  0  
+/dev/fd0                                   /media/floppy0           auto     rw,user,noauto,exec,utf8                  0  0  
+
+#/dev/sda1 is Windows C, sda6 is not used.
+#Entry for /dev/sda5 :
+UUID=4C0E4B260E4B0882		/media/D                 ntfs-3g  defaults,nosuid,nodev,locale=zh_CN.UTF-8  0  0  
+#Entry for /dev/sda7 :
+UUID=80889F11889F0536           /media/E                 ntfs-3g  defaults,nosuid,nodev,locale=zh_CN.UTF-8  0  0  
+
+#Entry for /dev/sda8 :
+UUID=395ee7b8-eece-4fc8-b3cd-3c05aaac74e9  none                     swap     sw                                        0  0  
+
+#Entry for /dev/sda9 :
+UUID=78d8e5b3-b476-4b9b-b467-5decf371c2f9	/media/Hlp	ext4	defaults	0	0
+
+#Entry for /dev/sda10 :
+UUID=d2182b82-256d-4117-b545-8febcaccbd3a	/media/OtherLinux	ext4	defaults,errors=remount-ro	0	0
+
+#Entry for /dev/sda11 :
+UUID=b8750f97-6929-4b36-abae-790b241c1237	/	ext4    defaults,errors=remount-ro	0	1  
+
+

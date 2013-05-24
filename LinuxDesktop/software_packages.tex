@@ -76,3 +76,35 @@ dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
 \end{verbatim}
 如果你的系统中没有残留配置文件了，会报错。
 
+\subsection{dpkg出错}
+\label{err:dpkgConfig}
+\begin{verbatim}
+dpkg：处理 xxx (--configure)时出错
+\end{verbatim}
+处理方式，找到/var/lib/dpkg/info目录，备份他处，重新目录，执行
+\begin{verbatim}
+apt-get update
+apt-get -f install
+\end{verbatim}
+在将新建的info目录同备份的目录合并
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

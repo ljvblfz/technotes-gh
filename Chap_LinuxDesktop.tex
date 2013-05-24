@@ -418,11 +418,17 @@ deb-src http://jx.tju.zyrj.org/deepin/ precise-updates main non-free
 
 
 \section{常见错误与异常}
+
 更新源下载目录时，提示没有与主机相关联的地址，可能是网络不通
 
 系统死机时，如键盘还有效，可以执行CtrlAlt+f切换到其他tty，然后通过top和kill杀死一些占用资源较大的进程。如果键盘无效，应尝试安全重启。即按住Alt+SysRq，然后依此执行R，E，I，S，U，B等6个命令。
 
 lightDM登录失败，输入用户密码执行登录崩溃又回到登录页面。通过删除～目录下Xauthority文件或许可以解决。网上其他解决方法包括:安装gdm取代lightDM，或放弃当前用户新建用户。甚至有人干脆提出重装系统。
+
+
+dpkg备份出错，参\ref{err:dpkgConfig}。
+
+
 \section{软件界面的绿豆沙色背景}
 关于绿豆沙色的定义网上找到了多种：
 1.RGB(204,232,207),RGB hex(CCE8CF)。
@@ -706,9 +712,6 @@ sudo /etc/init.d/networking restart
 使用tsocks这个软件。配置文件在/etc/tsocks.conf,修改local使其包含202.38.95.110。
 其他工具还包括proxychains
 
-\subsection{备注}
-2012年5月9日我调动工位，网址由192.168.10.224改为同MAC绑定的210.75.225.165，结果网络不通。后来放弃network-manager-gnome工具，改用/etc/network/interface来配置，方可正常使用网络。原因不明。
-
 
 
 
@@ -809,96 +812,6 @@ Ctrl+Alt+F7 返回X视窗系统
 
 
 
-\section{Ubuntu软件安装与管理}
-
-查看已经安装了哪些包：
-\begin{verbatim}
-dpkg -l
-\end{verbatim}
-
-查看软件包版本和其他信息
-\begin{verbatim}
- apt-cache showpkg mendeleydesktop
-\end{verbatim}
-
-查找官方源软件包：
-\begin{verbatim}
-apt-cache search 正则表达式
-aptitude search 软件包
-\end{verbatim}
-
-如果官方源中没有相关的包，可以查看PPA仓库:
-
-\url{https://launchpad.net/ubuntu/+ppas}
-
-安装ppa软件的一般方法有两种:
-\begin{verbatim}
-sudo add-apt-repository source_line
-sudo add-apt-repository ppa:<user>/<ppa-name>
-\end{verbatim}
-
-查询软件xxx依赖哪些包：
-\begin{verbatim}
-apt-cache depends xxx
-\end{verbatim}
-
-查询软件xxx被哪些包依赖：
-\begin{verbatim}
-apt-cache rdepends xxx
-\end{verbatim}
-
-查找文件属于哪个包
-\begin{verbatim}
-apt-file search filename
-\end{verbatim}
-
-编译时缺少h文件的自动处理
-\begin{verbatim}
-sudo auto-apt run ./configure
-\end{verbatim}
-
-查看安装软件时下载包的临时存放目录
-\begin{verbatim}
-ls /var/cache/apt/archives
-\end{verbatim}
-
-备份当前系统安装的所有包的列表
-\begin{verbatim}
-dpkg --get-selections | grep -v deinstall > ~/somefile
-\end{verbatim}
-
-从上面备份的安装包的列表文件恢复所有包
-\begin{verbatim}
-dpkg --set-selections < ~/somefile
-sudo dselect
-\end{verbatim}
-
-清理旧版本的软件缓存
-\begin{verbatim}
-sudo apt-get autoclean
-\end{verbatim}
-
-清理所有软件缓存
-\begin{verbatim}
-sudo apt-get clean
-\end{verbatim}
-
-删除系统不再使用的孤立软件
-\begin{verbatim}
-sudo apt-get autoremove
-\end{verbatim}
-
-查看包在服务器上面的地址
-\begin{verbatim}
-apt-get -qq --print-uris install ssh | cut -d\' -f2
-\end{verbatim}
-
-除所有已删除包的残馀配置文件
-\begin{verbatim}
-dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P 
-\end{verbatim}
-如果你的系统中没有残留配置文件了，会报错。
-
 \section{软件包安装与管理}
 
 一般而言，aptitude命令优于apt命令。
@@ -976,6 +889,38 @@ apt-get -qq --print-uris install ssh | cut -d\' -f2
 dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P 
 \end{verbatim}
 如果你的系统中没有残留配置文件了，会报错。
+
+\subsection{dpkg出错}
+\label{err:dpkgConfig}
+\begin{verbatim}
+dpkg：处理 xxx (--configure)时出错
+\end{verbatim}
+处理方式，找到/var/lib/dpkg/info目录，备份他处，重新目录，执行
+\begin{verbatim}
+apt-get update
+apt-get -f install
+\end{verbatim}
+在将新建的info目录同备份的目录合并
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{网络对时}
 \begin{shellcmd}

@@ -1,10 +1,20 @@
-\section{SSH免密登录}
+\section{SSH便捷登录}
+
+\subsection{登录后执行命令}
+ssh命令后追加shell命令使得后者在目标主机执行后在本地打印，然后关闭ssh连接。如果需要保留在目标主机上，可以使用-t选项，并追加bash命令。
+\begin{lstlisting}[language=bash]
+   ssh HOSTNAME -t ``cd /somedir; bash'' 
+\end{lstlisting}
+远程登录并进入minicom，参\ref{sshMinicom}。
+
+\subsection{ssh免输密码}
+
 默认情况下ssh命令的每次执行都需要输入密码以进行验证。scp命令基于ssh，也需要密码。有两种方法能够避免在使用ssh和scp时输入密码。
 
-\subsection{sshpass}
+\subsubsection{sshpass}
 sshpass工具可用于保存ssh密码。在ssh和scp命令前添加\verb+sshpass -p <password>+即可。
 
-\subsection{服务器端保存客户机公钥}
+\subsubsection{服务器端保存客户机公钥}
 首先，客户端需要生成自身的公钥和私钥，使用ssh-keygen命令,公私钥文件在生成后保存到客户机~/.ssh目录下。
 \begin{verbatim}
 ssh-keygen -t rsa
@@ -50,6 +60,7 @@ Missing privilege separation directory: /var/run/sshd
 \begin{verbatim}
 mkdir -p /var/run/sshd
 \end{verbatim}
+
 
 
 

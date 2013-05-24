@@ -1,64 +1,3 @@
-\section{网络流量测量}
-vnstat, sar, slurm, ifstat, system-monitor等工具可查看网卡总流量。iptraf，iftop可查看连接的流量。
-
-\subsection{简单测量}
-最原始的办法,是连续两次使用date;ifconfig命令,计算一定时间间隔内的数据量。
-也可以通过查看/proc/net/dev获取数据量。
-在Gnome3下,可以使用一个叫做netspeed的gnome shell插件。
-
-\subsection{vnstat工具}
-\begin{shellcmd}
-#-ru 0 使其以byte为单位,1使其以bit为单位.
-vnstat -l -ru 0 #持续采样 
-vnstat -tr #统计网速，5秒内的采样平均计算所得。
-\end{shellcmd}
-
-\subsection{iftop工具}
-显示带宽使用情况。3列显示，分别表示过去2s，10s，40s内的统计带宽。
-\begin{verbatim}
-iftop -h | [-nNpbBP] [-i interface] [-f filter code] [-F net/mask]
-\end{verbatim}
-例如：
-\begin{shellcmd}
-#-B表示以byte而非bit为单位,-P显示端口号
-sudo iftop -B -P 
-\end{shellcmd}
-工具默认自动将IP地址转换为主机名，会产生一定的DNS流量，扰乱测试。为讲其关闭，可使用-n命令。
-
-\subsection{sar工具}
-也可以使用sar工具.在Fedora下,sar工具位于sysstat软件包中.
-\begin{shellcmd}
-#最后的数字表示刷新时间间隔,单位为秒
-sar -n DEV 3 
-\end{shellcmd}
-
-\subsection{ifstat工具}
-\begin{shellcmd}
-ifstat -a
-\end{shellcmd}
-经我验证，sar统计的字节数为以太网层，包括其头部和尾部，不包括前导码和帧间隔。
-
-\subsection{ntop工具}
-Ntop是一种监控网络流量工具，用ntop显示网络的使用情况比其他一些网络管理软件更加直观、详细。Ntop甚至可以列出每个节点计算机的网络带宽利用率。它是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具；尤其当ntop与nprobe配合使用，其功能更加显著。它同时提供命令行输入和web页面，可应用于嵌入式web服务。跟 top 监视系统活动状况相似，ntop 是一个用来实时监视网络使用情况的工具。由于 ntop 具有 Web 界面模式，因此无论是配置还是使用都很容易在短时间之内快速上手。
-
-\subsection{iptraf工具}
-Interactive Colorful IP LAN Monitor。可查看每条连接的信息。
-\begin{verbatim}
-iptraf -i eth0
-\end{verbatim}
-
-
-\subsection{slurm工具}
- Simple Linux Utility for Resource Management，查看网络流量的一个工具。
- \begin{verbatim}
- slurm -i eth0
- \end{verbatim}
-
-彩色curse节目，有部分文字是白色，在浅色背景下看不清楚。
-
-
-
-
 \section{磁盘速率测量}
 关于磁盘负载的生成器，主要有iometer和dd。
 
@@ -285,26 +224,41 @@ Linux中使用logrotate命令进行日志转储。可以配合cron计划任务�
 
 
 
-\section{minicom串口配置}
+\section{Minicom}
 
-\begin{verbatim}
+\subsection{Minicom配置}
+
 创建或编辑配置文件，保存为/etc/minirc.Filename或/etc/minicom/minirc.Filename，因系统而异。
+\begin{lstlisting}[language=bash]
 minicom -s Filename
-\end{verbatim}
+\end{lstlisting}
 配置文件指定设备名、波特率等。Dell服务器的串口设备名为/dev/ttyS0, 4个USB接口的设备名为/dev/ttyUSB0-/dev/ttyUSB3。对于Hili的串口连接，要求码率为115200, 软、硬件流控制都设置为No。
 
+配置文件格式如下：
+\begin{lstlisting}
+    # Machine-generated file - use ``minicom -s'' to change parameters. 
+     pr port             /dev/ttyUSB0 
+     pu baudrate         115200 
+     pu bits             8 
+     pu parity           N 
+     pu stopbits         1 
+     pu rtscts           No
+\end{lstlisting}
 
-
-\begin{verbatim}
-按照指定配置文件，登录串口设备
+\subsection{Minicom登录}
+按照指定配置文件，登录串口设备:
+\begin{lstlisting}[language=bash]
 minicom Filename
-\end{verbatim}
-
+\end{lstlisting}
 
 minirc.dfl指定了默认配置，minicom命令不加任何参数时安装该文件进行初始化。
 
 登录后ctrl+a z显示各种快捷键选项，ctrl+a x退出并reset,ctrl+a q退出不reset。
 
+ssh远程登录并登录minicom，执行：
+\begin{lstlisting}[language=bash]
+ssh -t HOSTNAME minicom Filename
+\end{lstlisting}
 
 \section{RHEL网络配置}
 
@@ -338,22 +292,6 @@ DNS信息由/etc/resolv.conf配置
 127.0.0.1 localhost.localdomain localhost //该行强烈建议保留
 192.168.0.1 rhel.lpwr.net rhel //必须有三个字段：IP、FQDN、HOSTNAME
 \end{verbatim}
-
-
-\section{网络连接查询netstat}
-
-重要选项为：
-a 显示所有的socket，而不仅仅是监听套接字(默认为l)
-t TCP only
-u UDP only
-n 不将数字解析成名字，使用该选项能加速程序输出
-p 显示相关进程的PID和名字
-
-
-
-
-
-
 
 
 
@@ -455,31 +393,22 @@ yum search git
 \end{verbatim}
 易知git在yum系统中可能叫做git.i386.
 
-\section{SmartBits仪表使用}
-其测试客户端称为SmartWindow, 只能安装在Windows XP系统下，驱动程序选择7.x版本。需要输入序列号。
+\section{SSH便捷登录}
 
-打开SmartWindow后，选择connection set up,设置连接地址，即仪表的IP地址。其默认IP地址为192.168.1.121。然后执行连接操作，可以看到仪表正面面板图。在面板图上选择连线了的子板，执行reserve操作，相当于选中。然后可以右键进行各种测试了。
+\subsection{登录后执行命令}
+ssh命令后追加shell命令使得后者在目标主机执行后在本地打印，然后关闭ssh连接。如果需要保留在目标主机上，可以使用-t选项，并追加bash命令。
+\begin{lstlisting}[language=bash]
+   ssh HOSTNAME -t ``cd /somedir; bash'' 
+\end{lstlisting}
 
-发送数据时，需要确保对方的IP，MAC，PORT等设置正确。
+\subsection{ssh免输密码}
 
-统计速率，可用的子工具有smart counter，或右键某module选择display counter。统计的字节数为L2层，包括以太网头和尾（FCS），不包括帧前导和帧间隔，确定。
-
-抓包:SmartWindow界面，右击某module模块选择capture。
-
-每次更改设置时，smartbit可能会停止发包。可以查看光电转换模块的指示等判断smartbits是否仍然在发包。如果没有，需要重启smartbits。
-
-用完后，smartbit和光电转换模块都需关闭电源，以防损害设备。
-
-
-
-
-\section{SSH免密登录}
 默认情况下ssh命令的每次执行都需要输入密码以进行验证。scp命令基于ssh，也需要密码。有两种方法能够避免在使用ssh和scp时输入密码。
 
-\subsection{sshpass}
+\subsubsection{sshpass}
 sshpass工具可用于保存ssh密码。在ssh和scp命令前添加\verb+sshpass -p <password>+即可。
 
-\subsection{服务器端保存客户机公钥}
+\subsubsection{服务器端保存客户机公钥}
 首先，客户端需要生成自身的公钥和私钥，使用ssh-keygen命令,公私钥文件在生成后保存到客户机~/.ssh目录下。
 \begin{verbatim}
 ssh-keygen -t rsa
@@ -529,6 +458,7 @@ mkdir -p /var/run/sshd
 
 
 
+
 \section{Ubuntu系统服务}
 
 Ubuntu使用service命令来临时启动和停止服务。service是一个脚本，调用start,stop等可执行文件。
@@ -552,25 +482,6 @@ service --status-all
 将所有支持status命令的服务运行一遍
 \end{verbatim}
 
-\section{Tcpdump用法举例}
-
-\begin{verbatim}
-tcpdump -i eth0 host 192.168.130.10 'tcp' -w file.pcap
-tcpdump -r file.pcap >> file.txt
-\end{verbatim}
-注意，待写入的文件必须以pcap为后缀，否则tcpdump不能运行，报权限错误。
-
-c选项指定抓包数量，s选项指定抓包长度(以太网层)，比较实用。注意如果s选项指定的长度超过帧长，则只抓帧长。所谓帧长，如果是在Linux下运行pcap程序，是不包括L2 FCS的（以太网尾部CRC），这和Smartbit等测试仪表不一样。Smartbit等抓到FCS并统计到计数器中。sar也将FCS加入到计数器中，虽然Linux下的pcap抓不到FCS。Wireshark会判断操作系统只否能抓到FCS，但声称判断未必准确，可以手工告诉Wireshark一定有FCS。
-
-上述pcap文件也可以用wireshark打开。
-
-
- To print the start and end packets (the SYN and FIN packets) of each TCP conversation that involves a non-local host.
-\begin{verbatim}
-tcpdump 'tcp[tcpflags] & (tcp-syn|tcp-fin) != 0 and not src and dst net localnet'
-\end{verbatim}
-
-待补充
 \section{tftp服务器端安装}
 Ubuntu下，安装tftp-hpa。在/etc/default/tftp-hpa目录下配置。
 RHEL下，安装tftp-server。/etc/xinetd.d/tftp配置。守护进程名称为in.tftpd。

@@ -1,0 +1,16 @@
+
+
+PATH=/media/D/Nutstore/Softwares/ztoolkit/scripts:$PATH
+PATH=/usr/local/texlive/2012/bin/i386-linux:$PATH; 
+MANPATH=/usr/local/texlive/2012/texmf/doc/man:$MANPATH; export MANPATH
+INFOPATH=/usr/local/texlive/2012/texmf/doc/info:$INFOPATH; export INFOPATH
+export PATH
+alias z='. zcd'
+alias zsetoct='. zsetoct'
+# enable OCTEON SDK environment
+#if [ -d ~/sdk ];then
+#pushd ~/sdk 
+#. env-setup OCTEON_CN58XX
+#popd
+#fi
+

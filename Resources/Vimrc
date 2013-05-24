@@ -1,0 +1,98 @@
+
+"for latex-suite plugin
+filetype plugin on
+set shellslash
+set grepprg=grep\ -nH\ $*
+filetype indent on
+let g:tex_flavor='latex'
+
+
+"for coding style
+set nu
+"set foldmethod=indent
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
+"for reading Windows-created text files
+set fencs=utf-8,gb18030
+set fenc=gb18030
+
+"for sdcv
+nmap <C-k> : !sdcv <C-R>=expand("<cword>")<CR><CR>
+
+
+"for cscope
+if has("cscope")
+	set csprg=/usr/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+	elseif $CSCOPE_DB != ""
+		cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+
+nmap <F2>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <F2>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <F2>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <F2>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+nmap <F3>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <F3>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <F3>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <F3>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+"for exuberant ctags
+set tags=./tags,/usr/include/tags,/media/D/OCTEON-SDK/components_clean/tags
+
+
+
+"for omnicppcomplete
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_MayCompleteDot = 1
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_SelectFirstItem = 2
+
+set cot=menu
+
+"for doxygen-toolkit
+let g:DoxygenToolkit_authorName="Li Mingzhe" 
+
+"for pydiction 
+let g:pydiction_location = '~/.vim/complete-dict'
+"let g:pydiction_location = '~/.vim/after/ftplugin/pydiction/complete-dict'
+
+autocmd FileType python set omnifunc=pythoncomplete#Complete  
+
+"taglist
+let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+let Tlist_GainFocus_On_ToggleOpen = 1
+map <silent> <leader>tl :TlistToggle<cr>
+
+"quickfix
+nmap <F6> :cn<cr>
+nmap <F7> :cp<cr>
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-\section{Python脚本}
+\section{Python脚本常用功能}
 常用对象和函数
 \begin{verbatim}
 sys.argv
@@ -35,4 +35,29 @@ subprocess模块定义了Popen类，试图取代os.system,os.spawn,os.popen, pop
 pexpect包含的spawn类具有强大的交互功能，适用于ssh，scp等工具。
 
 如果需要非阻塞式地获取进程的输出，似乎只能用subprocess.Popen或pexpect.spawn。
+
+\section{Python科研仿真程序常用功能}
+
+\subsection{浮点除法}
+\begin{lstlisting}
+from __future__ import division
+\end{lstlisting}
+即可让除法默认为浮点除法。
+\subsection{随机数}
+random模块提供了random,uniform, shuffle等函数。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

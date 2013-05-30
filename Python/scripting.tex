@@ -1,16 +1,17 @@
 \section{Python脚本常用功能}
 常用对象和函数
-\begin{verbatim}
-sys.argv
-len(sys.argv)
-os.system()
-time.sleep()
-sys.exit()
-os.path.exists()
-os.path.isfile()
-os.path.split()
-os.path.basename()
-\end{verbatim}
+\begin{lstlisting}[language=Python]
+    sys.argv
+    len(sys.argv)
+    os.system()
+    time.sleep()
+    sys.exit()
+    os.path.exists()
+    os.path.isfile()
+    os.path.split()
+    os.path.basename()
+    __file__
+\end{lstlisting}
 
 \subsection{检查文件是否存在}
 os.path.isfile(filename)
@@ -21,8 +22,17 @@ fpath = commands.getoutput('which %s'% handler)
 if not (os.path.isfile(fpath) and os.access(fpath, os.X_OK)):
 \end{verbatim}
 \subsection{当前脚本名字}
+\begin{lstlisting}[language=Python]
 os.path.basename(sys.argv[0])
+os.path.basename(__file__)
 os.path.split(sys.argv[0])[1]
+\end{lstlisting}
+
+\subsection{当前路径}
+\begin{lstlisting}[language=Python]
+    os.path.dirname(__file__)
+\end{lstlisting}
+
 \subsection{执行外部程序}
 \begin{verbatim}
 os.system(cmd)

@@ -1,0 +1,21 @@
+\section{Gnuplot制图}
+ 需要准备好数据文件和程序文件。
+
+输出成图片
+\begin{lstlisting}
+set term png
+set output ``outputfilename.png''
+\end{lstlisting}
+
+输出成tex文件
+\begin{lstlisting}
+set term png
+set output ``filename.png''
+\end{lstlisting}
+
+作图：
+\begin{lstlisting}
+    datafile = ``datafilename.txt''
+    plot datafile using 1:2 #对前两列制图
+\end{lstlisting}
+

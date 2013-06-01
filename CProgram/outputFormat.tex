@@ -1,0 +1,52 @@
+\section{printf格式化输出}
+格式占位符的格式为：
+\begin{lstlisting}
+    %[parameter][flags][width][.precision][length]type
+\end{lstlisting}
+
+\begin{description}
+    \item[paramater]指\verb|n$|记法，代表参数列表中第n个参数，n的范围从1开始，至参数数量，如n越界则后果不可知。
+	如\lstinline!printf(``%2$d %2$#x; %1$d %1$#x'',16,17)!输出结果``17 0x11; 16 0x10''。
+    \item[flags]
+	\begin{description}
+	    \item[+]正数须前缀加号
+	    \item[-]宽度填充使用左对齐
+	    \item[\#]浮点数须带小数点，标准记数法后缀0须保留，八进制、十六进制数须前缀0,0x或0X。
+	    \item[0]宽度填充浮使用0而非空格。\lstinline!printf(``%05d'',3)!输出00003。
+	\end{description}
+    \item[width]最小宽度，不会截断过长的域。默认右对齐。宽度值可以用*代替，自动替换为下一个参数，如\lstinline!printf(``%*c\n'', 5, 'a');!显示为“    a”。	
+    \item[precision]浮点数的小数位数，字符串的显示长度，后面的被截断。具体值可以用*代替，自动替换为下一个参数，如\lstinline!printf(``%.*s\n'', 3, ``abcedf'');!显示为“abc”。	
+    \item[length]
+	\begin{description}
+	    \item[hh] 期待char类型。
+	    \item[h] 期待short类型。
+	    \item[l] 期待long类型。
+	    \item[ll] 期待long long类型。
+	    \item[L] 期待long double类型。
+	    \item[z] 期待size\_t类型。
+	\end{description}
+    \item[type]
+	\begin{description}
+	    \item[d,i]显示为十进制整型。 
+	    \item[f,F]显示为double类型的浮点表示。F将nan，inf显示为NAN，INF等。 
+	    \item[e,E]显示为double类型的标准记数法表示。E将记法中的e显示为E。
+	    \item[g,G]显示形式在浮点记法和标准记法之间自动选择。
+	    \item[p]期待void*类型的指针，显示形式取决于实现。
+	\end{description}
+
+\end{description}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

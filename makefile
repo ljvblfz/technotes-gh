@@ -33,16 +33,16 @@ all: $(TARGET) display
 doublemake: $(SOURCE_FILE) $(CHAP_FILES) makefile
 	xelatex $<
 	xelatex $<
-	cp $@ ~
 
 %.pdf: $(SOURCE_FILE) $(CHAP_FILES) makefile
 	xelatex $<
-	#latex2rtf -C utf8 technotes
-	cp $@ ~
 
 Chap_%.tex: %/*.tex
 	cat $^ > $@
 
+
+rtf:
+	latex2rtf -C utf8 technotes
 
 touch:
 	touch $(SOURCE_FILE)

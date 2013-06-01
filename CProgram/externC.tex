@@ -68,7 +68,7 @@ return 0;
 在C中引用C++语言中的函数和变量时，C++的头文件需添加extern "C"，但是在C语言中不能直接引用声明了extern "C"的该头文件，应该仅将C文件中将C++中定义的extern "C"函数声明为extern类型。
 
 例如三个文件的源代码如下：
-\begin{lstlisting}
+\begin{lstlisting}[language=C++]
  //C++头文件 cppExample.h
 #ifndef CPP_EXAMPLE_H
 #define CPP_EXAMPLE_H

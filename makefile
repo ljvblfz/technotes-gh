@@ -1,5 +1,4 @@
 
-TARGET = technotes.pdf
 
 CHAPTERS = \
 Algorithm \
@@ -19,10 +18,13 @@ ShellPrograms \
 SystemPlatforms \
 WindowsPC \
 
-CHAP_FILES = $(CHAPTERS:%=Chap_%.tex)
 
 BACKUP_DIR = /media/D/Yunio
+
 SOURCE_FILE = technotes.tex
+CHAP_FILES = $(CHAPTERS:%=Chap_%.tex)
+DEPEND_FILES = thebib.tex makefile
+TARGET = technotes.pdf
 
 .PHONY: backup
 .PHONY: display 
@@ -30,11 +32,11 @@ SOURCE_FILE = technotes.tex
 
 all: $(TARGET) display
 
-doublemake: $(SOURCE_FILE) $(CHAP_FILES) makefile
+doublemake: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES) 
 	xelatex $<
 	xelatex $<
 
-%.pdf: $(SOURCE_FILE) $(CHAP_FILES) makefile
+%.pdf: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES) 
 	xelatex $<
 
 Chap_%.tex: %/*.tex

@@ -11,6 +11,8 @@
 \usepackage{ifthen}
 \usepackage{color,fancyvrb}
 \usepackage{listings}
+\usepackage{syntonly}
+\usepackage{makeidx}
 
 \CustomVerbatimEnvironment{shellcmd}{Verbatim}
 {frame=single,rulecolor=\color{blue},framerule=3pt,framesep=1pc,fillcolor=\color{yellow}}
@@ -22,15 +24,19 @@
 \renewcommand{\bibname}{\begin{center} \sffamily 参考文献 \end{center}}
 \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 \renewcommand{\contentsname}{\sffamily 目录}
-\title{\sffamily 技术笔记}
+\newcommand{\bookname}{技术笔记}
+\title{\sffamily \bookname}
 \author{李明哲}
 \date{\today}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{1}
 
 \begin{document}
 
 \maketitle
+\addcontentsline{toc}{part}{目录}
 \tableofcontents
+\listoffigures
+\listoftables
 
 \titleformat{\part}{\huge\raggedright\sffamily}{第\thepart 部分}{1em}{}
 \titleformat{\chapter}{\Large\raggedright\sffamily}{第\thechapter 章}{1em}{}
@@ -77,30 +83,7 @@
 \chapter{算法}
 \input{Chap_Algorithm}
 
-
-\begin{thebibliography}{99}
-    \bibitem {acp} Donald Knuth, 计算机程序设计的艺术，Volume 3, 第二版，国防工业出版社.2003
-    \bibitem {pp} Jon Bentley著, 黄倩译，编程珠玑，第二版，人民邮电出版社，2008
-    \bibitem {ita} Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 算法导论，中文第二版，机械工业出版社
-    \bibitem {sedgewick} Robert Sedgewick, Algorithm, Ed4, Addison-Wesley
-    \bibitem {wikipedia}wikipedia 
-    \bibitem {weijipedia} 维基百科
-    \bibitem {pie} Eric Giguere, John Mongan.\emph{Programming Interviews Exposed, 3rd Edition}. John Wileys \& Sons, Inc .
-    \bibitem {pibible} 欧立奇，刘洋，段韬.\emph{程序员面试宝典, 第3版}. 电子工业出版社，2011.4 
-    \bibitem {bop} 微软编程之美小组.\emph{编程之美}.电子工业出版社，2008.
-    \bibitem {ita} 算法导论，第二版，电子工业出版社
-    \bibitem {ms100}微软面试100题，结构之法算法之道博客
-    \bibitem {sword}何海涛，剑指offer，第1版，电子工业出版社
-    \bibitem {refractor}重构
-    \bibitem {self}本笔记。
-    \bibitem {tcpipill}W. Richard Stevens, TCP/IP Illustrated, Volume 1
-    \bibitem {krc}Brian W.Kernighan, Dennis M.Ritchie,C程序设计语言，第2版，徐宝文译，机械工业出版社
-
-\end{thebibliography}
-
-
-
-
+\input{thebib}
 
 
 \end{document}

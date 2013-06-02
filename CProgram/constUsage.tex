@@ -1,0 +1,16 @@
+\section{const修饰符}
+\subsection{const用途}
+\begin{itemize}
+    \item 定义const常量
+    \item 修饰函数参数和返回值
+    \item 修饰函数体(C++ only)，定义恒态函数，不改动成员变量，除非成员变量使用了mutable修饰符
+\end{itemize}
+
+\subsection{C与C++的区别}
+\begin{itemize}
+    \item C默认const是外部连接的，而C++则默认是内部连接的。C++不允许\verb|const int a;|这种写法，而C中相当于声明语句\verb|extern const int a;|
+    \item C中const量总是占用内存，且全局可见，不能当作编译期间的常量(如定义数组长度)。因此C中const用途非常有限。
+\end{itemize}
+
+
+

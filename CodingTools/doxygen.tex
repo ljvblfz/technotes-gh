@@ -5,10 +5,10 @@ http://www.stack.nl/~dimitri/doxygen/index.html
 http://sourceforge.net/projects/doxygen/
 \end{verbatim}
 
-\begin{shellcmd}
+\begin{lstlisting}
 doxygen -g
 doxygen Doxyfile
-\end{shellcmd}
+\end{lstlisting}
 
 要点：
 \begin{enumerate}
@@ -23,8 +23,10 @@ doxygen Doxyfile
 \end{enumerate}
 
 在vim中安装doxygen-toolkit插件，常用命令包括
-\begin{verbatim}
-:Dox
-生成函数注释
-\end{verbatim}
+\begin{description}
+    \item[:Dox]生成函数或类的注释
+    \item[:DoxLic]生成GPL版权信息
+    \item[:DoxAuthor]生成作者信息
+\end{description}
+
 

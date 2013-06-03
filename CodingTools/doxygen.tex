@@ -25,8 +25,22 @@ doxygen Doxyfile
 在vim中安装doxygen-toolkit插件，常用命令包括
 \begin{description}
     \item[:Dox]生成函数或类的注释
-    \item[:DoxLic]生成GPL版权信息
+    \item[:DoxLic]生成版权信息，默认为GPL
     \item[:DoxAuthor]生成作者信息
 \end{description}
+
+为配置该插件，可在.vimrc中加以配置:
+\begin{lstlisting}
+"for doxygen-toolkit
+let g:DoxygenToolkit_authorName="Li Mingzhe, limz@dsp.ac.cn" 
+let s:licenseTag = "Copyright(C) National Network New Media Engineering Center(3NM)\<enter>\<enter>"
+let s:licenseTag = s:licenseTag . "All rights reserved. 3NM’s source code is an unpublished work and the\<enter>"
+let s:licenseTag = s:licenseTag . "use of a copyright notice does not imply otherwise. This source code contains\<enter>"
+let s:licenseTag = s:licenseTag . "confidential, trade secret material of 3NM, Inc. Any attempt or participation\<enter>"
+let s:licenseTag = s:licenseTag . "in deciphering, decoding, reverse engineering or in any way altering the source\<enter>"
+let s:licenseTag = s:licenseTag . "code is strictly prohibited, unless the prior written consent of 3NM\<enter>"
+let s:licenseTag = s:licenseTag . "is obtained.\<enter>"
+\end{lstlisting}
+
 
 

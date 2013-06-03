@@ -44,7 +44,7 @@ service ssh start/stop/status
 /etc/init.d/ssh start/stop/status
 \end{verbatim}
 
-如果希望开机时不自动启动sshd，只有需要用时才开启sshd，目前找到的办法是:破坏\verb+/etc/init/ssh.conf+文件，如将其重命名，或将exec语言破坏。
+Ubuntu上默认sshd开机启动。如果希望开机时不自动启动sshd，只有需要用时才开启sshd，目前找到的办法是:破坏\verb+/etc/init/ssh.conf+文件，如将其重命名，或将exec语言破坏。
 这样，sshd将脱离service命令的管理。需要临时开启时，执行
 \begin{verbatim}
 /usr/sbin/sshd 或者
@@ -60,6 +60,12 @@ Missing privilege separation directory: /var/run/sshd
 \begin{verbatim}
 mkdir -p /var/run/sshd
 \end{verbatim}
+
+Centos上sshd开机不启动。如需开机启动，需要
+\begin{verbatim}
+chkconfig sshd
+\end{verbatim}
+
 
 
 

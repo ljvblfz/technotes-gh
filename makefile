@@ -38,6 +38,7 @@ doublemake: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES)
 
 %.pdf: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES) 
 	xelatex $<
+	cp $@ /media/D/Nutstore/BookShelf/
 
 Chap_%.tex: %/*.tex
 	cat $^ > $@

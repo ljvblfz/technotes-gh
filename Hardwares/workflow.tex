@@ -1,0 +1,77 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[top=1in,bottom=1in,left=1.2in,right=1.2in]{geometry}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+\usepackage{indentfirst} 
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{rotating}
+\setCJKmainfont[ItalicFont={KaiTi}]{SimSun}
+\setCJKsansfont{SimHei}
+\setCJKfamilyfont{hei}{SimHei}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{fit}
+\usetikzlibrary{positioning}
+\usepgflibrary{plotmarks}
+
+\usetikzlibrary{shapes.geometric}
+
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+\renewcommand{\figurename}{图} 
+\title{\sffamily 基于SE的B接口设计概要}
+\author{李明哲}
+\date{\today}
+
+
+
+\begin{document}
+
+\tikzset{ box/.style={
+rectangle, minimum width=1.3cm,very thick, draw=gray!50!black!50, text centered,
+text width=0.2\textwidth, top color=white, bottom color=gray!50!black!20},
+diamondbox/.style={diamond, 
+draw=gray!50!black!, top color=white, bottom color=gray!50!black!10,
+minimum width=3cm, minimum height=1.5cm, very thick, inner sep=0pt, text centered},
+ellipbox/.style={ellipse,minimum width=1.3cm, minimum height=.8cm, draw=gray!50!black!, very thick, text width=0.07\textwidth, inner sep=0pt},
+every node/.style={text badly centered, font=\footnotesize}
+}
+
+%自定义命令：用于流程图判断语句
+\newcommand{\abovelabel}[1]{node[near start, above, text width=20mm]{#1}}
+\newcommand{\rightlabel}[1]{node[midway, right]{#1}}
+
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+	\matrix[row sep=8mm, column sep=30mm]
+	{
+            &\node[box](cpu){CPU};&\node[box](cache){高速缓存};\\
+            \node[box](graphic card){显卡槽};&\node[box](north){北桥};&\node[box](mem){内存};\\
+            \node(ata){ATA};&\node(south1){};&\node(ide){IDE};\\
+            \node(isa){ISA};&\node(south2){};\\
+            \node[box](flash rom){Flash Rom};&&\node[box](super io){Super I/O};\\
+	};
+
+	\begin{scope}[every path/.style={draw, thick}]
+            \path (cpu) -- (north) \rightlabel{FSB}; 
+            \path (cpu) -- (cache) \abovelabel{BSB}; 
+            \path (graphic card) -- (north) \abovelabel{高速图形总线(PCI-E或AGP)} -- (mem) \abovelabel{内存总线}; 
+            \path (north) -- (south1) \rightlabel{桥间总线}; 
+	\end{scope}
+        
+        \node[box, fit=(south1)(south2)](south){南桥};
+
+    \end{tikzpicture}
+    \caption{MainBoard}
+\end{figure}
+
+
+
+
+\end{document}
+

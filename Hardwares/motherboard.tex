@@ -62,21 +62,9 @@ AMD在Athlon 64时代将内存总线整个拿掉，直接设计到处理器中�
 
 \subsection{HyperTransport}
 
-HyperTransport技术，简称“HT总线”，以前曾被称作“闪电数据传输”（Lightning Data Transport，LDT），是一种高速、双向、低延时、点对点的、串行或者并行的高带宽连接总线技术，于2001年4月2日开始投入使用。旨在提高个人计算机、服务器、嵌入式系统，以及网络和电信设备内集成电路之间的通信速度。该技术有助于减少系统之中的布线数量，从而能够减少系统瓶颈，让当前速度更快的微处理器能够更加有效地在高端多处理器系统中使用系统内存。由HyperTransport联合会（The HyperTransport Consortium）负责改进和发展此技术。AMD和全美达公司把这项技术应用在x86处理器上，而PMC-Sierra、Broadcom（博通）和Raza Microelectronics则把它应用在MIPS（一种RISC微处理器架构）微处理器上；除微处理器应用之外，AMD、NVIDIA、VIA和SiS把它用于PC主板的芯片组；惠普、Sun Microsystems、IBM、和IWill把它用于服务器领域；Cray、Newisys、 和QLogic把它用于高性能计算；CISCO Systems（思科）把它用于路由器领域。应该引起关注的是以上名单中唯独少了半导体巨头Intel，它继续选择使用一种共享的总线架构，但在Intel新的Nehalem架构（如Core i7）中内置了内存控制器。
+HyperTransport技术，简称“HT总线”，以前曾被称作“闪电数据传输”（Lightning Data Transport，LDT），是一种高速、双向、低延时、点对点的、串行或者并行的高带宽连接总线技术，于2001年4月2日开始投入使用。旨在提高个人计算机、服务器、嵌入式系统，以及网络和电信设备内集成电路之间的通信速度。该技术有助于减少系统之中的布线数量，从而能够减少系统瓶颈，让当前速度更快的微处理器能够更加有效地在高端多处理器系统中使用系统内存。由HyperTransport联合会（The HyperTransport Consortium）负责改进和发展此技术。AMD和全美达公司把这项技术应用在x86处理器上，而PMC-Sierra、Broadcom（博通）和Raza Microelectronics则把它应用在MIPS（一种RISC微处理器架构）微处理器上；除微处理器应用之外，AMD、NVIDIA、VIA和SiS把它用于PC主板的芯片组；惠普、Sun Microsystems、IBM、和IWill把它用于服务器领域；Cray、Newisys、 和QLogic把它用于高性能计算；CISCO Systems（思科）把它用于路由器领域。应该引起关注的是以上名单中唯独少了半导体巨头Intel，它继续选择使用一种共享的总线架构，但在Intel新的Nehalem架构（如Core i7）中内置了内存控制器，相较于以往的Intel平台性能有显著的提升。
 
-
-具体应用有：
-\begin{description}
-	\item[替代前端总线]The primary use for HyperTransport is to replace the front-side bus, which is currently different for every type of machine. For instance, a Pentium cannot be plugged into a PCI Express bus. To expand the system, the proprietary front-side bus must connect through adapters for the various standard buses, like AGP or PCI Express. These are typically included in the respective controller functions, namely the northbridge and southbridge.
-
-		In contrast, HyperTransport is an open specification, published by a multi-company consortium. A single HyperTransport adapter chip will work with a wide spectrum of HyperTransport enabled microprocessors. For example, Broadcom HT-1000 and HT-2000 server controller devices can work with many different HyperTransport enabled microprocessors.
-
-		AMD uses HyperTransport to replace the front-side bus in their Opteron, Athlon 64, Sempron 64, Turion 64, Phenom, Phenom II and FX families of microprocessors.
-	\item[多处理器]Another use for HyperTransport is as an interconnect for NUMA multiprocessor computers. AMD uses HyperTransport with a proprietary cache coherency extension as part of their Direct Connect Architecture in their Opteron and Athlon 64 FX (Dual Socket Direct Connect (DSDC) Architecture) line of processors. The HORUS interconnect from Newisys extends this concept to larger clusters. The Aqua device from 3Leaf Systems virtualizes and interconnects CPUs, memory, and I/O.
-	\item[路由器和交换机]
-	\item[协处理器连接]
-	\item[扩展设备]
-\end{description}
+HyperTransport技术的出现是由于CPU的性能已经发展到一定的极限，而AMD又无法再将时钟频率往上拉升，便开始以其他方式增加CPU性能。[来源请求]AMD的HT技术是由许多公司共同开发。
 
 
 \begin{figure}[htb]

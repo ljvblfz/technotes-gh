@@ -138,20 +138,25 @@ SATA与原来的IDE相比有很多优越性，最明显的就是数据线从80 p
 \subsection{NCQ}
 原生指令排序(Native Command Queuing，简称NCQ)，原先是改善服务器硬盘存取控制技术,应用在SCSI和SATA 1.0/2.0/3.0接口硬盘读写的加速技术，其接口开启磁盘阵列RAID亦有所提升。透过硬盘固件、硬盘控制器以及操作系统三者的互相配合，改善硬盘内部磁区的读取顺序，可以提高硬盘效能，亦能够轻微减轻硬盘损耗的速率。NCQ对用于服务器上的硬盘的效率提升尤为明显。
 
-\subsection{SCSI和SAS}
+\subsection{SCSI}
 小型计算机系统接口（SCSI，Small Computer System Interface）是一种用于计算机及其周边设备之间（硬盘、软驱、光驱、打印机、扫描仪等）系统级接口的独立处理器标准。SCSI标准定义了命令、通信协定以及实体的电气特性（换成OSI的说法，就是占据了实体层、链接层、通信层、应用层），最大部份的应用是在存储设备上（例如硬盘、磁带机）；但，其实SCSI可以连接的设备包括有扫描仪、光学设备（像CD、DVD）、打印机……等等，SCSI命令中有条列出支持的设备SCSI周边设备。理论上，SCSI不可能连接所有的设备，所以有“1Fh - unknown or no device type”这个参数存在。
+
 SCSI-1是最初版本的SCSI，现已过时。SCSI-1具有8位BUS，数据传输率为40 Mbps(5MB/sec)。
 
 SCSI-2是基于CCS的SCSI-1改进版本，由18条基本命令组成，可以运行在所有的硬件平台上。在Fast SCSI和Wide SCSI的支持下，SCSI-2在原SCSI-1的基础上传输速率得到了提高。命令串行特性使得SCSI设备能够以最有效的顺序运行命令。Fast SCSI的传输速率为10 MB/sec，当配合16位BUS时，其传输速率为20 MB/sec（Fast-Wide SCSI）。
 
 SCSI-3是SCSI标准的首个平行界面标准，由Adaptec及SCSITA于1992年制定。SCSI-3在8-bit的线路亦可有20MB/s的速度，而在16-bit的环境亦可有40MB/s。不过，仪器的距离必须在3米（3M）以内。 SCSI-3在SCSI-2基础上有了很多提高，如串行SCSI。通过6芯同轴电缆，其传输速率达到100 MB/sec。SCSI-3解决了旧SCSI版本中存在的终结和延迟问题。此外通过即插即用（plug-and-play）操作，自动分配SCSI ID和终结，使SCSI安装更为容易。与SCSI-2支持8台设备相比，SCSI-3能支持32台设备。 SCSI-3改变了文档结构。它不是指用以处理所有不同层和电气接口（electrical interface）的单个文档，而是涵盖物理层、有关电接口基本协议、基本命令设置层（SPC）以及特殊协议层等的文档集合。例如，这个特定协议层文档包含块命令（SBC：Block Command） 中的硬盘接口命令、磁带设备的流命令（SSC）、RAID阵列的控制命令（SCC）、多媒体命令（MMC）、媒体切换命令（MCC：Media Changer Command）以及箱体服务命令（SES：enclosure services Command）。关于此SCSI-3中有一个全面的体系结构模型（SAM）。 当今，SCSI-3单元采用Ultra-Wide和Ultra SCSI类型的驱动器。Ultra SCSI具有8位BUS，其传输速率为20 MB/sec。Ultra-Wide SCSI具有16位BUS，其传输速率达到40 MB/sec。
 
+\subsection{SAS}
 串行式SCSI（SAS：Serial Attached SCSI）是一种电脑集线的技术，其功能主要是作为周边零件的数据传输，例如：硬盘、CD-ROM等设备而设计的界面。串行式SCSI 由并行SCSI物理存储接口演化而来，是由ANSI INCITS T10技术委员会（T10 committee）开发及维护的新的存储接口标准。与并行方式相比，串行方式能提供更快速的通信传输速度以及更简易的配置。此外SAS并支持与串行式ATA（SATA）设备兼容，且两者可以使用相类似的电缆。
+
 SAS是点对点（point-to-point）连接，并允许多个端口集中于单个控制器上，其可以自带于主板（mother board）当中；也可另外添加。该技术创建在强大的并行SCSI通信技术基础上。SAS是采用SATA兼容的电缆线采取点对点连接方式，从而在计算机系统中不需要创建雏菊链结（daisy-chaining）方式便可简单地实现线缆安装。
+
 第一代SAS为数组中的每个驱动器提供 3.0 Gbps（300 MBps）的传输速率。
+
 第二代SAS为数组中的每个驱动器提供 6.0 Gbps（600 MBps）的传输速率。
 
-SAS由3种类型协议组成，根据连接的不同设备使用相应的协议进行数据传输。
+SAS由3种类型协议组成，根据连接的不同设备使用相应的协议进行数据传输:
 串行SCSI协议 (SSP) — 用于传输SCSI命令。
 SATA通道协议 (STP) — 用于传输SATA数据。
 SCSI管理协议 (SMP) — 用于对SAS设备的维护和管理。
@@ -164,12 +169,69 @@ SAS的接口技术可以向下兼容SATA。具体来说，二者的兼容性主�
 LPC总线，原名叫Low pin count Bus，是在IBM PC兼容机中用于把低带宽设备和“老旧”连接到CPU上。那些常见低速设备有：BIOS，串口，并口，PS/2的键盘和鼠标，软盘控制器，比较新的设备有可信平台模块。LPC总线通常和主板上的南桥物理相连，南桥在IBM PC AT平台上通常连接了一系列的“老旧”设备，例如两个可编程中断控制器， 可编程计时器和两个 ISA DMA 控制器。 LPC总线是Intel在1998时作为工业标准架构体系（ISA）的替代品引入，它与ISA在软件层面是类似的，尽管在物理层面是有着巨大不同的，ISA是16比特宽，8.33 MHz的总线，而它是4比特宽，有着四倍频率（33.3 MHz）的总线。 LPC总线最大的优点是只需要7个信号，在拥挤的现代主板上是很容易布局的。
 
 
+\subsection{USB}
+
+通用串行总线（英语：Universal Serial Bus，缩写USB）是连接计算机系统与外部设备的一种串口总线标准，也是一种输入输出接口的技术规范，被广泛地应用于个人电脑和移动设备等信息通讯产品，并扩展至摄影器材、数字电视（机顶盒）、游戏机等其它相关领域。
+
+多媒体电脑刚问世时，外接式设备的传输界面各不相同，如打印机只能接LPT port、调制解调器只能接RS232、鼠标键盘只能接PS/2等。繁杂的界面系统，加上必须安装驱动程序并重启才能使用的限制，都不免造成用户的困扰。因此，创造出一个统一且支持热插拔的外接式传输界面，便成为无可避免的趋势。
+USB最初是由英特尔与微软倡导发起，其最大的特点是支持热插拔和即插即用。当设备插入时，主机枚举到此设备并加载所需的驱动程序，因此在使用上远比PCI和ISA总线方便。
+USB在速度上远比并行端口（例如EPP、LPT）与串行接口（例如RS-232）等传统电脑用标准总线快上许多。USB 1.1的最大传输带宽为12Mbps，USB 2.0的最大传输带宽为480Mbps。USB 3.0为5Gbps。
+
+USB的设计为非对称式的，它由一个主机控制器和若干通过集线器设备以树形连接的设备组成。一个控制器下最多可以有5级Hub，包括Hub在内，最多可以连接128个设备，因为在设计时是使用7位寻址字段，二的七次方就等于128，一般人说USB连接127个是指连接（某一设备）时需扣除一个连接主机的USB接头，而一台计算机可以同时有多个控制器。和SPI-SCSI等标准不同，USB集线器不需要终结器。
+
+USB的连接器分为A、B两种，分别用于主机和设备；其各自的小型化的连接器是Mini-A和Mini-B，另外还有Mini-AB（可同时支持Mini-A及Mini-B）的插口。
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[keepaspectratio,width=0.5\paperwidth]{USB_types_2.jpg}
+	\end{center}
+	\caption{USB连接器类型}
+	从左到右分别为：非USB(私有)，mini-B plug, B plug, A receptacle, A plug。
+	\label{fig:USBconnectors}
+\end{figure}
+
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[keepaspectratio,width=0.5\paperwidth]{Mini_usb_AB.jpg}
+	\end{center}
+	\caption{USB mini连接器类型}
+	从左到右分别为：mini-A plug，mini-B plug。
+	\label{fig:USBconnectors}
+\end{figure}
+
+USB可以连接的外设有鼠标、键盘、游戏手柄、游戏杆、扫描仪、数码相机、打印机、硬盘和网络部件。对数码相机这样的多媒体外设USB已经是缺省接口；由于大大简化了与计算机的连接，USB也逐步取代并行接口成为打印机的主流连接方式。2004年已经有超过1亿台USB设备；到2007年时，高清晰度数字视频外设是仅有的USB未能染指的外设类别，因为他需要更高的传输速率。
+
+现USB标准中，统一为USB 3.0，理论可以向下兼容。一般产商同时提供USB 3(以蓝色特别标示)与USB 2接口，不提供向下兼容USB 2的USB 3接口。
+
+USB实装论坛（USB Implementers Forum，USB-IF）负责USB标准制订，其成员包括：苹果电脑、惠普、NEC、微软和英特尔。
+
+2001年底，USB-IF公布了USB 2.0规范，增加更高的数据传输速率480 Mbit/s（现在称作Hi-Speed）。与之前的USB 0.9、USB 1.0和USB 1.1一样，该规范完全向后兼容。随后，USB-IF公布了USB On-The-Go（USB OTG，当前版本：1.0a）作为USB 2.0规范的补充标准，使其能够用于在便携设备之间直接交换数据。
+
+2007年1月4日，USB-IF颁布了Micro-USB的插头标准。该标准将在许多新型智能手机和PDA上替代Mini-USB。Micro-USB插头的插拔寿命为10,000次，比Mini-USB插头高度减半，宽度相差无几。OMTP组织最近宣布，Micro-USB将成为移动设备数据和电源的标准接口。
+
+USB 3.0于2008年11月释出。USB 3.0支持全双工，比USB 2.0多了数个触点，并采用发送列表区段来进行数据发包。USB 3.0暂定的供电标准为900mA，且支持光纤传输，设计“Super Speed”传输速度为5Gbit/s，若采用光纤则可达到25Gbit/s。USB 3.0的设计兼容USB 2.0与USB 1.1版本，并采用了三级多层电源管理技术，可以为不同设备提供不同的电源管理方案。
 
 
 
-\subsection{USB1.0}
 \subsection{USB2.0}
 \subsection{USB3.0}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

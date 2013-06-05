@@ -41,7 +41,7 @@ every node/.style={text badly centered, font=\footnotesize}
 }
 
 %自定义命令：用于流程图判断语句
-\newcommand{\abovelabel}[1]{node[near start, above, text width=20mm]{#1}}
+\newcommand{\abovelabel}[1]{node[midway, above, text width=20mm]{#1}}
 \newcommand{\rightlabel}[1]{node[midway, right]{#1}}
 
 
@@ -52,9 +52,12 @@ every node/.style={text badly centered, font=\footnotesize}
 	{
             &\node[box](cpu){CPU};&\node[box](cache){高速缓存};\\
             \node[box](graphic card){显卡槽};&\node[box](north){北桥};&\node[box](mem){内存};\\
-            \node(ata){ATA};&\node(south1){};&\node(ide){IDE};\\
-            \node(isa){ISA};&\node(south2){};\\
-            \node[box](flash rom){Flash Rom};&&\node[box](super io){Super I/O};\\
+            \node(usb){USB设备};&\node(south1){};&\node(ide){IDE硬盘};\\
+            \node(isa){ISA设备(过时)};&\node(south2){};&\node(sata){SATA硬盘};\\
+            \node(pci slots){PCI槽};&\node(south3){};&\node(onboard graph){Onboard显卡控制器};\\
+            \node(phy){以太网};&\node(south4){};&\node(audio){声卡};\\
+            \node(cmos){CMOS内存};&\node(south5){};&\node[box](flash rom){Flash Rom};\\
+            &\node[box](super io){Super I/O};\\
 	};
 
 	\begin{scope}[every path/.style={draw, thick}]
@@ -62,15 +65,19 @@ every node/.style={text badly centered, font=\footnotesize}
             \path (cpu) -- (cache) \abovelabel{BSB}; 
             \path (graphic card) -- (north) \abovelabel{高速图形总线(PCI-E或AGP)} -- (mem) \abovelabel{内存总线}; 
             \path (north) -- (south1) \rightlabel{桥间总线}; 
+	    \path (usb) -- (south1) \abovelabel{USB总线}-- (ide) \abovelabel{IDE总线};
+	    \path (isa) -- (south2) \abovelabel{ISA总线}-- (sata) \abovelabel{?总线};
+	    \path (pci slots) -- (south3) \abovelabel{PCI总线}-- (onboard graph) \abovelabel{PCI总线};
+	    \path (phy) -- (south4) \abovelabel{PCI等总线}-- (audio) \abovelabel{总线};
+	    \path (cmos) -- (south5) \abovelabel{PCI等总线} -- (flash rom) \abovelabel{LPC总线};
+	    \path (south5) -- (super io) \rightlabel{LPC总线};
 	\end{scope}
         
-        \node[box, fit=(south1)(south2)](south){南桥};
+        \node[box, fit=(south1)(south5)](south){南桥};
 
     \end{tikzpicture}
     \caption{MainBoard}
 \end{figure}
-
-
 
 
 \end{document}

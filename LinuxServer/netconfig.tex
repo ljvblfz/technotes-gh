@@ -24,8 +24,13 @@ GATEWAY=192.168.0.254 //设置默认网关
 \begin{verbatim}
 /etc/init.d/network restart
 \end{verbatim}
+或者
+\begin{verbatim}
+service network restart
+\end{verbatim}
 
-DNS信息由/etc/resolv.conf配置
+DNS信息由/etc/resolv.conf配置，重启后可能会被覆盖。
+
 \begin{verbatim}
 127.0.0.1 localhost.localdomain localhost //该行强烈建议保留
 192.168.0.1 rhel.lpwr.net rhel //必须有三个字段：IP、FQDN、HOSTNAME

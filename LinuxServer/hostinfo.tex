@@ -1,7 +1,15 @@
-\section{主机硬件与OS信息查询}
-\subsection*{查询主机名称}
-hostname命令可以查询主机名称。但是很多主机的名称都取作localhost
-\subsection*{Linux内核版本}
+\section{主机信息查询与修改}
+
+\subsection{主机名称查询与修改}
+hostname命令可以查询主机名称。但是很多主机的名称都取作localhost。
+Ubuntu主机名需要在/etc目录下hostname和hosts两个文件下修改，Centos6.4主机名通过/etc/sysconfig/network文件修改。
+
+\begin{lstlisting}
+	HOSTNAME=vss-dev1   
+\end{lstlisting}
+
+
+\subsection{Linux内核版本}
 \begin{shellcmd}
 cat /proc/version:查询内核信息
 uname -r：查询Linux内核版本号

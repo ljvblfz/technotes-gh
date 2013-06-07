@@ -1,0 +1,12 @@
+\section{Centos安装与配置}
+环境：Dell R720, CentOS6.4。
+
+放入光盘后进入BIOS，选择光驱启动。执行安装。
+
+安装后，首先临时配置IP地址，打开sshd(chkconfig)。远程登录，配置外网IP，DNS，网关等信息。源信息在/etc/yum.repos.d目录下，默认源似乎已经很快，无需修改。将/etc/yum.conf的keepcache选项可以改为1, 使得安装后不删除rpm文件。默认没有安装minicom, git, gcc, gcc-c++, tftp-server, sysstat(提供sar)，subversion, emacs等软件, 但java和python俱已安装。
+
+
+
+
+
+

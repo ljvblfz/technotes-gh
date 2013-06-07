@@ -22,7 +22,7 @@ WindowsPC \
 BACKUP_DIR = /media/D/Yunio
 
 SOURCE_FILE = technotes.tex
-CHAP_FILES = $(CHAPTERS:%=Chap_%.tex)
+CHAP_FILES = $(CHAPTERS:%=Chap-%.tex)
 DEPEND_FILES = thebib.tex makefile
 TARGET = technotes.pdf
 
@@ -36,11 +36,11 @@ doublemake: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES)
 	xelatex $<
 	xelatex $<
 
-%.pdf: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES) 
+$(TARGET): $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES)
 	xelatex $<
 	cp $@ /media/D/Nutstore/BookShelf/
 
-Chap_%.tex: %/*.tex
+Chap-%.tex: %/*.tex
 	cat $^ > $@
 
 

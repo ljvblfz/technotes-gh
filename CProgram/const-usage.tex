@@ -14,3 +14,10 @@
 
 
 
+
+一般而言，定义引用(reference)须用相同类型的变量作初始化，但const引用则可以用一般右值进行初始化。
+\begin{lstlisting}
+    int i = 3;
+    int &t = i;
+    const int &r = i + 6;
+\end{lstlisting}

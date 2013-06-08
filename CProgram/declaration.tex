@@ -1,0 +1,64 @@
+\section{复杂的C语言声明语法}
+
+\subsection{声明的语法构成}
+以下内容为声明语句的语法构成，选自《C专家编程》
+\begin{lstlisting}
+声明语句：
+至少一个类型说明符(type-specifier) 存储类型(storage-class) 类型限定符(type-qualifier) 一个或多个声明器(declarator) 一个分号
+
+声明器：
+指针 直接声明器 初始化内容
+
+\end{lstlisting}
+
+类型说明符：
+\begin{enumerate}
+    \item char, short, int, long, double, float, signed, unsigned, void 
+    \item 结构说明符(struct-specifier)
+    \item 枚举说明符(enum-specifier)
+    \item 联合说明符(union-specifier)
+\end{enumerate}
+
+存储类型：extern, static, register, auto, typedef
+
+类型限定符：const, volatile
+
+指针(星号，后面可有volatile或/和const符号，顺序不限)：
+\begin{lstlisting}
+    * [volatile][const]
+\end{lstlisting}
+
+直接声明器：
+\begin{enumerate}
+    \item 标识符
+    \item 标识符[下标]
+    \item 标识符(参数)
+    \item (声明)
+\end{enumerate}
+
+初始化内容：\verb|=初始值|
+
+\subsection{声明语句的解析}
+声明语句分解的优先级规则为：
+\begin{itemize}
+    \item 从最左标识符开始读取
+    \item 优先级从高到低依次是： 
+    \item const和 
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,7 +8,6 @@
 
 声明器：
 指针 直接声明器 初始化内容
-
 \end{lstlisting}
 
 类型说明符：
@@ -43,11 +42,15 @@
 \begin{itemize}
     \item 从最左标识符开始读取
     \item 优先级从高到低依次是： 
-    \item const和 
+        \begin{itemize}
+            \item 将多个部分组在一起的括号 
+            \item 表示函数的小括号(输出a function returning\dots)和表示数组的方括号(an array of \dots)，两者至多出现一个 
+            \item 前缀的星号，输出pointer to \dots
+        \end{itemize}
+    \item const和volatile 如果在类型描述符之后(英文原文是next to，可能是相邻的意思，包括之前)则类型限定符被应用于(apply to)类型描述符，否则应用于恰在其左侧的星号。 
 \end{itemize}
 
-
-
+如\verb| char* const *(*next)();|表示``next is a pointer to a function returning a pointer to a const pointer-to-char''。
 
 
 

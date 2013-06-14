@@ -29,4 +29,47 @@ C标准中未规定参数压栈顺序，但VC和gcc都规定从右往左压栈�
 
 二者都可以用静态字符串变量初始化。
 
+\subsection{malloc和new的区别}
+前者为标准库函数，后者为运算符。前者不在编译器控制权限内，不能自动执行构造函数。new能完成对象初始化工作，delete能完成对象清理工作。
+
+\subsection{指针、引用和句柄}
+指针和引用的差别:
+\begin{enumerate}
+    \item 非空区别。引用不得指向空值
+    \item 可修改区别。引用的指向在初始化时确定，永不更改
+\end{enumerate}
+
+句柄是32位整数，实际是Windows在内存中维护的一个对象内存物理地址的整数索引，相当于是指向指针的指针。Windows的内存管理经常将当前空闲对象的内存释放掉，当需要访问时再重新提交到物理内存，因此对象的物理地址是变化的，不允许应用程序直接通过物理地址访问对象。
+
+\subsection{异常安全}
+一个语句块中的delete语句可能会因抛出异常被被跳过，导致对象未被清理的。\textbf{异常安全}指即使发生异常，程序仍能正确地工作，其中包括资源能够被正确地清理。通过定义一个类来封装资源的分配和释放,可以保证正确释放资源。这一技术常称为“资源分配即初始化”,简称 RAII。
+
+标准库的\verb|auto_ptr|类是的异常安全的“资源分配即初始化”技术的例子(\cite{cppprimer}17.1.9)。\verb|auto_ptr|接受一个类型形参的模板,它为动态分配的对象提供异常安全，在头文件memory中定义。\verb|auto_ptr|被复制或赋值的时候, 有不寻常的行为, 因此, 不能将\verb|auto_ptr|存储在标准库容器类型中。
+
+\begin{lstlisting}
+    void f()
+    {
+	auto_ptr<int> ap(new int(42)); // allocate a new object
+	// code that throws an exception that is not caught inside f
+    }
+    // auto_ptr freed automatically when function ends
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

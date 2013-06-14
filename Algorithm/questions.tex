@@ -254,6 +254,7 @@ http://en.wikipedia.org/wiki/Longest_increasing_subsequence
 \subsection{字串枚举:电话号码对应英文单词}
 \cite{bop}3.2, \cite{pie}P119\\
 问题1：枚举一个电话号码能够构成的所有字母组合，普通枚举问题。问题2:基于词典，一个给定电话号码是否构成有意义的单词。方法一：基于问题1的解答，将每个答案同词典进行匹配，需要遍历词典很多次。方法二：将可以构成单词的电话号码预先存放到数字词典中。方法三:实质可看作词典聚类问题，参\ref{problem:dictClassify}，遍历一遍词典，判断每个单词是否符合这个电话号。
+\label{question:phonekeyboard}
 
 \subsection{文档词频统计}
 \cite{pp}15.1。不基于词典，单词词形没有限制。利用散列表存储每个单词的词频，表的长度为质数29989，使哈希载荷因子接近1(圣经中有29121个单词，区分大小写)，用链表解决冲突。每次查询几乎为常数时间。总时间正比于文档长度。
@@ -331,6 +332,7 @@ void bsort(l,u,depth)
 
 
 
+
 \section{杂问题举例}
 
 \subsection{装箱问题的首次适应算法}
@@ -359,6 +361,30 @@ void bsort(l,u,depth)
 
 问题4:输出m个随机序可重复整数(\cite{pp}12.5.8)。
 随机抽取，直接输出。问题3和4要求输出可重复整数，基于候选空间的算法不可用，只能基于抽取。
+
+
+
+
+
+
+
+
+\subsection{枚举问题列表}
+\begin{enumerate}
+    \item 枚举一个电话号码能够构成的所有字母组合(\ref{question:phonekeyboard})
+    \item 枚举目标字符串在源字符串中的连接次序，见\cite{pibible}8.2.1,P83
+    \item 字符串的全排列，全组合
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
 
 
 

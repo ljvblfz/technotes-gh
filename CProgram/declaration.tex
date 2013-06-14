@@ -50,7 +50,14 @@
     \item const和volatile 如果在类型描述符之后(英文原文是next to，可能是相邻的意思，包括之前)则类型限定符被应用于(apply to)类型描述符，否则应用于恰在其左侧的星号。 
 \end{itemize}
 
-如\verb| char* const *(*next)();|表示``next is a pointer to a function returning a pointer to a const pointer-to-char''。
+\subsection{例子}
+\begin{enumerate}
+    \item \verb|char *const *(*next)();|表示``next is a pointer to a function returning a pointer to a const pointer-to-char''。
+    \item \verb|int (*a[10])(int);|表示a是一个数组，数组每个元素都是都是指向函数的指针
+    \item \verb|int a[5];|\&为指向数组的指针，\&a+1指向数组最末元素之后的不可访问的位置。
+\end{enumerate}
+
+
 
 
 

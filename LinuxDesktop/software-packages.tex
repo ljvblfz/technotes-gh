@@ -1,4 +1,4 @@
-\section{软件包安装与管理}
+\section{Debian软件包安装与管理}
 
 一般而言，aptitude命令优于apt命令。
 
@@ -88,6 +88,30 @@ apt-get -f install
 \end{verbatim}
 在将新建的info目录同备份的目录合并
 
+\section{Yum软件包管理}
+\label{yum}
+\subsection{配置更新源}
+\subsubsection{手动选择源}
+开源镜像网站http://mirrors.163.com/和http://mirrors.sohu.com/下载fedora的源配置文件。为了区别镜像，打开下载的镜像文件后把三个中括号[]中的fedora分别替换为fedora-163与fedora-sohu。将修改好的配置文件保存到/etc/yum.repos.d/目录下。最后在终端输入：
+\begin{lstlisting}
+sudo yum makecache
+\end{lstlisting}
+
+\subsubsection{安装fastest-mirror}
+\begin{lstlisting}
+sudo yum -y install yum-plugin-fastestmirror 
+\end{lstlisting}
+
+\subsubsection{添加rpmfusion源}
+\begin{lstlisting}
+sudo rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-stable.noarch.rpm 
+http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-stable.noarch.rpm
+\end{lstlisting}
+
+\subsection{升级系统}
+\begin{lstlisting}
+sudo yum update
+\end{lstlisting}
 
 
 

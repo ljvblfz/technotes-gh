@@ -42,3 +42,54 @@ int rank()
 \end{verbatim}
 
 
+\subsection{插入算法伪代码}
+
+可以同时使用algorithm和algorithmic环境。依赖的包如下：
+\begin{verbatim}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\end{verbatim}
+
+如果是用debian包管理系统安装的texlive，那么还需安装texlive-science包。
+\begin{verbatim}
+\begin{algorithm}
+\caption{静态解析}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{StaticChunkedParse}{$msg$}\Comment{msg is the chunked message}
+\State $ep\gets 0$
+\While{\texttt{True}}
+\State $chunkSize \gets msg[ep:ep+64]$
+\State $chunkLen \gets hex2int(chunkSize)$
+\If{$chunkLen = 0$}
+\State \textbf{break}
+\EndIf
+\State $ep \gets ep + len(chunkSize)$
+\State $output \gets output + msg[ep:ep+chunkLen]$
+\State $ep \gets ep + chunkLen$
+\EndWhile\label{euclidendwhile}
+\State \textbf{return} $output$\Comment{output is the decoded content}
+\EndProcedure
+\end{algorithmic}
+\label{alg:static}
+\end{algorithm}
+\end{verbatim}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

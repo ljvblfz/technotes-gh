@@ -1,0 +1,43 @@
+\section{常用命令详解}
+
+\subsection{ls}
+解释几个比较实用的选项。
+
+\subsubsection{l选项}
+会产生类似如下输出。
+\begin{verbatim}
+srw-rw-rw-   1 root root             0 11月  3 15:45 log=
+crw-------   1 root root       10, 237 11月  3 15:45 loop-control
+-rwsr-xr-x   1 root root 45420  7月 27 01:07 /usr/bin/passwd*
+\end{verbatim}
+其中第1个字符表示文件类型。s表示socket，p表示FIFO(命名管道)，b表示块设备，l表示符号链接，-表示普通文件，？表示未知类型。
+
+在文件权限中，s表示设置用户(组)id位为1，且文件可执行。t表示粘住位为1，且文件可执行。相应的S和T表示文件不可执行。
+
+第2个位段表示硬链接数。第3、4位分别表示用户和组，-n选项让二者用数字而非名字表示。第5位表示size。第6位表示修改日期。最后一位为文件名。
+
+\subsubsection{R选项}
+递归输出。
+\subsubsection{F选项}
+文件名后面加上一个符号，表示文件类型。如/表示目录，@表示符号链接，|表示FIFO，=表示socket。普通文件后面什么也没有。
+\subsubsection{ld选项}
+-d选项表示显示的为目录本身的信息，而非其子目录或包含文件的信息。
+\subsubsection{lt选项}
+t选项表示安装修改时间排序。
+\subsubsection{ltr选项}
+表示按照t选项的排序的反序显示。
+\subsubsection{c选项}
+表示按照inode ctime值排序，而不是修改时间。
+\subsubsection{i选项}
+显示inode号。
+
+\subsection{grep}
+
+略
+\subsection{find}
+
+
+略
+
+
+

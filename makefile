@@ -60,7 +60,7 @@ backup:
 	fi
 
 display:
-	evince $(TARGET) &
+	okular $(TARGET) &
 
 
 

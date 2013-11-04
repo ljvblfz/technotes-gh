@@ -1,0 +1,15 @@
+\section{restrict关键词}
+由C99提出，用于指针声明，表示所指对象不会被其他别名指针所指，以提示编译器进行更加大胆的优化。C++标准不支持该关键词，gcc和Visual C++提出了自己的非标准解决方案。
+
+以下是\cite{wikipedia}给出的例子：
+
+\begin{lstlisting}
+void updatePtrs(size_t *ptrA, size_t *ptrB, size_t *val)
+{
+  *ptrA += *val;
+  *ptrB += *val;
+}
+\end{lstlisting}
+
+由于不知道val所指对象是否与ptrA或ptrB重合，因此，需要对该变量执行load操作两次。如果三个参数都有restrict修饰，可只对val加载一次。
+

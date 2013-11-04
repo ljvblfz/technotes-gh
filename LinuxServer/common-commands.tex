@@ -1,43 +1,146 @@
 \section{常用命令详解}
 
-\subsection{ls}
-解释几个比较实用的选项。
+\subsection{ls命令用法}
+解释几个比较实用的选项。当不使用任何选项时，输出按照名字排序。S，t选项能更改排序的依据。r指示反序。
 
 \subsubsection{l选项}
 会产生类似如下输出。
 \begin{verbatim}
 srw-rw-rw-   1 root root             0 11月  3 15:45 log=
 crw-------   1 root root       10, 237 11月  3 15:45 loop-control
--rwsr-xr-x   1 root root 45420  7月 27 01:07 /usr/bin/passwd*
+-rwsr-xr-x   1 root root         45420  7月 27 01:07 /usr/bin/passwd*
 \end{verbatim}
-其中第1个字符表示文件类型。s表示socket，p表示FIFO(命名管道)，b表示块设备，l表示符号链接，-表示普通文件，？表示未知类型。
+其中第1个字符表示文件类型。s表示socket，p表示FIFO(命名管道)，b表示块设备，c表示字符设备，l表示符号链接，-表示普通文件，？表示未知类型。
 
 在文件权限中，s表示设置用户(组)id位为1，且文件可执行。t表示粘住位为1，且文件可执行。相应的S和T表示文件不可执行。
 
-第2个位段表示硬链接数。第3、4位分别表示用户和组，-n选项让二者用数字而非名字表示。第5位表示size。第6位表示修改日期。最后一位为文件名。
+第2个位段表示硬链接数。第3、4位分别表示用户和组，-n选项让二者用数字而非名字表示。
+
+第5位单位为字节。对于设备文件(b和c)，显示为主从设备号。
+
+第6位表示时间戳。文件的三个时间属性为修改时间(mtime),访问时间(atime)和i节点状态改变时间(ctime)。-l选项的默认时间戳为mtime。使用u选项使得时间戳使用atime，使用-c选项表示时间戳为ctime。
+
+最后一位为文件名。
 
 \subsubsection{R选项}
 递归输出。
+相当于\verb|`--recursive'|
 \subsubsection{F选项}
 文件名后面加上一个符号，表示文件类型。如/表示目录，@表示符号链接，|表示FIFO，=表示socket。普通文件后面什么也没有。
-\subsubsection{ld选项}
+相当于\verb|`--classify'|
+\subsubsection{d选项}
 -d选项表示显示的为目录本身的信息，而非其子目录或包含文件的信息。
-\subsubsection{lt选项}
-t选项表示安装修改时间排序。
-\subsubsection{ltr选项}
-表示按照t选项的排序的反序显示。
+相当于\verb|`--directory'|
+\subsubsection{t选项}
+t选项表示按照时间戳排序。
+相当于\verb|`--sort=time'|
+\subsubsection{S选项}
+S选项表示按照size排序。
+相当于\verb|`--sort=size'|
+\subsubsection{r选项}
+将排序结果反转。
+相当于\verb|`--reverse'|
 \subsubsection{c选项}
-表示按照inode ctime值排序，而不是修改时间。
+使用ctime表示时间。如果同-t选项一同使用，则按照ctime排序。
+相当于：
+\begin{verbatim}
+`--time=ctime'
+`--time=status'
+\end{verbatim}
+
+\subsubsection{u选项}
+使用atime表示时间。如果同-t选项一同使用，则按照atime排序。
+相当于：
+\begin{verbatim}
+`--time=atime'
+`--time=access'
+`--time=use'
+\end{verbatim}
+
 \subsubsection{i选项}
 显示inode号。
 
 \subsection{grep}
 
 略
-\subsection{find}
 
 
-略
+\subsection{xargs命令}
+执行一条命令，其参数从标准输入获取。
+
+其用途之一是用于将参数分成多行输入，类似于行末添加了反斜杠。例如输入xargs file，分多行输入file命令的参数，用CtrlD终止输入。
+
+用途之二是构造管道，第一个命令的输入并不连接到第二个命令的输入，而是其命令行参数。如
+
+\begin{verbatim}
+ls | xargs file
+find /tmp -name core -type f -print0 | xargs -0 /bin/rm -f
+\end{verbatim}
+
+\subsection{find命令}
+\begin{verbatim}
+find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression]
+\end{verbatim}
+H,L,P选项控制是否进入符号链接。D,O选项也不太常用。
+expression包含选项、测试、行动三部分,因此find命令的使用方式通常为如下形式：
+
+\verb+find 起始目录 寻找条件 操作+
+
+寻找条件可以用and,or,not连接起来，分别写作:
+
+\verb+ -a -o 和 !+
+
+如
+
+\verb+ find ! -name 'tmp'+
+
+\verb+-prune选项相当与-maxdetph 0+,表示只对path参数包含的路径进行操作，不进行递归。
+
+需要说明的是：当使用很多的逻辑选项时，可以用括号把这些选项括起来。为了避免Shell本身对括号引起误解，在话号前需要加转义字符来去除括号的意义。例：
+
+\verb+find \(–name ’tmp’ -a type c -user ’inin’ \)+
+
+
+只显示当前目录下的文件夹：
+
+\verb+ls -l | grep ^d+
+\verb+find * -type d -prune+
+\verb+find . -maxdepth 1 -mindepth 1 -type d+
+
+只显示当前目录下的非文件夹：
+
+\verb+ls -l | grep -v ^d+
+
+\subsection{sort用法笔记}
+比较重要的选项包括:
+
+\begin{itemize}
+    \item o 指定输出文件
+    \item r 逆序
+    \item k=pos 指定关键词在第几列，默认为第一列
+    \item n 按照数值大小排序；默认为按字典序
+    \item u 删除重复行
+    \item t 指定field分隔符；默认为空格
+    \item f 忽略大小写 
+\end{itemize}
+
+
+举例：
+\begin{verbatim}
+sort -n -t ‘ ‘ -k 3r -k 2 facebook.txt
+sort -t ‘ ‘ -k 1 facebook.txt
+\end{verbatim}
+
+sort命令选项众多，十分强大。
+\subsection{uniq命令用法笔记}
+
+uniq命令用来检查或忽略文件中重复的行。重要选项有：
+
+\begin{itemize}
+    \item -u 只显示不重复的行
+    \item -d 只显示重复的行
+    \item -c 显示重复次数
+\end{itemize}
 
 
 

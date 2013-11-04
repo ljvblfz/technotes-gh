@@ -60,7 +60,7 @@ backup:
 	fi
 
 display:
-	okular $(TARGET) &
+	okular $(TARGET) 
 
 
 

@@ -14,17 +14,17 @@
 
 \subsection{全局字体设置}
 示例:
-\begin{verbatim}
+\begin{lstlisting}[language={[LaTex]Tex}]
 \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
 \setCJKmainfont[ItalicFont={KaiTi_GB2312}]{SimSun}
 \setCJKsansfont{SimHei}
-\end{verbatim}
+\end{lstlisting}
 注意，\verb+KaiTi_GB2312+中的下划线不需要转义。需要事先查看系统已经安装了的字体：
-\begin{verbatim}
+\begin{lstlisting}[language={[LaTex]Tex}]
 fc-list :lang=zh
-\end{verbatim}
+\end{lstlisting}
 以下模板从网上抄得：
-\begin{verbatim}
+\begin{lstlisting}[language={[LaTex]Tex}]
 \usepackage{xeCJK}
 \CJKlanguage{zh-cn}
 \setmainfont{DejaVu Sans}
@@ -34,20 +34,20 @@ fc-list :lang=zh
 \setCJKfamilyfont{song}{AR PL New Sung}
 \setCJKfamilyfont{kai}{AR PL New Kai}
 \setCJKfamilyfont{hei}{文泉驿正黑}
-\end{verbatim}
+\end{lstlisting}
 
 \subsection{xeCJK字体调用}
 在导言中设置hei字体为系统黑体：
-\begin{verbatim}
+\begin{lstlisting}[language={[LaTex]Tex}]
 \setCJKfamilyfont{hei}{SimHei}
-\end{verbatim}
+\end{lstlisting}
 在正文中使用字体调用：
-\begin{verbatim}
+\begin{lstlisting}[language={[LaTex]Tex}]
 {\CJKfamily{hei}
 这里对CDN有个要求，就是对同一个媒体资源子文件，相应的transferID必须保持一致
 }
 \end{verbatim}
-
+\end{lstlisting}
 
 
 

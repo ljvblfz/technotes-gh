@@ -1,9 +1,10 @@
-\section{论文结构中文化}
-日期，日期和参考文献
-\begin{shellcmd}
+\section{Latex论文结构中文化}
+日期，日期和参考文献的中文化方式：
+\begin{verbatim}
 \renewcommand{\bibname}{\begin{center} \sffamily 参考文献 \end{center}}
 \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 \renewcommand{\contentsname}{目录}
-\end{shellcmd}
+\end{verbatim}
 
+注意，对于ctex系统，这些工作都不需要。
 

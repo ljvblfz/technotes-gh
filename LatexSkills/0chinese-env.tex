@@ -1,39 +1,83 @@
 
-\section{Latex中文环境安装}
+\section{Latex中文环境支持}
 \label{sec:LatexInstall}.
-\subsection{基于CJK宏包的方法}
-Debian下相关软件包：
-texlive texlive-latex-extra latex-cjk-chinese
-参\ref{sec:zhCJK}。
-CJK 作为一个 LaTeX2e 宏包，其对字体的定义遵照 NFSS（新字体选择框架）。Dpkg环境只提供了gbsn,gkai两种简体中文字体。可以使用一些网上流传的工具(如gbkfonts)将ttl字体转换为CJK宏包需要的PK字体，很繁琐，勿尝试。
 
-\subsection{基于xeCJK宏包的方法}
-Debian下相关软件包：
-texlive texlive-latex-extra texlive-xetex
+\subsection{Latex底层中文系统}
+主要包括CJK，xeCJK，CCT等。CCT已经过时。
+\begin{description}
+    \item[CJK宏包]
+CJK作为一个LaTeX2e宏包，其对字体的定义遵照NFSS（新字体选择框架）。Dpkg环境只提供了gbsn,gkai两种简体中文字体。可以使用一些网上流传的工具(如gbkfonts)将ttl字体转换为CJK宏包需要的PK字体，很繁琐，勿尝试。
+Debian下相关软件包： texlive texlive-latex-extra latex-cjk-chinese。 参\ref{sec:zhCJK}。
+    \item[xeCJK宏包] xeCJK的好处就是能够直接使用系统安装的字体。Debian下相关软件包： texlive texlive-latex-extra texlive-xetex
+    \item[CCT] 最早支持简体中文的TeX是CCT，这个是中国科学院数学与系统科学研究院的张林波研究员编写。
+\end{description}
 
-xeCJK的好处就是能够直接使用系统安装的字体。
+\subsection{安装TexLive}
+社区普遍认为通过Linux发行版的包管理系统安装Texlive并不好，而推荐从CTAN下载安装镜像。CTAN全称是Comprehensive Tex Archive Network，提供全面、最新的安装文件镜像。利用镜像文件安装的TexLive通过tlmgr工具。
 
-\subsection{Ctex}
-CTeX 中文套装是基于 Windows 下的 MiKTeX 系统，集成了编辑器 WinEdt 和 PostScript 处理软件 Ghostscript 和 GSview 等主要工具。 CTeX 中文套装在 MiKTeX 的基础上增加了对中文的完整支持。 CTeX 中文套装支持 CJK, xeCJK, CCT, TY 等多种中文 TeX 处理方式。
-
-Ubuntu原生软件包系统不提供对CTEX的安装，只能到网上下载相关文件，复制到目录\verb+/usr/share/texmf-texlive/tex/latex/ctex/fontset+下，然后执行sudo texhash命令。
-
-字体配置路径可能是
-\begin{verbatim}
-/usr/local/texlive/tex/latex/ctex/fontset/
-/usr/local/texlive/2012/texmf-dist/tex/latex/ctex/fontset
-\end{verbatim}
-相关文件包括: ctex-xecjk-winfonts.def
-
-\subsection{从CTAN安装texlive}
 \url{http://oss.ustc.edu.cn/CTAN/systems/texlive}
+\url{http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive}。
 
-\url{http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive}
+命令texdoc <package> 方便查阅各个包的文档。
+TexLive的安装路径(TEXLIVEROOT)为：
+\begin{verbatim}
+/usr/share/texlive/ (Debian包管理系统)
+/usr/local/texlive/2011 (CTAN)
+\end{verbatim}
 
-\subsection{背景知识}
-texhash又叫mktexlsr，用于刷新ls-R文件名数据库。
+其子目录:
+\begin{description}
+    \item[texmf]
+TEXMFMAIN -- "The tree which holds vital parts of the system such as configuration files, helper scripts, and program documentation."
+    \item[texmf-dist]
+TEXMFDIST -- "The tree which holds the main set of macro packages, fonts, etc."
+    \item[texmf-var]
+TEXMFSYSVAR -- "The (site-wide) tree used by texconfig-sys, updmap-sys and fmtutil-sys, and also by tlmgr, to store (cached) runtime data such as format files and generated map files."
+    \item[texmf-config]
+TEXMFSYSCONFIG -- "The (site-wide) tree used by the utilities texconfig-sys, updmap-sys, and fmtutil-sys to store modified configuration data."
+\end{description}
 
-CTAN全称是Comprehensive Tex Archive Network.The TeX Archive Network is a set of fully-mirrored ftp sites providing the most complete, up-to-date TeX-related software possible.
+%\subsection{texhash}
+%texhash又叫mktexlsr，用于刷新ls-R文件名数据库。
+
+\subsection{CTex}
+
+\emph{CTex}宏包提供了一个统一的中文\LaTeX文档框架,底层支持CCT和CJK两种中文\LaTeX系统。ctex宏包提供了编写中文\LaTeX文档常用的一些宏定义和命令。ctex宏包需要CCT系统或者CJK宏包的支持。主要文件包括ctexart.cls、ctexrep.cls、ctexbook.cls和ctex.sty、ctexcap.sty。ctex宏包由ctex.org制作并负责维护。Debian的软件包系统texlive-lang-cjk提供了ctex。
+
+ctex文件目录位于TEXMFDIST/tex/latex/ctex，被称作CTEXROOT。
+
+ctex的字体配置方案包括winfonts(默认)，adobefonts，nofonts。另外，可以自行配置字体方案，经常命名为unixfonts。
+
+XeTeX引擎下，winfonts选项是面向Windows用户设计的字体选项。其配置文件在Unix平台下为CTEXROOT/fontset/ctex-xecjk-winfonts.def。其中经常被类Unix平台用户误认为有错误的是楷体和仿宋体的设置：
+\begin{verbatim}
+\setCJKfamilyfont{zhkai}{[simkai.ttf]}
+\setCJKfamilyfont{zhfs}{[simfang.ttf]}
+\end{verbatim}
+Unix类平台下直接使用winfonts方案会报错，原因是因为Unix系统对对大小写敏感，以及可能没有设置OSFONTDIR变量。
+
+如使用nofonts选项，需在文档中显式指明字体：
+\begin{verbatim}
+\documentclass[UTF8,nofonts]{ctexart}
+\setCJKmainfont[ItalicFont={AR PLKaitiMGB}]{AR PLSungtiLGB}%文鼎宋体和楷书
+\setCJKsansfont{WenQuanYiZenHei}%文泉驿的黑体
+
+\begin{document}
+文章内容
+\end{document}
+\end{verbatim}
+
+\subsection{字体支持}
+Windows XP下的字体目录在\verb|C:\WINDOWS\Fonts|之下。Ubuntu下的字体目录一般为/usr/share/fonts/和~/.local/share/fonts。
+
+用字体查看器如gnome-font-viewer安装的字体可以被fc-list和xeCJK识别，但未必能被ctex系统识别。原因是TeXLive在Linux下安装时不自动设置OSFONTDIR变量，而按文件名寻找字体时使用的是kpathsea 库，需要OSFONTDIR变量指向包含中文字体的位置。配置文件为TEXLIVEROOT/texmf.cnf, 增加类似下面的内容：
+\begin{verbatim}
+OSFONTDIR = /usr/share/fonts//;/home/limz/.local/share/fonts//
+\end{verbatim}
+
+
+
+
+
 
 
 

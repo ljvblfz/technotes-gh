@@ -1,7 +1,4 @@
-\documentclass[11pt,a4paper]{report}
-\usepackage[top=1in,bottom=1in,left=1.2in,right=1.2in]{geometry}
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
+\documentclass[winfonts]{ctexrep}
 \usepackage{indentfirst} 
 \usepackage{fontspec}
 \usepackage{titlesec}
@@ -25,14 +22,8 @@
 \CustomVerbatimEnvironment{shellcmd}{Verbatim}
 {frame=single,rulecolor=\color{blue},framerule=3pt,framesep=1pc,fillcolor=\color{yellow}}
 
-\setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{SimSun}
-\setCJKsansfont{SimHei}
-\renewcommand{\baselinestretch}{1.3}
-\renewcommand{\figurename}{图} 
-\renewcommand{\bibname}{\begin{center} \sffamily 参考文献 \end{center}}
-\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
-\renewcommand{\contentsname}{\sffamily 目录}
 \newcommand{\bookname}{技术笔记}
+
 \title{\sffamily \bookname}
 \author{李明哲}
 \date{\today}
@@ -45,12 +36,6 @@
 \tableofcontents
 \listoffigures
 \listoftables
-
-\titleformat{\part}{\huge\raggedright\sffamily}{第\thepart 部分}{1em}{}
-\titleformat{\chapter}{\Large\raggedright\sffamily}{第\thechapter 章}{1em}{}
-\titleformat{\section}{\large\raggedright\sffamily}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalfont\raggedright\sffamily}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalfont\raggedright\sffamily}{\thesubsubsection}{1em}{}
 
 \part{基础知识}
 \chapter{硬件}
@@ -92,7 +77,6 @@
 \input{Chap-Algorithm}
 
 \input{thebib}
-
 
 \end{document}
 

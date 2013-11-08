@@ -1,4 +1,40 @@
 \section{磁盘速率测量}
 关于磁盘负载的生成器，主要有iometer和dd。
 
-对于速率测量，在ubuntu下需要安装sysstat软件包，它提供了iostat工具。另外ubuntu下也有sar工具。
+sar(System Activity Report)是源于Solaris的系统监视命令，用于报告系统负载，包括CPU，内存，磁盘，网络\cite{wikipedia}。在Linux上通过sysstat软件包来提供。
+与sysstat类似的工具还包括atsar和dstat。
+
+Sysstat是一个工具集，包括sar、pidstat、iostat、mpstat、sadf、sadc。sadc(System Activity Data Collector)是sar的后端，为其收集数据。
+
+The \textbf{sa1} command is a shell procedure variant of the sadc command and handles all of the flags and parameters of that command. The sa1 command collects and stores binary data in the /var/log/sysstat/sadd file, where the dd parameter indicates the current day. The interval and  count  parameters specify that the record should be written count times at interval seconds. If no arguments are given to sa1 then a single record is written. The sa1 command is designed to be started automatically by the cron command.
+
+The  \textbf{sa2}  command  is  a  shell  procedure variant of the sar command which writes a daily report in the /var/log/sysstat/sardd file, where the dd parameter indicates the current day. The sa2 command handles all of the flags and parameters of the sar command. The sa2 command is designed to be started automatically by the cron command.
+
+The \textbf{pidstat} command is used for monitoring individual tasks currently being managed by the Linux kernel.  It writes to standard output  activities for  every  task  selected with option -p or for every task managed by the Linux kernel if option -p ALL has been used. Not selecting any tasks is
+equivalent to specifying -p ALL but only active tasks (tasks with non-zero statistics values) will appear in the report.
+
+The  \textbf{mpstat} command writes to standard output activities for each available processor, processor 0 being the first one.  Global average activities among all processors are also reported.  The mpstat command can be used both on SMP and UP machines, but in the latter, only global average activities will be printed. If no activity has been selected, then the default report is the CPU utilization report.  
+
+The \textbf{iostat} command is used for monitoring system input/output device loading by observing the time the devices are active  in  relation  to  their average  transfer  rates.  The iostat command generates reports that can be used to change system configuration to better balance the input/output load between physical disks.
+
+\textbf{vmstat} reports information about processes, memory, paging, block IO, traps, disks and cpu activity.
+
+\begin{verbatim}
+pidstat  2   5  
+// 每隔2秒，显示5次，所有活动进程的CPU 使用情况 
+pidstat  - p  3132   2   5  
+// 每隔2秒，显示5次，PID为1643的进程的CPU使用情况显示 
+pidstat  - p  3132   2   5   - r
+// 每隔2秒，显示5次，PID为1643的进程的内存使用情况显示
+\end{verbatim}
+
+\begin{verbatim}
+sar 2 // 每隔2秒显示CPU使用的情况										
+sar -r 2 //内存使用情况					 
+sar -d 2 //磁盘使用情况					 
+sar -n DEV  2 //网络使用情况
+iostat 2 //磁盘使用情况
+\end{verbatim}
+
+
+

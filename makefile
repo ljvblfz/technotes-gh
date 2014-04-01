@@ -19,7 +19,7 @@ SystemPlatforms \
 WindowsPC \
 
 
-BACKUP_DIR = /media/D/Yunio
+BACKUP_DIR = /media/D/Kuaipan/KuaipanCore
 
 SOURCE_FILE = technotes.tex
 CHAP_FILES = $(CHAPTERS:%=Chap-%.tex)
@@ -38,7 +38,7 @@ doublemake: $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES)
 
 $(TARGET): $(SOURCE_FILE) $(CHAP_FILES) $(DEPEND_FILES)
 	xelatex $<
-	cp $@ /media/D/Nutstore/BookShelf/
+	cp $@ $(BACKUP_DIR)
 
 Chap-%.tex: %/*.tex
 	cat $^ > $@
